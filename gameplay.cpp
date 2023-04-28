@@ -117,10 +117,10 @@ void gameplay::processCheckBoard()
 			int color[] = { RED, BLUE }, pos[] = { 22,9 };
 			if (_turn)
 			{
-				menu::printBoard(69, 1, 34, 10, LIGHT_BLUE);
+				draw::printBoard(69, 1, 34, 10, LIGHT_BLUE);
 				common::setConsoleColor(BRIGHT_WHITE, GRAY);
-				menu::printRectangle(69, 14, 33, 10);
-				menu::printBigX(66, 2, LIGHT_BLUE, BRIGHT_WHITE);
+				draw::printRectangle(69, 14, 33, 10);
+				draw::printBigX(66, 2, LIGHT_BLUE, BRIGHT_WHITE);
 				common::gotoXY(86 - _p1Name.length() / 2, 4);
 				common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
 				cout << _p1Name;
@@ -139,7 +139,7 @@ void gameplay::processCheckBoard()
 				cout << _b->getCountX();
 				common::setConsoleColor(BRIGHT_WHITE, GRAY);
 				common::gotoXY(82, 16);
-				menu::printBigO(66, 15, GRAY, BRIGHT_WHITE);
+				draw::printBigO(66, 15, GRAY, BRIGHT_WHITE);
 				common::gotoXY(86 - _p2Name.length() / 2, 17);
 				cout << _p2Name;
 				common::gotoXY(80, 18);
@@ -155,10 +155,10 @@ void gameplay::processCheckBoard()
 			else
 			{
 				common::setConsoleColor(BRIGHT_WHITE, GRAY);
-				menu::printRectangle(69, 1, 33, 10);
-				menu::printBoard(69, 14, 34, 10, LIGHT_RED);
+				draw::printRectangle(69, 1, 33, 10);
+				draw::printBoard(69, 14, 34, 10, LIGHT_RED);
 				common::setConsoleColor(BRIGHT_WHITE, GRAY);
-				menu::printBigX(66, 2, GRAY, BRIGHT_WHITE);
+				draw::printBigX(66, 2, GRAY, BRIGHT_WHITE);
 				common::gotoXY(86 - _p1Name.length() / 2, 4);
 				cout << _p1Name;
 				common::gotoXY(80, 5);
@@ -171,7 +171,7 @@ void gameplay::processCheckBoard()
 				common::gotoXY(86, 8);
 				cout << _b->getCountX();
 				common::gotoXY(82, 16);
-				menu::printBigO(66, 15, LIGHT_RED, BRIGHT_WHITE);
+				draw::printBigO(66, 15, LIGHT_RED, BRIGHT_WHITE);
 				common::gotoXY(86 - _p2Name.length() / 2, 17);
 				cout << _p2Name;
 				common::gotoXY(80, 18);
@@ -392,10 +392,10 @@ void gameplay::printInterface()
 	}
 	if (_turn)
 	{
-		menu::printBoard(69, 1, 34, 10, LIGHT_BLUE);
+		draw::printBoard(69, 1, 34, 10, LIGHT_BLUE);
 		common::setConsoleColor(BRIGHT_WHITE, GRAY);
-		menu::printRectangle(69, 14, 33, 10);
-		menu::printBigX(66, 2, LIGHT_BLUE, BRIGHT_WHITE);
+		draw::printRectangle(69, 14, 33, 10);
+		draw::printBigX(66, 2, LIGHT_BLUE, BRIGHT_WHITE);
 		common::gotoXY(86 - _p1Name.length() / 2, 4);
 		common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
 		cout << _p1Name;
@@ -414,7 +414,7 @@ void gameplay::printInterface()
 		cout << _b->getCountX();
 		common::setConsoleColor(BRIGHT_WHITE, GRAY);
 		common::gotoXY(82, 16);
-		menu::printBigO(66, 15, GRAY, BRIGHT_WHITE);
+		draw::printBigO(66, 15, GRAY, BRIGHT_WHITE);
 		common::gotoXY(86 - _p2Name.length() / 2, 17);
 		cout << _p2Name;
 		common::gotoXY(80, 18);
@@ -430,10 +430,10 @@ void gameplay::printInterface()
 	else
 	{
 		common::setConsoleColor(BRIGHT_WHITE, GRAY);
-		menu::printRectangle(69, 1, 33, 10);
-		menu::printBoard(69, 14, 34, 10, LIGHT_RED);
+		draw::printRectangle(69, 1, 33, 10);
+		draw::printBoard(69, 14, 34, 10, LIGHT_RED);
 		common::setConsoleColor(BRIGHT_WHITE, GRAY);
-		menu::printBigX(66, 2, GRAY, BRIGHT_WHITE);
+		draw::printBigX(66, 2, GRAY, BRIGHT_WHITE);
 		common::gotoXY(86 - _p1Name.length() / 2, 4);
 		cout << _p1Name;
 		common::gotoXY(80, 5);
@@ -446,7 +446,7 @@ void gameplay::printInterface()
 		common::gotoXY(86, 8);
 		cout << _b->getCountX();
 		common::gotoXY(82, 16);
-		menu::printBigO(66, 15, LIGHT_RED, BRIGHT_WHITE);
+		draw::printBigO(66, 15, LIGHT_RED, BRIGHT_WHITE);
 		common::gotoXY(86 - _p2Name.length() / 2, 17);
 		cout << _p2Name;
 		common::gotoXY(80, 18);
@@ -464,9 +464,9 @@ void gameplay::printInterface()
 		cout << _b->getCountO();
 	}
 	common::setConsoleColor(BRIGHT_WHITE, BLUE);
-	menu::printRectangle(69, 27, 14, 2);
+	draw::printRectangle(69, 27, 14, 2);
 	common::setConsoleColor(BRIGHT_WHITE, RED);
-	menu::printRectangle(88, 27, 14, 2);
+	draw::printRectangle(88, 27, 14, 2);
 	common::setConsoleColor(BRIGHT_WHITE, BLACK);
 	common::gotoXY(73, 28);
 	cout << "SAVE (P)";
@@ -529,11 +529,11 @@ void gameplay::setUpGame(int mode, string fileName)
 	{
 		common::setConsoleColor(BRIGHT_WHITE, GRAY);
 		common::clearConsole();
-		menu::printLogo();
-		menu::printBigO(5, 11, LIGHT_BLUE, BRIGHT_WHITE);
-		menu::printBigX(93, 2, LIGHT_RED, BRIGHT_WHITE);
+		draw::printLogo();
+		draw::printBigO(5, 11, LIGHT_BLUE, BRIGHT_WHITE);
+		draw::printBigX(93, 2, LIGHT_RED, BRIGHT_WHITE);
 		_mode = mode;
-		menu::printBoard(22, 19, 68, 6, BLACK);
+		draw::printBoard(22, 19, 68, 6, BLACK);
 		common::setConsoleColor(BLACK, BRIGHT_WHITE);
 		common::gotoXY(37, 19);
 		cout << "  ENTER NAME (UNDER 15 CHARACTERS)  ";
@@ -686,7 +686,7 @@ void gameplay::askContinue()
 	common::showCursor(false);
 	common::clearConsole();
 	continueBackground();
-	menu::printBoard(32, 8, 44, 9, BLACK);
+	draw::printBoard(32, 8, 44, 9, BLACK);
 	common::setConsoleColor(BRIGHT_WHITE, PURPLE);
 	common::gotoXY(47, 11);
 	cout << " DO YOU WANT TO ";
@@ -894,14 +894,14 @@ void gameplay::saveBoxScreen()
 {
 	common::showCursor(false);
 	common::clearConsole();
-	menu::printScene();
+	draw::rainbowBackground();
 	//common::setConsoleColor(BRIGHT_WHITE, BLACK);
 	//printRectangle(36, 18, 35, 8);
 	//printRectangle(39, 23, 7, 2);
 	//printRectangle(62, 23, 6, 2);
 	//common::setConsoleColor(BRIGHT_WHITE, RED);
 	////printLogo();
-	menu::printBoard(32, 8, 44, 9, BLACK);
+	draw::printBoard(32, 8, 44, 9, BLACK);
 	common::setConsoleColor(BRIGHT_WHITE, PURPLE);
 	common::gotoXY(44, 11);
 	cout << " DO YOU WANT TO SAVE? ";
@@ -950,7 +950,7 @@ void gameplay::saveBoxScreen()
 			else 
 			{
 				common::clearConsole();
-				menu::loadingBar();
+				draw::loadingBar();
 				common::clearConsole();
 				return;
 			}
@@ -966,8 +966,8 @@ void gameplay::saveBoxScreen()
 void gameplay::exitGameScreen() {
 	common::showCursor(false);
 	common::clearConsole();
-	menu::printScene();
-	menu::printBoard(32, 8, 44, 9, BLACK);
+	draw::rainbowBackground();
+	draw::printBoard(32, 8, 44, 9, BLACK);
 	common::setConsoleColor(BRIGHT_WHITE, PURPLE);
 	common::gotoXY(44, 11);
 	cout << " DO YOU WANT TO EXIT ";
@@ -1017,7 +1017,7 @@ void gameplay::exitGameScreen() {
 			else 
 			{
 				common::clearConsole();
-				menu::loadingBar();
+				draw::loadingBar();
 				common::clearConsole();
 				return;
 			}
@@ -1176,8 +1176,8 @@ void gameplay::continueBackground()
 		}
 	}
 
-	menu::printBigX(84, 23, BLACK, RED);
-	menu::printBigO(16, 23, BLACK, RED);
+	draw::printBigX(84, 23, BLACK, RED);
+	draw::printBigO(16, 23, BLACK, RED);
 
 	common::setColor(0);
 	for (int i = 28; i < 31; i++) {
