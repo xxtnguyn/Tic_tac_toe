@@ -2,6 +2,7 @@
 #include "header.h"
 #include "common.h"
 #include "gameplay.h"
+#include "avatar.h"
 
 
 #include <unordered_map>
