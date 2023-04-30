@@ -708,6 +708,22 @@ void draw::printScene() {
 		}
 	}
 
+	// Vẽ táo
+	common::setColor(4);
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < 3; j++) {
+			common::gotoXY(2 + j, 5 + i); cout << sun[0];
+			common::gotoXY(8 + j, 8 + i); cout << sun[0];
+			common::gotoXY(16 + j, 5 + i); cout << sun[0];
+			common::gotoXY(21 + j, 9 + i); cout << sun[0];
+		}
+	}
+	common::setColor(2);
+	common::gotoXY(3, 4); cout << sun[0];
+	common::gotoXY(9, 7); cout << sun[0];
+	common::gotoXY(17, 4); cout << sun[0];
+	common::gotoXY(22, 8); cout << sun[0];
+
 	// Vẽ nền đất của đảo
 	common::setConsoleColor(BRIGHT_WHITE, BLACK);
 	for (int i = 0; i < 15; i++) {
@@ -730,6 +746,8 @@ void draw::printScene() {
 			cout << sun[0];
 		}
 	}
+
+	avatar::rightAmongUs(10, 15, LIGHT_RED, RED);
 }
 
 void draw::printLoadBoard(int color)
