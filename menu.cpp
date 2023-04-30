@@ -1,5 +1,6 @@
 #include "menu.h"
 #include "gameplay.h"
+#include "avatar.h"
 #ifdef __cpp_lib_filesystem
 #include <filesystem>
 namespace fs = std::filesystem;
@@ -29,11 +30,12 @@ void menu::mainScreen()
 		{options[7], playPvEh},
 		{options[8], backMenu} };
 	common::setConsoleColor(BRIGHT_WHITE, RED);
-	common::clearConsole();
+	/*common::clearConsole();
 	draw::printIntro();
-	draw::loadingBar();
 	common::clearConsole();
-	draw::printAnimatedBigXandBigO(96, 10, 1, 10);
+	draw::loadingBar();
+	common::clearConsole();*/
+	// draw::printAnimatedBigXandBigO(96, 10, 1, 10);
 	common::clearConsole();
 	bool loadMenu = 1;
 	while (true)
@@ -318,6 +320,8 @@ void menu::exitScreen()
 	common::showCursor(false);
 	common::clearConsole();
 	draw::printScene();
+	/*avatar::leftAmongUsHead(10, 0, LIGHT_BLUE, BLUE);*/
+	/*avatar::Cat(10, 0);*/
 	//common::setConsoleColor(BRIGHT_WHITE, BLACK);
 	//printRectangle(36, 18, 35, 8);
 	//printRectangle(39, 23, 7, 2);
@@ -690,4 +694,5 @@ void menu::changeFile(int key, vector<string>& fileName, int& file)
 //		cout << fileName[file];
 //	}
 //}
+
 
