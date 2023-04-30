@@ -13,20 +13,23 @@ namespace fs = std::experimental::filesystem;
 
 void draw::rainbowBackground()
 {
-	int color[] = { 12, 14, 10 , 9, 13 };
-	for (int i = 0; i < 5; i++) {
+	int color[] = { 12, 14 , 9, 13 };
+	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 105; j++) {
-			for (int k = 0; k < 6; k++) {
+			for (int k = 0; k < 8; k++) {
 				common::setColor(color[i]);
-				common::gotoXY(j, i * 6 + k);
+				common::gotoXY(j, i * 8 + k);
 				putchar(219);
 			}
 		}
 	}
-	for (int i = 0; i < 105; i++) {
-		common::setColor(color[4]);
-		common::gotoXY(i, 30);
-		putchar(219);
+	
+	common::setColor(color[3]);
+	for (int i = 0; i < 7; i++) {
+		for (int j = 0; j < 105; j++) {
+			common::gotoXY(j, 24 + i);
+			putchar(219);
+		}
 	}
 
 	common::setColor(15);
@@ -36,6 +39,10 @@ void draw::rainbowBackground()
 			putchar(219);
 		}
 	}
+	avatar::Cat(10, 0, LIGHT_RED);
+	avatar::Cat(10, 16, LIGHT_BLUE);
+	avatar::Cat(85, 8, LIGHT_YELLOW);
+	avatar::Cat(85, 24, LIGHT_PURPLE);
 }
 
 void draw::rainbowColumn() {
