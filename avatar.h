@@ -7,8 +7,9 @@
 class avatar
 {
 public:
-	static void Cat(int, int);						// Vẽ mèo
-	static void rightAmongUs(int, int, int, int);					// Vẽ nhân vật among us phải
+	static void rightAmongUs(int, int, int, int);	// Vẽ nhân vật among us phải
 	static void leftAmongUs(int, int, int, int);	// Vẽ nhân vật among us trái
-	static void leftAmongUsHead(int, int, int, int);	// Vẽ đầu among us
+	static void leftAmongUsHead(int, int, int);		// Vẽ đầu among us
+	static void Bot(int, int);						// Vẽ con bot fithcmus
+	static void BotHead(int, int);					// Vẽ phần đầu con bot
 };
