@@ -327,7 +327,7 @@ void menu::exitScreen()
 	//printRectangle(39, 23, 7, 2);
 	//printRectangle(62, 23, 6, 2);
 	//common::setConsoleColor(BRIGHT_WHITE, RED);
-	////printLogo();
+	//printLogo();
 	draw::printBoard(32, 8, 44, 9, BLACK);
 	common::setConsoleColor(BRIGHT_WHITE, PURPLE);
 	common::gotoXY(44, 11);
@@ -623,6 +623,95 @@ void menu::changeFile(int key, vector<string>& fileName, int& file)
 			common::setConsoleColor(BRIGHT_WHITE, PURPLE);
 			cout << dt[file];
 	}
+}
+
+void menu::chooseAvatar() 
+{
+	// Tiêu đề
+	draw::printTitleChoose(20, 1);
+
+	// Hàng trên
+	common::setColor(0);
+	common::gotoXY(14, 4); cout << "No.1";
+	draw::printBoard(7, 5, 16, 10, BLACK);
+	draw::printColoredRectangle(8, 6, 15, 9, WHITE);
+	avatar::rightAmongUs(9, 7, LIGHT_RED, RED);
+	string red = "RED";
+	common::setConsoleColor(BRIGHT_WHITE, RED);
+	for (int i = 0; i < red.size(); i++) {
+		common::gotoXY(5, 8 + 2 * i);
+		cout << red[i];
+	}
+
+	common::setColor(0);
+	common::gotoXY(44, 4); cout << "No.2";
+	draw::printBoard(37, 5, 16, 10, BLACK);
+	draw::printColoredRectangle(38, 6, 15, 9, WHITE);
+	avatar::rightAmongUs(39, 7, LIGHT_BLUE, BLUE);
+	string blue = "BLUE";
+	common::setConsoleColor(BRIGHT_WHITE, BLUE);
+	for (int i = 0; i < blue.size(); i++) {
+		common::gotoXY(35, 7 + 2 * i);
+		cout << blue[i];
+	}
+
+	common::setColor(0);
+	common::gotoXY(74, 4); cout << "No.3";
+	draw::printBoard(67, 5, 16, 10, BLACK);
+	draw::printColoredRectangle(68, 6, 15, 9, WHITE);
+	avatar::rightAmongUs(69, 7, LIGHT_GREEN, GREEN);
+	string green = "GREEN";
+	common::setConsoleColor(BRIGHT_WHITE, GREEN);
+	for (int i = 0; i < green.size(); i++) {
+		common::gotoXY(65, 6 + 2 * i);
+		cout << green[i];
+	}
+
+	// Hang dưới
+	common::setColor(0);
+	common::gotoXY(27, 18); cout << "No.4";
+	draw::printBoard(20, 19, 16, 10, BLACK);
+	draw::printColoredRectangle(21, 20, 15, 9, WHITE);
+	avatar::rightAmongUs(22, 21, LIGHT_PURPLE, PURPLE);
+	string purple = "PURPLE";
+	common::setConsoleColor(BRIGHT_WHITE, PURPLE);
+	for (int i = 0; i < purple.size(); i++) {
+		common::gotoXY(18, 19 + 2 * i);
+		cout << purple[i];
+	}
+
+	common::setColor(0);
+	common::gotoXY(57, 18); cout << "No.5";
+	draw::printBoard(50, 19, 16, 10, BLACK);
+	draw::printColoredRectangle(51, 20, 15, 9, WHITE);
+	avatar::rightAmongUs(52, 21, BRIGHT_WHITE, WHITE);
+	string white = "WHITE";
+	common::setConsoleColor(BRIGHT_WHITE, BLACK);
+	for (int i = 0; i < white.size(); i++) {
+		common::gotoXY(48, 20 + 2 * i);
+		cout << white[i];
+	}
+
+	common::setColor(0);
+	common::gotoXY(87, 18); cout << "No.6";
+	draw::printBoard(80, 19, 16, 10, BLACK);
+	draw::printColoredRectangle(81, 20, 15, 9, WHITE);
+	avatar::rightAmongUs(82, 21, LIGHT_YELLOW, LIGHT_YELLOW);
+	string yellow = "YELLOW";
+	common::setConsoleColor(BRIGHT_WHITE, YELLOW);
+	for (int i = 0; i < yellow.size(); i++) {
+		common::gotoXY(78, 19 + 2 * i);
+		cout << yellow[i];
+	}
+
+	// Hộp Start (vào game)
+	common::setColor(2);
+	draw::printRectangle(91, 9, 9, 2);
+	common::gotoXY(94, 10); cout << "START";
+
+	// Hộp back menu
+	draw::printRectangle(3, 23, 8, 2);
+	common::gotoXY(6, 24); cout << "BACK";
 }
 
 //void menu::changeFile(int key, vector<string>& fileName, int& file)
