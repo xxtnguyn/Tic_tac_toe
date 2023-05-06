@@ -34,4 +34,6 @@ public:
 	static void printLoadText();								//In logo màn hình load game
 	static void printScene();									//In cảnh
 	static void loadingBar();									//Màn hình chờ
+	static void Cat(int, int, int);								// Vẽ mèo
+	static void printTitleChoose(int, int);						// Vẽ dòng chữ "CHOOSE YOUR AVATAR"
 };
