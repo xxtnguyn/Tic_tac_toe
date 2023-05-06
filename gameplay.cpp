@@ -137,6 +137,8 @@ void gameplay::processCheckBoard()
 				common::gotoXY(86, 8);
 				common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
 				cout << _b->getCountX();
+				avatar::leftAmongUsHead(89, 8, LIGHT_BLUE);
+
 				common::setConsoleColor(BRIGHT_WHITE, GRAY);
 				common::gotoXY(82, 16);
 				draw::printBigO(66, 15, GRAY, BRIGHT_WHITE);
@@ -151,6 +153,7 @@ void gameplay::processCheckBoard()
 				cout << "Moves:";
 				common::gotoXY(86, 21);
 				cout << _b->getCountO();
+				avatar::leftAmongUsHead(89, 21, WHITE);
 			}
 			else
 			{
@@ -170,6 +173,8 @@ void gameplay::processCheckBoard()
 				cout << "Moves:";
 				common::gotoXY(86, 8);
 				cout << _b->getCountX();
+				avatar::leftAmongUsHead(89, 8, WHITE);
+
 				common::gotoXY(82, 16);
 				draw::printBigO(66, 15, LIGHT_RED, BRIGHT_WHITE);
 				common::gotoXY(86 - _p2Name.length() / 2, 17);
@@ -187,6 +192,7 @@ void gameplay::processCheckBoard()
 				common::gotoXY(86, 21);
 				common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
 				cout << _b->getCountO();
+				avatar::leftAmongUsHead(89, 21, LIGHT_RED);
 			}
 			common::gotoXY(_x, _y);
 			_showCursor = true;
@@ -412,6 +418,8 @@ void gameplay::printInterface()
 		common::gotoXY(86, 8);
 		common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
 		cout << _b->getCountX();
+		avatar::leftAmongUsHead(89, 8, LIGHT_BLUE);
+
 		common::setConsoleColor(BRIGHT_WHITE, GRAY);
 		common::gotoXY(82, 16);
 		draw::printBigO(66, 15, GRAY, BRIGHT_WHITE);
@@ -426,6 +434,7 @@ void gameplay::printInterface()
 		cout << "Moves:";
 		common::gotoXY(86, 21);
 		cout << _b->getCountO();
+		avatar::leftAmongUsHead(89, 21, WHITE);
 	}
 	else
 	{
@@ -769,8 +778,14 @@ void gameplay::printPlayerWin(int pWhoWin)
 	};
 	int top = 6, num_char = 33, count = 0;
 	int color[] = { RED, YELLOW, GREEN, AQUA, BLUE, PURPLE };
-	common::gotoXY(53 - playerName.size() / 2, 10);
+	common::gotoXY(53 - playerName.size() / 2, 3);
 	cout << playerName;
+	if (playerName == _p1Name) {
+		/*avatar::leftAmongUs(45, 5, LIGHT_RED, RED);*/
+	}
+	else {
+		/*avatar::leftAmongUs(20, 10, LIGHT_BLUE, BLUE);*/
+	}
 	Sleep(500);
 	for (int i = 1;i <= 3;i++)
 	{
