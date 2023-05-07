@@ -256,9 +256,87 @@ void avatar::leftAmongUs(int x, int y, int color, int color_1)
 	}
 }
 
-void avatar::BotHead(int x, int y)
+void avatar::BotHead(int left, int top, int color, int color_1)
 {
+	// Tô màu
+	common::setColor(color);
+	for (int i = 0; i < 5; i++) {
+		common::gotoXY(left + i + 12, top);
+		putchar(219);
+	}
+	for (int i = 0; i < 14; i++) {
+		common::gotoXY(left + i + 8, top + 1);
+		putchar(219);
+	}
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 15; j++) {
+			common::gotoXY(left + 7 + j, top + 2 + i);
+			putchar(219);
+		}
+	}
 
+	//Vẽ viền
+	common::setConsoleColor(BRIGHT_WHITE, BLACK);
+	for (int i = 0; i < 5; i++) {
+		common::gotoXY(left + i + 12, top - 1);
+		putchar(220);
+	}
+	common::gotoXY(left + 11, top);
+	putchar(219);
+	for (int i = 0; i < 3; i++) {
+		common::gotoXY(left + i + 8, top);
+		putchar(220);
+	}
+	common::gotoXY(left + 7, top + 1);
+	putchar(219);
+	common::gotoXY(left + 6, top + 2);
+	putchar(219);
+	for (int i = 0; i < 2; i++) {
+		common::gotoXY(left + 22, top + 4 - i);
+		putchar(219);
+		common::gotoXY(left + 6, top + 4 - i);
+		putchar(219);
+	}
+	common::gotoXY(left + 22, top + 2);
+	putchar(219);
+	common::gotoXY(left + 21, top + 1);
+	putchar(219);
+	for (int i = 0; i < 4; i++) {
+		common::gotoXY(left + 17 + i, top);
+		putchar(220);
+	}
+	common::gotoXY(left + 17, top);
+	putchar(219);
+
+	//Tô mặt
+	common::setConsoleColor(color, BLACK);
+	for (int i = 0; i < 7; i++) {
+		common::gotoXY(left + 11 + i, top + 1);
+		putchar(220);
+	}
+	for (int i = 0; i < 11; i++) {
+		common::gotoXY(left + 9 + i, top + 2);
+		putchar(219);
+	}
+	for (int i = 0; i < 1; i++) {
+		for (int j = 0; j < 13; j++) {
+			common::gotoXY(left + 8 + j, top + 3 + i);
+			putchar(219);
+		}
+	}
+	for (int i = 0; i < 11; i++) {
+		common::gotoXY(left + 9 + i, top + 4);
+		putchar(223);
+	}
+
+	//Vẽ mặt
+	common::setColor(color_1);
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < 2; j++) {
+			common::gotoXY(left + 11 + i * 5 + j, top + 3);
+			putchar(219);
+		}
+	}
 }
 
 void avatar::Bot(int left, int top) 
