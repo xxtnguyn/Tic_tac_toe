@@ -36,4 +36,9 @@ public:
 	static void loadingBar();									//Màn hình chờ
 	static void Cat(int, int, int);								// Vẽ mèo
 	static void printTitleChoose(int, int);						// Vẽ dòng chữ "CHOOSE YOUR AVATAR"
+	static void smallLostAmongUs(int, int, int);				// Vẽ among us khóc
+	static void Aura(int, int);									// Vẽ hào quang
+	static void biggerAura(int, int);							// Vẽ hào quang lớn
+	static void titleEffect(int, int);							// Tiêu đề
+	static void winnerSignature(int, int);						// Vẽ dòng chữ "WINNER"
 };
