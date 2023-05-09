@@ -342,7 +342,7 @@ void avatar::BotHead(int left, int top, int color, int color_1)
 void avatar::Bot(int left, int top) 
 {
 	int color1 = BRIGHT_WHITE, color2 = BLACK, color3 = LIGHT_BLUE;
-
+	
 	// Tô màu
 	common::setColor(color1);
 	for (int i = 0; i < 2; i++) {
@@ -385,7 +385,7 @@ void avatar::Bot(int left, int top)
 	}
 
 	//Vẽ viền
-	common::setColor(color2);
+	common::setConsoleColor(WHITE, color2);
 	for (int i = 0; i < 5; i++) {
 		common::gotoXY(left + i + 12, top - 1);
 		putchar(220);
