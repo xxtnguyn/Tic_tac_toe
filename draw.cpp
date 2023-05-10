@@ -1106,7 +1106,7 @@ void draw::winnerSignature(int x, int y)
 	}
 }
 
-void draw::musicIconOn(int x, int y)
+void draw::musicIconOff(int x, int y)
 {
 	draw::printColoredRectangle(x, y, 7, 3, GRAY);
 	common::setConsoleColor(BRIGHT_WHITE, WHITE);
@@ -1130,7 +1130,7 @@ void draw::musicIconOn(int x, int y)
 	common::gotoXY(x, y + 1); putchar(254);
 }
 
-void draw::musicIconOff(int x, int y)
+void draw::musicIconOn(int x, int y)
 {
 	draw::printColoredRectangle(x, y, 7, 3, RED);
 	common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
