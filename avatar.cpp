@@ -1,7 +1,7 @@
 #include "avatar.h"
 #include "common.h"
 
-void avatar::rightAmongUs(int x, int y, int color, int color_1)
+void avatar::rightAmongUs(int x, int y, int color, int color_1, int color_2)
 {
 	// Tô màu
 	common::setColor(color);
@@ -72,21 +72,23 @@ void avatar::rightAmongUs(int x, int y, int color, int color_1)
 	common::gotoXY(x + 16, y + 4); putchar(223);
 
 	// Vẽ viền
-	common::setConsoleColor(WHITE, BLACK);
-	for (int i = 0; i < 3; i++) {
-		common::gotoXY(x, y + 4 + i); putchar(219);
-	}
+	common::setConsoleColor(color_2, BLACK);
 	for (int i = 0; i < 3; i++) {
 		common::gotoXY(x + 1 + i, y + 3); putchar(220);
 		common::gotoXY(x + 1 + i, y + 7); putchar(223);
+	}
+	for (int i = 0; i < 9; i++) {
+		common::gotoXY(x + 5 + i, y); putchar(220);
+	}
+
+	common::setConsoleColor(WHITE, BLACK);
+	for (int i = 0; i < 3; i++) {
+		common::gotoXY(x, y + 4 + i); putchar(219);
 	}
 	for (int i = 0; i < 7; i++) {
 		common::gotoXY(x + 3, y + 2 + i); putchar(219);
 	}
 	common::gotoXY(x + 4, y + 1); putchar(219);
-	for (int i = 0; i < 9; i++) {
-		common::gotoXY(x + 5 + i, y); putchar(220);
-	}
 	common::gotoXY(x + 14, y + 1); putchar(219);
 	for (int i = 0; i < 3; i++) {
 		common::gotoXY(x + 4 + i, y + 9); putchar(223);
@@ -152,7 +154,7 @@ void avatar::leftAmongUsHead(int x, int y, int color)
 	common::gotoXY(x + 3, y + 4); putchar(219);
 }
 
-void avatar::leftAmongUs(int x, int y, int color, int color_1)
+void avatar::leftAmongUs(int x, int y, int color, int color_1, int color_2, int color_3)
 {
 	// Tô màu
 	common::setColor(color);
@@ -196,7 +198,7 @@ void avatar::leftAmongUs(int x, int y, int color, int color_1)
 	}
 
 	// Tô bóng
-	common::setColor(7);
+	common::setColor(color_3);
 	common::gotoXY(x + 7, y + 9); putchar(219);
 	common::gotoXY(x + 15, y + 9); putchar(219);
 
@@ -221,13 +223,21 @@ void avatar::leftAmongUs(int x, int y, int color, int color_1)
 	common::setColor(0);
 	common::gotoXY(x + 11, y + 2); putchar(219);
 	common::gotoXY(x + 11, y + 3); putchar(219);
-	common::setConsoleColor(BRIGHT_WHITE, BLACK);
+	common::setConsoleColor(color_2, BLACK);
 	common::gotoXY(x + 2, y + 1); putchar(220);
 	common::gotoXY(x + 3, y + 1); putchar(220);
 	common::gotoXY(x + 2, y + 4); putchar(223);
 
 	// Vẽ viền
-	common::setConsoleColor(WHITE, BLACK);
+	common::setConsoleColor(color_3, BLACK);
+	for (int i = 0; i < 3; i++) {
+		common::gotoXY(x + 4 + i, y + 9); putchar(223);
+	}
+	for (int i = 0; i < 3; i++) {
+		common::gotoXY(x + 12 + i, y + 9); putchar(223);
+	}
+
+	common::setConsoleColor(color_2, BLACK);
 	for (int i = 0; i < 3; i++) {
 		common::gotoXY(x + 18, y + 4 + i); putchar(219);
 	}
@@ -243,14 +253,8 @@ void avatar::leftAmongUs(int x, int y, int color, int color_1)
 		common::gotoXY(x + 5 + i, y); putchar(220);
 	}
 	common::gotoXY(x + 14, y + 1); putchar(219);
-	for (int i = 0; i < 3; i++) {
-		common::gotoXY(x + 4 + i, y + 9); putchar(223);
-	}
 	common::gotoXY(x + 7, y + 8); putchar(219);
 	common::gotoXY(x + 11, y + 8); putchar(219);
-	for (int i = 0; i < 3; i++) {
-		common::gotoXY(x + 12 + i, y + 9); putchar(223);
-	}
 	for (int i = 0; i < 7; i++) {
 		common::gotoXY(x + 15, y + 8 - i); putchar(219);
 	}
@@ -342,7 +346,29 @@ void avatar::BotHead(int left, int top, int color, int color_1)
 void avatar::Bot(int left, int top) 
 {
 	int color1 = BRIGHT_WHITE, color2 = BLACK, color3 = LIGHT_BLUE;
-	
+	//Vẽ mình
+	/*unsigned char avatarbot[] = {
+		 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,219,219,219,219,219,219, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
+		 32, 32, 32, 32, 32, 32, 32,219,219,219,219,219,219,219,219,219,219,219,219,219,219, 32, 32, 32, 32, 32, 32, 32,
+		 32, 32, 32, 32, 32, 32,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219, 32, 32, 32, 32, 32, 32,
+		 32, 32,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219, 32,
+		 32, 32,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219, 32,
+		 32, 32, 32, 32, 32, 32,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219, 32, 32, 32, 32, 32,
+		 32, 32, 32, 32, 32, 32, 32,219,219,219,219,219,219,219,219,219,219,219,219,219,219,219, 32, 32, 32, 32, 32, 32,
+		 32, 32, 32, 32, 32, 32, 32, 32, 32,219,219,219,219,219,219,219,219,219,219,219, 32, 32, 32, 32, 32, 32, 32, 32,
+		 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,219,219,219,219,219, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
+
+	};
+	int num_char = 28, num_lines = 9;
+	for (int i = 0; i < num_lines; i++) {
+		common::gotoXY(left, top + i);
+		common::setConsoleColor(BRIGHT_WHITE, color1);
+		for (int j = 0; j < num_char; j++)
+		{
+			putchar(avatarbot[i * num_char + j]);
+		}
+	}*/
+
 	// Tô màu
 	common::setColor(color1);
 	for (int i = 0; i < 2; i++) {
