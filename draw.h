@@ -41,4 +41,6 @@ public:
 	static void biggerAura(int, int);							// Vẽ hào quang lớn
 	static void titleEffect(int, int);							// Tiêu đề
 	static void winnerSignature(int, int);						// Vẽ dòng chữ "WINNER"
+	static void musicIconOn(int, int);							// icon bật nhạc
+	static void musicIconOff(int, int);							// icon tắt nhạc
 };
