@@ -1105,3 +1105,51 @@ void draw::winnerSignature(int x, int y)
 		}
 	}
 }
+
+void draw::musicIconOn(int x, int y)
+{
+	draw::printColoredRectangle(x, y, 7, 3, GRAY);
+	common::setConsoleColor(BRIGHT_WHITE, WHITE);
+	for (int i = 0; i < 7; i++) {
+		common::gotoXY(x - 1 + i, y - 1); putchar(220);
+	}
+	for (int i = 0; i < 2; i++) {
+		common::gotoXY(x - 1 + i, y + 2); putchar(223);
+	}
+	common::setConsoleColor(GRAY, WHITE);
+	for (int i = 0; i < 5; i++) {
+		common::gotoXY(x + 1 + i, y + 2); putchar(223);
+	}
+	draw::printColoredRectangle(x - 1, y, 7, 2, WHITE);
+	common::setConsoleColor(WHITE, BLACK);
+	common::gotoXY(x + 2, y); putchar(219);
+	common::gotoXY(x + 3, y); putchar(223);
+	common::gotoXY(x + 4, y); putchar(254);
+	common::gotoXY(x + 2, y + 1); putchar(219);
+	common::gotoXY(x + 1, y + 1); putchar(219);
+	common::gotoXY(x, y + 1); putchar(254);
+}
+
+void draw::musicIconOff(int x, int y)
+{
+	draw::printColoredRectangle(x, y, 7, 3, RED);
+	common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+	for (int i = 0; i < 7; i++) {
+		common::gotoXY(x - 1 + i, y - 1); putchar(220);
+	}
+	for (int i = 0; i < 2; i++) {
+		common::gotoXY(x - 1 + i, y + 2); putchar(223);
+	}
+	common::setConsoleColor(RED, LIGHT_RED);
+	for (int i = 0; i < 5; i++) {
+		common::gotoXY(x + 1 + i, y + 2); putchar(223);
+	}
+	draw::printColoredRectangle(x - 1, y, 7, 2, LIGHT_RED);
+	common::setConsoleColor(LIGHT_RED, BRIGHT_WHITE);
+	common::gotoXY(x + 2, y); putchar(219);
+	common::gotoXY(x + 3, y); putchar(223);
+	common::gotoXY(x + 4, y); putchar(254);
+	common::gotoXY(x + 2, y + 1); putchar(219);
+	common::gotoXY(x + 1, y + 1); putchar(219);
+	common::gotoXY(x, y + 1); putchar(254);
+}
