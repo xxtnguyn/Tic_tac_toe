@@ -1145,7 +1145,7 @@ void draw::musicIconOff(int x, int y)
 		common::gotoXY(x + 1 + i, y + 2); putchar(223);
 	}
 	draw::printColoredRectangle(x - 1, y, 7, 2, LIGHT_RED);
-	common::setConsoleColor(LIGHT_RED, BRIGHT_WHITE);
+	common::setConsoleColor(LIGHT_RED, BLACK);
 	common::gotoXY(x + 2, y); putchar(219);
 	common::gotoXY(x + 3, y); putchar(223);
 	common::gotoXY(x + 4, y); putchar(254);
