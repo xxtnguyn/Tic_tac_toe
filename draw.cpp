@@ -754,7 +754,7 @@ void draw::printScene() {
 		}
 	}
 
-	avatar::rightAmongUs(10, 15, LIGHT_RED, RED);
+	avatar::rightAmongUs(10, 15, LIGHT_RED, RED, BRIGHT_WHITE);
 }
 
 void draw::printLoadBoard(int color)
@@ -1038,48 +1038,53 @@ void draw::Aura(int x, int y)
 
 void draw::biggerAura(int x, int y)
 {
-	common::setColor(LIGHT_RED);
-	for (int i = 0; i < 16; i++) {
-		common::gotoXY(x + 17 + i, y); putchar(219);
-		common::gotoXY(x + 17 + i, y + 22); putchar(219);
-	}
-	for (int i = 0; i < 24; i++) {
-		common::gotoXY(x + 13 + i, y + 1); putchar(219);
-		common::gotoXY(x + 13 + i, y + 21); putchar(219);
-	}
-	for (int i = 0; i < 30; i++) {
-		common::gotoXY(x + 10 + i, y + 2); putchar(219);
-		common::gotoXY(x + 10 + i, y + 20); putchar(219);
-	}
-	for (int i = 0; i < 34; i++) {
-		common::gotoXY(x + 8 + i, y + 3); putchar(219);
-		common::gotoXY(x + 8 + i, y + 19); putchar(219);
-	}
-	for (int i = 0; i < 38; i++) {
-		common::gotoXY(x + 6 + i, y + 4); putchar(219);
-		common::gotoXY(x + 6 + i, y + 18); putchar(219);
-	}
-	for (int i = 0; i < 40; i++) {
-		common::gotoXY(x + 5 + i, y + 5); putchar(219);
-		common::gotoXY(x + 5 + i, y + 17); putchar(219);
-	}
-	for (int i = 0; i < 42; i++) {
-		common::gotoXY(x + 4 + i, y + 6); putchar(219);
-		common::gotoXY(x + 4 + i, y + 16); putchar(219);
-	}
-	for (int i = 0; i < 44; i++) {
-		common::gotoXY(x + 3 + i, y + 7); putchar(219);
-		common::gotoXY(x + 3 + i, y + 15); putchar(219);
-	}
-	for (int i = 0; i < 46; i++) {
-		common::gotoXY(x + 2 + i, y + 8); putchar(219);
-		common::gotoXY(x + 2 + i, y + 14); putchar(219);
-	}
-	for (int i = 0; i < 5; i++) {
-		for (int j = 0; j < 48; j++) {
-			common::gotoXY(x + 1 + j, y + 9 + i); putchar(219);
+	unsigned int color[] = { LIGHT_RED, LIGHT_YELLOW, LIGHT_GREEN, LIGHT_BLUE, LIGHT_RED };
+	for (int count = 0; count < 5; count++) {
+		common::setColor(color[count]);
+		for (int i = 0; i < 16; i++) {
+			common::gotoXY(x + 17 + i, y); putchar(219);
+			common::gotoXY(x + 17 + i, y + 22); putchar(219);
 		}
+		for (int i = 0; i < 24; i++) {
+			common::gotoXY(x + 13 + i, y + 1); putchar(219);
+			common::gotoXY(x + 13 + i, y + 21); putchar(219);
+		}
+		for (int i = 0; i < 30; i++) {
+			common::gotoXY(x + 10 + i, y + 2); putchar(219);
+			common::gotoXY(x + 10 + i, y + 20); putchar(219);
+		}
+		for (int i = 0; i < 34; i++) {
+			common::gotoXY(x + 8 + i, y + 3); putchar(219);
+			common::gotoXY(x + 8 + i, y + 19); putchar(219);
+		}
+		for (int i = 0; i < 38; i++) {
+			common::gotoXY(x + 6 + i, y + 4); putchar(219);
+			common::gotoXY(x + 6 + i, y + 18); putchar(219);
+		}
+		for (int i = 0; i < 40; i++) {
+			common::gotoXY(x + 5 + i, y + 5); putchar(219);
+			common::gotoXY(x + 5 + i, y + 17); putchar(219);
+		}
+		for (int i = 0; i < 42; i++) {
+			common::gotoXY(x + 4 + i, y + 6); putchar(219);
+			common::gotoXY(x + 4 + i, y + 16); putchar(219);
+		}
+		for (int i = 0; i < 44; i++) {
+			common::gotoXY(x + 3 + i, y + 7); putchar(219);
+			common::gotoXY(x + 3 + i, y + 15); putchar(219);
+		}
+		for (int i = 0; i < 46; i++) {
+			common::gotoXY(x + 2 + i, y + 8); putchar(219);
+			common::gotoXY(x + 2 + i, y + 14); putchar(219);
+		}
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 48; j++) {
+				common::gotoXY(x + 1 + j, y + 9 + i); putchar(219);
+			}
+		}
+		Sleep(50);
 	}
+	
 }
 
 void draw::titleEffect(int x, int y)
