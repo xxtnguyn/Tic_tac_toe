@@ -319,7 +319,18 @@ void menu::exitScreen()
 {
 	common::showCursor(false);
 	common::clearConsole();
-	draw::printScene();
+	/*draw::winnerSignature(13, 2);
+	draw::biggerAura(1, 5);
+	draw::Aura(8, 10);
+	avatar::leftAmongUs(17, 15, LIGHT_BLUE, BLUE, LIGHT_YELLOW, WHITE);
+	draw::smallLostAmongUs(45, 24, RED);*/
+	chooseAvatar();
+	/*draw::winnerSignature(3, 5);
+	draw::biggerAura(1, 8);
+	draw::Aura(8, 13);
+	avatar::leftAmongUs(17, 18, LIGHT_RED, RED);
+	draw::smallLostAmongUs(45, 27, RED);*/
+	// draw::printScene();
 	/*avatar::leftAmongUsHead(10, 0, LIGHT_BLUE, BLUE);*/
 	/*avatar::Cat(10, 0);*/
 	//common::setConsoleColor(BRIGHT_WHITE, BLACK);
@@ -328,61 +339,64 @@ void menu::exitScreen()
 	//printRectangle(62, 23, 6, 2);
 	//common::setConsoleColor(BRIGHT_WHITE, RED);
 	//printLogo();
-	draw::printBoard(32, 8, 44, 9, BLACK);
-	common::setConsoleColor(BRIGHT_WHITE, PURPLE);
-	common::gotoXY(44, 11);
-	cout << " DO YOU WANT TO EXIT? ";
-	string str[2] = { "YES", "NO" };
-	int left[] = { 35,41,48,58,64,70 }, word[] = { 32,32,62,60 }, top = 15;
-	bool choice = 0;
-	bool loop = 1;
-	auto print1 = [&]()
-	{
-		int i = 0;
-		while (i < 2)
-		{
-			//common::playSound(2);
-			if (i == 1)
-			{
-				common::setConsoleColor(BLACK, BRIGHT_WHITE);
-				common::gotoXY(left[choice * 3 + 1], top);    cout << " " << str[choice] << " ";
-			}
-			else
-			{
-				common::setConsoleColor(BRIGHT_WHITE, BLACK);
-				common::gotoXY(left[choice * 3 + 1], top);    cout << " " << str[choice] << " ";
-			}
-			common::gotoXY(left[choice * 3], top);  common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);      putchar(word[i * 2]);putchar(word[i * 2]);putchar(word[i * 2]);putchar(word[i * 2]);
-			common::gotoXY(left[choice * 3 + 2], top);  common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);  putchar(word[i * 2 + 1]); putchar(word[i * 2 + 1]); putchar(word[i * 2 + 1]); putchar(word[i * 2 + 1]);
-			if (!i++)
-				choice = !choice;
-		}
-	};
-	print1();
-	while (loop)
-	{
-		int key = common::getConsoleInput();
-		if ((key == 3 && choice == 1) || (key == 4 && choice == 0))
-		{
-			print1();
-		}
-		else if (key == 6)
-		{
-			if (!choice)
-			{
-				common::clearConsole();
-				exit(0);
-			}
-			common::clearConsole();
-			draw::loadingBar();
-			common::clearConsole();
-			return;
-		}
-		else
-		{
-			//common::playSound(4);
-		}
-	}
+	
+	//draw::printBoard(32, 8, 44, 9, BLACK);
+	//common::setConsoleColor(BRIGHT_WHITE, PURPLE);
+	//common::gotoXY(44, 11);
+	//cout << " DO YOU WANT TO EXIT? ";
+	//string str[2] = { "YES", "NO" };
+	//int left[] = { 35,41,48,58,64,70 }, word[] = { 32,32,62,60 }, top = 15;
+	//bool choice = 0;
+	//bool loop = 1;
+	//auto print1 = [&]()
+	//{
+	//	int i = 0;
+	//	while (i < 2)
+	//	{
+	//		//common::playSound(2);
+	//		if (i == 1)
+	//		{
+	//			common::setConsoleColor(BLACK, BRIGHT_WHITE);
+	//			common::gotoXY(left[choice * 3 + 1], top);    cout << " " << str[choice] << " ";
+	//		}
+	//		else
+	//		{
+	//			common::setConsoleColor(BRIGHT_WHITE, BLACK);
+	//			common::gotoXY(left[choice * 3 + 1], top);    cout << " " << str[choice] << " ";
+	//		}
+	//		common::gotoXY(left[choice * 3], top);  common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);      putchar(word[i * 2]);putchar(word[i * 2]);putchar(word[i * 2]);putchar(word[i * 2]);
+	//		common::gotoXY(left[choice * 3 + 2], top);  common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);  putchar(word[i * 2 + 1]); putchar(word[i * 2 + 1]); putchar(word[i * 2 + 1]); putchar(word[i * 2 + 1]);
+	//		if (!i++)
+	//			choice = !choice;
+	//	}
+	//};
+	//print1();
+	//while (loop)
+	//{
+	//	int key = common::getConsoleInput();
+	//	if ((key == 3 && choice == 1) || (key == 4 && choice == 0))
+	//	{
+	//		print1();
+	//	}
+	//	else if (key == 6)
+	//	{
+	//		if (!choice)
+	//		{
+	//			common::clearConsole();
+	//			exit(0);
+	//		}
+	//		common::clearConsole();
+	//		draw::loadingBar();
+	//		common::clearConsole();
+	//		return;
+	//	}
+	//	else
+	//	{
+	//		//common::playSound(4);
+	//	}
+	//}
+	Sleep(200000);
+	exit(0);
 }
 
 void menu::playPvEe()
@@ -635,7 +649,7 @@ void menu::chooseAvatar()
 	common::gotoXY(14, 4); cout << "No.1";
 	draw::printBoard(7, 5, 16, 10, BLACK);
 	draw::printColoredRectangle(8, 6, 15, 9, WHITE);
-	avatar::rightAmongUs(9, 7, LIGHT_RED, RED);
+	avatar::rightAmongUs(9, 7, LIGHT_RED, RED, WHITE);
 	string red = "RED";
 	common::setConsoleColor(BRIGHT_WHITE, RED);
 	for (int i = 0; i < red.size(); i++) {
@@ -647,7 +661,7 @@ void menu::chooseAvatar()
 	common::gotoXY(44, 4); cout << "No.2";
 	draw::printBoard(37, 5, 16, 10, BLACK);
 	draw::printColoredRectangle(38, 6, 15, 9, WHITE);
-	avatar::rightAmongUs(39, 7, LIGHT_BLUE, BLUE);
+	avatar::rightAmongUs(39, 7, LIGHT_BLUE, BLUE, WHITE);
 	string blue = "BLUE";
 	common::setConsoleColor(BRIGHT_WHITE, BLUE);
 	for (int i = 0; i < blue.size(); i++) {
@@ -659,7 +673,7 @@ void menu::chooseAvatar()
 	common::gotoXY(74, 4); cout << "No.3";
 	draw::printBoard(67, 5, 16, 10, BLACK);
 	draw::printColoredRectangle(68, 6, 15, 9, WHITE);
-	avatar::rightAmongUs(69, 7, LIGHT_GREEN, GREEN);
+	avatar::rightAmongUs(69, 7, LIGHT_GREEN, GREEN, WHITE);
 	string green = "GREEN";
 	common::setConsoleColor(BRIGHT_WHITE, GREEN);
 	for (int i = 0; i < green.size(); i++) {
@@ -672,7 +686,7 @@ void menu::chooseAvatar()
 	common::gotoXY(27, 18); cout << "No.4";
 	draw::printBoard(20, 19, 16, 10, BLACK);
 	draw::printColoredRectangle(21, 20, 15, 9, WHITE);
-	avatar::rightAmongUs(22, 21, LIGHT_PURPLE, PURPLE);
+	avatar::rightAmongUs(22, 21, LIGHT_PURPLE, PURPLE, WHITE);
 	string purple = "PURPLE";
 	common::setConsoleColor(BRIGHT_WHITE, PURPLE);
 	for (int i = 0; i < purple.size(); i++) {
@@ -684,7 +698,7 @@ void menu::chooseAvatar()
 	common::gotoXY(57, 18); cout << "No.5";
 	draw::printBoard(50, 19, 16, 10, BLACK);
 	draw::printColoredRectangle(51, 20, 15, 9, WHITE);
-	avatar::rightAmongUs(52, 21, BRIGHT_WHITE, WHITE);
+	avatar::rightAmongUs(52, 21, BRIGHT_WHITE, WHITE, WHITE);
 	string white = "WHITE";
 	common::setConsoleColor(BRIGHT_WHITE, BLACK);
 	for (int i = 0; i < white.size(); i++) {
@@ -696,7 +710,7 @@ void menu::chooseAvatar()
 	common::gotoXY(87, 18); cout << "No.6";
 	draw::printBoard(80, 19, 16, 10, BLACK);
 	draw::printColoredRectangle(81, 20, 15, 9, WHITE);
-	avatar::rightAmongUs(82, 21, LIGHT_YELLOW, LIGHT_YELLOW);
+	avatar::rightAmongUs(82, 21, LIGHT_YELLOW, LIGHT_YELLOW, WHITE);
 	string yellow = "YELLOW";
 	common::setConsoleColor(BRIGHT_WHITE, YELLOW);
 	for (int i = 0; i < yellow.size(); i++) {
