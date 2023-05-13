@@ -1089,7 +1089,24 @@ void draw::biggerAura(int x, int y)
 
 void draw::titleEffect(int x, int y)
 {
+	printBoard(70, 2, 30, 3, BLACK);
+	unsigned char winningMove[] = { 219, 32 , 219, 32 , 219, 32 , 219, 32 , 219, 220, 32 , 219, 32 , 219, 220, 32 , 219, 32 , 219, 32 , 219, 220, 32 , 219, 32 , 219, 223, 223, 32 , 32 , 32 , 219, 223, 219, 32 , 219, 223, 219, 32 , 223, 219, 223, 32 , 219, 32 , 219, 223, 219, 
+									223, 254, 223, 254, 223, 32 , 219, 32 , 219, 32 , 223, 219, 32 , 219, 32 , 223, 219, 32 , 219, 32 , 219, 32 , 223, 219, 32 , 219, 220, 219, 32 , 32 , 32 , 219, 223, 220, 32 , 219, 223, 219, 32 , 32 , 219, 32 , 32 , 219, 32 , 219, 220, 219, };
+	int num_chars = 48;
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < num_chars; j++) {
+			common::gotoXY(x + j, y + i); putchar(winningMove[i * num_chars + j]);
+		}
+	}
 
+	unsigned char moves[] = { 219, 220, 32 , 220, 219, 32 , 219, 223, 219, 32 , 219, 32 , 219, 32 , 219, 223, 223, 32 , 219, 223,
+							  219, 32 , 223, 32 , 219, 32 , 219, 220, 219, 32 , 223, 254, 223, 32 , 219, 219, 220, 32 , 220, 219, };
+	int num_chars_1 = 20;
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < num_chars_1; j++) {
+			common::gotoXY(x + j + 8, y + i + 5); putchar(moves[i * num_chars_1 + j]);
+		}
+	}
 }
 
 void draw::winnerSignature(int x, int y)
@@ -1152,4 +1169,315 @@ void draw::musicIconOn(int x, int y)
 	common::gotoXY(x + 2, y + 1); putchar(219);
 	common::gotoXY(x + 1, y + 1); putchar(219);
 	common::gotoXY(x, y + 1); putchar(254);
+}
+
+void draw::printCaroTutorial(int x, int y, int color, int color_1)
+{
+	common::setConsoleColor(color_1, color);
+	unsigned char caro[] = { 220, 220, 220, 220, 32 , 220, 220, 220, 220, 32 , 220, 220, 220, 220, 32 , 220, 220, 220, 220,
+							 219, 32 , 32 , 32 , 32 , 219, 32 , 32 , 219, 32 , 219, 32 , 32 , 219, 32 , 219, 32 , 32 , 219,
+							 219, 32 , 32 , 32 , 32 , 219, 223, 223, 219, 32 , 219, 254, 254, 32 , 32 , 219, 32 , 32 , 219,
+							 219, 220, 220, 220, 32 , 219, 32 , 32 , 219, 32 , 219, 32 , 32 , 219, 32 , 219, 220, 220, 219 };
+	int num_chars_caro = 19;
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < num_chars_caro; j++) {
+			common::gotoXY(x + j, y + i);
+			putchar(caro[i * num_chars_caro + j]);
+		}
+	}
+
+	unsigned char tutorial[] = { 220, 220, 220, 220, 220, 32 , 220, 32 , 32 , 220, 32 , 220, 220, 220, 220, 220, 32 , 220, 220, 220, 220, 32 , 220, 220, 220, 220, 32 , 220, 32 , 220, 220, 220, 220, 32 , 220, 32 , 32 , 32 ,
+								 32 , 32 , 219, 32 , 32 , 32 , 219, 32 , 32 , 219, 32 , 32 , 32 , 219, 32 , 32 , 32 , 219, 32 , 32 , 219, 32 , 219, 32 , 32 , 219, 32 , 219, 32 , 219, 32 , 32 , 219, 32 , 219, 32 , 32 , 32 ,
+								 32 , 32 , 219, 32 , 32 , 32 , 219, 32 , 32 , 219, 32 , 32 , 32 , 219, 32 , 32 , 32 , 219, 32 , 32 , 219, 32 , 219, 254, 254, 32 , 32 , 219, 32 , 219, 223, 223, 219, 32 , 219, 32 , 32 , 32 ,
+								 32 , 32 , 219, 32 , 32 , 32 , 219, 220, 220, 219, 32 , 32 , 32 , 219, 32 , 32 , 32 , 219, 220, 220, 219, 32 , 219, 32 , 32 , 219, 32 , 219, 32 , 219, 32 , 32 , 219, 32 , 219, 220, 220, 220 };
+	int num_chars_tutorial = 38;
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < num_chars_tutorial; j++) {
+			common::gotoXY(x - 8 + j, y + 5 + i);
+			putchar(tutorial[i * num_chars_tutorial + j]);
+		}
+	}
+}
+
+void draw::printVS(int x, int y)
+{
+	common::setConsoleColor(BRIGHT_WHITE, BLACK);
+	unsigned char VS[] = { 219, 32 , 219,
+						   223, 254, 223,
+						   32 , 219, 223,
+						   254, 220, 219,};
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 3; j++) {
+			common::gotoXY(x + j, y + i); putchar(VS[i * 3 + j]);
+		}
+	}
+}
+
+void draw::boxChatRight(int x, int y, int height, int width)
+{
+	common::setConsoleColor(BRIGHT_WHITE, BLACK);
+	for (int i = 0; i < width + 1; i++) {
+		common::gotoXY(x + i, y); putchar(220);
+		common::gotoXY(x + i, y + height + 3); putchar(223);
+	}
+	for (int i = 0; i < height; i++) {
+		common::gotoXY(x - 2, y + 2 + i); putchar(219);
+		common::gotoXY(x + width + 2, y + 2 + i); putchar(219);
+	}
+	common::gotoXY(x - 1, y + 1); putchar(254);
+	common::gotoXY(x - 1, y + 2 + height); putchar(254);
+	common::gotoXY(x + width + 1, y + 1); putchar(254);
+	common::gotoXY(x + width + 1, y + 2 + height); putchar(254);
+	common::gotoXY(x + width - width / 2, y + 4 + height); putchar(219);
+	common::gotoXY(x + width - width / 2 + 1, y + 4 + height); putchar(219);
+	common::gotoXY(x + width - width / 2 + 2, y + 5 + height); putchar(254);
+}
+
+void draw::boxChatLeft(int x, int y, int height, int width)
+{
+	common::setConsoleColor(BRIGHT_WHITE, BLACK);
+	for (int i = 0; i < width + 1; i++) {
+		common::gotoXY(x + i, y); putchar(220);
+		common::gotoXY(x + i, y + height + 3); putchar(223);
+	}
+	for (int i = 0; i < height; i++) {
+		common::gotoXY(x - 2, y + 2 + i); putchar(219);
+		common::gotoXY(x + width + 2, y + 2 + i); putchar(219);
+	}
+	common::gotoXY(x - 1, y + 1); putchar(254);
+	common::gotoXY(x - 1, y + 2 + height); putchar(254);
+	common::gotoXY(x + width + 1, y + 1); putchar(254);
+	common::gotoXY(x + width + 1, y + 2 + height); putchar(254);
+	common::gotoXY(x + width - width / 2, y + 4 + height); putchar(219);
+	common::gotoXY(x + width - width / 2 - 1, y + 4 + height); putchar(219);
+	common::gotoXY(x + width - width / 2 - 2, y + 5 + height); putchar(254);
+}
+
+void draw::printRule(int x, int y)
+{
+	unsigned char rule[] = { 219, 223, 219, 32 , 219, 32 , 219, 32 , 219, 32 , 32 , 32 , 219, 223, 223,
+							 219, 223, 220, 32 , 219, 220, 219, 32 , 219, 220, 220, 32 , 219, 219, 220, };
+	int num_chars = 15;
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < num_chars; j++) {
+			common::gotoXY(x + j, y + i); putchar(rule[i * num_chars + j]);
+		}
+	}
+}
+
+void draw::PacmanCloseMouth(int x, int y)
+{
+	common::setColor(YELLOW);
+	for (int i = 0; i < 10; i++) {
+		common::gotoXY(x + 4 + i, y); putchar(219);
+		common::gotoXY(x + 4 + i, y + 7); putchar(219);
+	}
+	for (int i = 0; i < 14; i++) {
+		common::gotoXY(x + 2 + i, y + 1); putchar(219);
+		common::gotoXY(x + 2 + i, y + 6); putchar(219);
+	}
+	for (int i = 0; i < 16; i++) {
+		common::gotoXY(x + 1 + i, y + 2); putchar(219);
+		common::gotoXY(x + 1 + i, y + 5); putchar(219);
+	}
+	for (int i = 0; i < 18; i++) {
+		common::gotoXY(x + i, y + 3); putchar(219);
+		common::gotoXY(x + i, y + 4); putchar(219);
+	}
+	common::setConsoleColor(YELLOW, BLACK);
+	for (int i = 0; i < 7; i++) {
+		common::gotoXY(x + 11 + i, y + 4); putchar(223);
+	}
+	common::setColor(0);
+	common::gotoXY(x + 9, y + 2); putchar(219);
+}
+
+void draw::PacmanOpenMouth(int x, int y)
+{
+	PacmanCloseMouth(x, y);
+	common::setConsoleColor(YELLOW, BLACK);
+	for (int i = 0; i < 2; i++) {
+		common::gotoXY(x + 11 + i, y + 3); putchar(220);
+		common::gotoXY(x + 11 + i, y + 4); putchar(223);
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		common::gotoXY(x + 13 + i, y + 3); putchar(219);
+		common::gotoXY(x + 13 + i, y + 4); putchar(219);
+	}
+	common::gotoXY(x + 14, y + 2); putchar(220);
+	common::gotoXY(x + 15, y + 2); putchar(219);
+	common::gotoXY(x + 16, y + 2); putchar(219);
+	common::gotoXY(x + 16, y + 5); putchar(219);
+	common::gotoXY(x + 15, y + 5); putchar(219);
+	common::gotoXY(x + 14, y + 5); putchar(223);
+}
+
+void draw::PacmanOpenHalfMouth(int x, int y)
+{
+	PacmanCloseMouth(x, y);
+	common::setConsoleColor(YELLOW, BLACK);
+	for (int i = 0; i < 4; i++) {
+		common::gotoXY(x + 11 + i, y + 3); putchar(220);
+		common::gotoXY(x + 11 + i, y + 4); putchar(223);
+	}
+	for (int i = 0; i < 4; i++) {
+		common::gotoXY(x + 15 + i, y + 3); putchar(219);
+		common::gotoXY(x + 15 + i, y + 4); putchar(219);
+	}
+}
+
+void draw::Coin(int x, int y)
+{
+	// Vẽ viền coin
+	common::setConsoleColor(BLACK, YELLOW);
+	common::gotoXY(x, y); putchar(219);
+	common::gotoXY(x + 3, y); putchar(219);
+	for (int i = 0; i < 4; i++) {
+		common::gotoXY(x + i, y - 1); putchar(220);
+		common::gotoXY(x + i, y + 1); putchar(223);
+	}
+
+	// Tô màu
+	common::setColor(LIGHT_YELLOW);
+	common::gotoXY(x + 1, y); putchar(219);
+	common::gotoXY(x + 2, y); putchar(219);
+}
+
+void draw::thankPlaying(int x, int y)
+{
+	system("color 07");
+
+	// Hiển thị Pacman ăn coin
+	common::setConsoleColor(BLACK, LIGHT_PURPLE);
+	for (int i = 0; i < 105; i++) {
+		common::gotoXY(i, 9); putchar(205);
+		common::gotoXY(i, 10); putchar(205);
+		common::gotoXY(i, 21); putchar(205);
+		common::gotoXY(i, 22); putchar(205);
+	}
+	Coin(34, 16);
+	Coin(54, 16);
+	Coin(74, 16);
+
+	for (int i = 0; i < 85; i+=5) {
+		PacmanCloseMouth(i, 12);
+		Sleep(30);
+		printColoredRectangle(0, 12, 18 + i, 8, BLACK);
+		PacmanOpenHalfMouth(i + 2, 12);
+		Sleep(30);
+		printColoredRectangle(0, 12, 18 + i + 2, 8, BLACK);
+		PacmanOpenMouth(i + 4, 12);
+		Sleep(30);
+		printColoredRectangle(0, 12, 18 + i + 4, 8, BLACK);
+	}
+	PacmanCloseMouth(84, 12);
+
+	Sleep(1000);
+	common::clearConsole();
+
+	// Hiển thị màn hình Thanks for playing
+	system("color 07");
+	common::setConsoleColor(BLACK, BRIGHT_WHITE);
+	unsigned char thank[] = { 223, 223, 219, 223, 223, 32 , 219, 32 , 32 , 219, 32 , 219, 223, 223, 219, 32 , 219, 220, 32 , 32 , 219, 32 , 219, 32 , 32 , 219, 32 , 219, 223, 223, 223, 32 , 32 , 32 , 219, 223, 223, 223, 32 , 219, 223, 223, 219, 32 , 219, 223, 223, 219, 32 , 32 , 32 , 
+							  32 , 32 , 219, 32 , 32 , 32 , 219, 254, 254, 219, 32 , 219, 223, 223, 219, 32 , 219, 32 , 219, 32 , 219, 32 , 219, 254, 219, 32 , 32 , 223, 254, 254, 220, 32 , 32 , 32 , 219, 223, 223, 223, 32 , 219, 32 , 32 , 219, 32 , 219, 254, 254, 32 , 32 , 32 , 32 , 
+							  32 , 32 , 219, 32 , 32 , 32 , 219, 32 , 32 , 219, 32 , 219, 32 , 32 , 219, 32 , 219, 32 , 32 , 223, 219, 32 , 219, 32 , 32 , 219, 32 , 220, 220, 220, 219, 32 , 32 , 32 , 219, 32 , 32 , 32 , 32 , 219, 220, 220, 219, 32 , 219, 32 , 32 , 219, 32 , 32 , 32 , };
+	unsigned char playing[] = { 219, 223, 223, 219, 32 , 219, 32 , 32 , 32 , 32 , 219, 223, 223, 219, 32 , 219, 32 , 219, 32 , 219, 32 , 219, 220, 32 , 32 , 219, 32 , 219, 223, 223, 223,
+								219, 223, 223, 223, 32 , 219, 32 , 32 , 32 , 32 , 219, 223, 223, 219, 32 , 254, 220, 254, 32 , 219, 32 , 219, 32 , 219, 32 , 219, 32 , 219, 32 , 220, 220,
+								219, 32 , 32 , 32 , 32 , 219, 220, 220, 220, 32 , 219, 32 , 32 , 219, 32 , 32 , 219, 32 , 32 , 219, 32 , 219, 32 , 32 , 223, 219, 32 , 219, 220, 220, 219, };
+	int num_chars = 51, num_chars_1 = 31;
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < num_chars; j++) {
+			common::gotoXY(x + j + 20, y + i + 2); putchar(thank[i * num_chars + j]);
+		}
+	}
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < num_chars_1; j++) {
+			common::gotoXY(x + j + 29, y + i + 6); putchar(playing[i * num_chars_1 + j]);
+		}
+	}
+	cout << "\n\n\n\n\n\n\n";
+	Sleep(5000);
+}
+
+void draw::drawBoard()
+{
+	// Hiển thị bàn cờ
+	int _size = 14, _left = 3, _top = 1;
+	//Ve duong duoi
+	for (int i = 1; i < _size * 4; i++)
+	{
+		common::gotoXY(_size * 4 + _left - i + 1, _size * 2 + _top);
+		if (i % 4 == 0)
+			putchar(202);
+		else
+			putchar(205);
+	}
+	common::gotoXY(_left + 1, _size * 2 + _top);
+	putchar(200);
+
+	//Ve duong ben trai
+	for (int i = 1; i < _size * 2; i++)
+	{
+		common::gotoXY(_left + 1, _size * 2 + _top - i);
+		if (i % 2 != 0)
+			putchar(186);
+		else
+			putchar(204);
+	}
+	common::setConsoleColor(BRIGHT_WHITE, BLACK);
+	//Ve duong tren
+	common::gotoXY(_left + 1, _top);
+	putchar(201);
+	for (int i = 1; i < _size * 4; i++)
+	{
+		if (i % 4 == 0)
+			putchar(203);
+		else
+			putchar(205);
+	}
+	putchar(187);
+
+
+	//Ve duong ben phai
+	for (int i = 1; i < _size * 2; i++)
+	{
+		common::gotoXY(_size * 4 + _left + 1, i + _top);
+		if (i % 2 != 0)
+			putchar(186);
+		else
+			putchar(185);
+	}
+	common::gotoXY(_size * 4 + _left + 1, _size * 2 + _top);
+	putchar(188);
+
+
+	//Ve cac duong doc
+	for (int j = 1; j < _size * 4; j++)
+	{
+		for (int i = 1; i < _size * 2; i++)
+		{
+			if (j % 4 != 0)
+			{
+				if (i % 2 == 0)
+				{
+					common::gotoXY(j + _left + 1, i + _top);
+					putchar(196);
+				}
+			}
+			else
+			{
+				if (i % 2 == 0)
+				{
+					common::gotoXY(j + _left + 1, i + _top);
+					putchar(197);
+				}
+				else
+				{
+					common::gotoXY(j + _left + 1, i + _top);
+					putchar(179);
+				}
+			}
+		}
+	}
 }
