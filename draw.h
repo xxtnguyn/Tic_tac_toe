@@ -43,4 +43,15 @@ public:
 	static void winnerSignature(int, int);						// Vẽ dòng chữ "WINNER"
 	static void musicIconOn(int, int);							// icon bật nhạc
 	static void musicIconOff(int, int);							// icon tắt nhạc
+	static void printCaroTutorial(int, int, int, int);			// Vẽ dòng chữ "CARO TUTORIAL"						
+	static void printVS(int, int);								// In "VS
+	static void boxChatRight(int, int, int, int);				// In hộp chat
+	static void boxChatLeft(int, int, int, int);
+	static void drawBoard();
+	static void printRule(int x, int y);						// In dòng chữ "RULE"
+	static void Coin(int, int);									// Vẽ đồng xu
+	static void PacmanCloseMouth(int, int);						// Vẽ pacman
+	static void PacmanOpenHalfMouth(int, int);
+	static void PacmanOpenMouth(int, int);
+	static void thankPlaying(int, int);							// Kết thúc game
 };
