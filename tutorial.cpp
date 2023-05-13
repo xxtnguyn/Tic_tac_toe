@@ -89,7 +89,7 @@ void tutorial::tutorialStepOne()
 	}
 
 	common::setConsoleColor(BRIGHT_WHITE, BLACK);
-	common::gotoXY(23, 9); cout << "After that, you can choose one of three modes below to play.";
+	common::gotoXY(15, 9); cout << "After entering NEW GAME, you can choose one of three modes below to play.";
 
 	// hiển thị mode game PVP
 	common::gotoXY(7, 12); cout << "This one is for playing with friends";
