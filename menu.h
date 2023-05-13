@@ -32,4 +32,5 @@ public:
 	static void changeOption(bool, bool);					//Thay đổi lựa chọn
 	//static void onlyOption();								//Lựa chọn duy nhất
 	static void changeFile(int, vector<string>&, int&);		//Thay đổi file
+	static void Tutorial();									//Hướng dẫn chơi game
 };
