@@ -728,6 +728,100 @@ void menu::chooseAvatar()
 	common::gotoXY(6, 24); cout << "BACK";
 }
 
+void menu::Tutorial()
+{
+	tutorial::Intro();
+	int step = 0;
+	int input = 0;
+	while (1) {
+		input = getch();
+		if (input == 100 || input == 68) {
+			step++;
+			draw::printBoard(82, 28, 10, 2, GREEN);
+			common::setConsoleColor(GREEN, BRIGHT_WHITE);
+			common::gotoXY(83, 29); cout << " NEXT (D)";
+			Sleep(500);
+			common::setConsoleColor(BRIGHT_WHITE, BLACK);
+			common::clearConsole();
+			if (step == 7) {
+				common::clearConsole();
+				break;
+			}
+			else {
+				switch (step)
+				{
+				case 1:
+					tutorial::stepOne();
+					break;
+				case 2:
+					tutorial::stepTwo();
+					break;
+				case 3:
+					tutorial::stepThree();
+					break;
+				case 4:
+					tutorial::stepFour();
+					break;
+				case 5:
+					tutorial::stepFive();
+					break;
+				case 6:
+					tutorial::lastStep();
+					break;
+				}
+			}
+		}
+		else if (input == 97 || input == 65) {
+			step--;
+			if (step == -1) {
+				tutorial::Intro();
+				step = 0;
+			}
+			else {
+				draw::printBoard(70, 28, 10, 2, GREEN);
+				common::setConsoleColor(GREEN, BRIGHT_WHITE);
+				common::gotoXY(71, 29); cout << " BACK (A)";
+				Sleep(500);
+				common::setConsoleColor(BRIGHT_WHITE, BLACK);
+				common::clearConsole();
+				switch (step)
+				{
+				case 0 :
+					tutorial::Intro();
+					break;
+				case 1:
+					tutorial::stepOne();
+					break;
+				case 2:
+					tutorial::stepTwo();
+					break;
+				case 3:
+					tutorial::stepThree();
+					break;
+				case 4:
+					tutorial::stepFour();
+					break;
+				case 5:
+					tutorial::stepFive();
+					break;
+				case 6:
+					tutorial::lastStep();
+					break;
+				}
+			}
+		}
+		else if (input == 115 || input == 83) {
+			draw::printBoard(94, 28, 10, 2, GREEN);
+			common::setConsoleColor(GREEN, BRIGHT_WHITE);
+			common::gotoXY(97, 29); cout << " SKIP (D)";
+			Sleep(500);
+			common::clearConsole();
+			break;
+		}
+		else continue;
+	}
+}
+
 //void menu::changeFile(int key, vector<string>& fileName, int& file)
 //{
 //	if (key == 3 || key == 4)
