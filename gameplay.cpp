@@ -32,48 +32,96 @@ void gameplay::startGame()
 		_y = _b->getYAt(5, 6);
 		common::gotoXY(_x, _y);
 		moveDown();
+		int input = 0, _P1hour = 0, _P1minute = 1, _P1second = 30, _P1ms = 0, _P2hour = 0, _P2minute = 1, _P2second = 30, _P2ms = 0, _Bothour = 0, _Botminute = 1, _Botsecond = 20, _Botms = 0;
 		while (!_finish && !pause)
 		{
 			if (_mode == 0 || (_turn == 1 && _countRounds % 2 == 0) || (_turn == 0 && _countRounds % 2 == 1))
 			{
-				switch (common::getConsoleInput())
-				{
-				case 0:
-					//common::playSound(4);
-					break;
-				case 1:
-					pause = 1;
-					_loadSymbols = 1;
-					exitGameScreen();
-					_showCursor = false;
-					break;
-				case 2:
-					moveUp();
-					break;
-				case 3:
-					moveLeft();
-					break;
-				case 4:
-					moveRight();
-					break;
-				case 5:
-					moveDown();
-					break;
-				case 6:
-					processCheckBoard();
-					break;
-				case 7:
-					pause = 1;
-					_loadSymbols = 1;
-					saveBoxScreen();
-					_showCursor = false;
-					break;
+				if (_turn == 1) {
+					if (_mode == 0) time::printData(80, 16, _P2hour, _P2minute, _P2second, GRAY);
+					else time::printData(80, 16, _Bothour, _Botminute, _Botsecond, GRAY);
+					// time::stayTime(80, 9, _P1hour, _P1minute, _P1second, _P1ms, LIGHT_BLUE);
+					time::counter(80, 9, _P1hour, _P1minute, _P1second, _P1ms, input, LIGHT_BLUE);
+ 					input = common::getConsoleInput();
+					common::gotoXY(80, 10); cout << input;
+					switch (input)
+					{
+					case 0:
+						//common::playSound(4);
+						break;
+					case 1:
+						pause = 1;
+						_loadSymbols = 1;
+						exitGameScreen();
+						_showCursor = false;
+						break;
+					case 2:
+						moveUp();
+						break;
+					case 3:
+						moveLeft();
+						break;
+					case 4:
+						moveRight();
+						break;
+					case 5:
+						moveDown();
+						break;
+					case 6:
+						processCheckBoard();
+						break;
+					case 7:
+						pause = 1;
+						_loadSymbols = 1;
+						saveBoxScreen();
+						_showCursor = false;
+						break;
+					}
+				}
+				else if (_turn == 0 && _mode == 0) {
+					time::printData(80, 9, _P1hour, _P1minute, _P1second, GRAY);
+					// time::stayTime(80, 16, _P2hour, _P2minute, _P2second, _P1ms, LIGHT_RED);
+					time::counter(80, 16, _P2hour, _P2minute, _P2second, _P2ms, input, LIGHT_RED);
+					input = common::getConsoleInput();
+					switch (input)
+					{
+					case 0:
+						//common::playSound(4);
+						break;
+					case 1:
+						pause = 1;
+						_loadSymbols = 1;
+						exitGameScreen();
+						_showCursor = false;
+						break;
+					case 2:
+						moveUp();
+						break;
+					case 3:
+						moveLeft();
+						break;
+					case 4:
+						moveRight();
+						break;
+					case 5:
+						moveDown();
+						break;
+					case 6:
+						processCheckBoard();
+						break;
+					case 7:
+						pause = 1;
+						_loadSymbols = 1;
+						saveBoxScreen();
+						_showCursor = false;
+						break;
+					}
 				}
 			}
 			else
 			{
 				gpoint p = (_mode == 1) ? _b->PVC_easy() : _b->PVC_hard();
-				moveToDirection(p.getX(), p.getY());
+				moveToDirection(p.getX(), p.getY(), _Bothour, _Botminute, _Botsecond, _Botms);
 				processCheckBoard();
 			}
 		}
@@ -473,38 +521,53 @@ void gameplay::printInterface()
 		cout << _b->getCountO();
 	}
 	common::setConsoleColor(BRIGHT_WHITE, BLUE);
-	draw::printRectangle(69, 27, 14, 2);
+	draw::printRectangle(75, 27, 12, 2);
 	common::setConsoleColor(BRIGHT_WHITE, RED);
-	draw::printRectangle(88, 27, 14, 2);
+	draw::printRectangle(90, 27, 12, 2);
 	common::setConsoleColor(BRIGHT_WHITE, BLACK);
-	common::gotoXY(73, 28);
+	common::gotoXY(78, 28);
 	cout << "SAVE (P)";
-	common::gotoXY(91, 28);
+	common::gotoXY(92, 28);
 	cout << "BACK (ESC)";
+	draw::musicIconOn(67, 27);
 	if(!_turn) common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
 	else common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
 }
 
-void gameplay::moveToDirection(int x, int y)
+void gameplay::moveToDirection(int x, int y, int& hour, int& minute, int& second, int& ms)
 {
+	int countTime = 0;
+
 	while (_x < x)
 	{
-		Sleep(300);
+		Sleep(250);
+		countTime = 1;
+		time::timerForBot(80, 16, hour, minute, second, ms, LIGHT_RED, countTime);
+		countTime = 0;
 		moveRight();
 	}
 	while (_x > x)
 	{
-		Sleep(300);
+		Sleep(250);
+		countTime = 1;
+		time::timerForBot(80, 16, hour, minute, second, ms, LIGHT_RED, countTime);
+		countTime = 0;
 		moveLeft();
 	}
 	while (_y < y)
 	{
-		Sleep(300);
+		Sleep(250);
+		countTime = 1;
+		time::timerForBot(80, 16, hour, minute, second, ms, LIGHT_RED, countTime);
+		countTime = 0;
 		moveDown();
 	}
 	while (_y > y)
 	{
-		Sleep(300);
+		Sleep(250);
+		countTime = 1;
+		time::timerForBot(80, 16, hour, minute, second, ms, LIGHT_RED, countTime);
+		countTime = 0;
 		moveUp();
 	}
 }
@@ -1032,7 +1095,7 @@ void gameplay::exitGameScreen() {
 			else 
 			{
 				common::clearConsole();
-				draw::loadingBar();
+				// draw::loadingBar();
 				common::clearConsole();
 				return;
 			}
