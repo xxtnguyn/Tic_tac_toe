@@ -98,6 +98,8 @@ int common::getConsoleInput()
 		return 6;
 	else if (c == 80 || c == 112) //P, p
 		return 7;
+	else if (c == 111 || c == 79) // O, o
+		return 8;
 	else
 		return 0;                 //nút khác
 
