@@ -3,7 +3,7 @@
 #include "common.h"
 #include "gameplay.h"
 #include "avatar.h"
-
+#pragma warning (disable: 0266)
 
 #include <unordered_map>
 #include <filesystem>
@@ -32,15 +32,15 @@ public:
 	static void printTHKN();									//
 	static void printInstructor();								//In tên giảng viên
 	static void printLoadText();								//In logo màn hình load game
-	static void printScene();									//In cảnh
 	static void loadingBar();									//Màn hình chờ
-	static void Cat(int, int, int);								// Vẽ mèo
+	static void Cat(int, int, int, int);								// Vẽ mèo
 	static void printTitleChoose(int, int);						// Vẽ dòng chữ "CHOOSE YOUR AVATAR"
 	static void smallLostAmongUs(int, int, int);				// Vẽ among us khóc
 	static void Aura(int, int);									// Vẽ hào quang
-	static void biggerAura(int, int);							// Vẽ hào quang lớn
-	static void titleEffect(int, int);							// Tiêu đề
-	static void winnerSignature(int, int);						// Vẽ dòng chữ "WINNER"
+	static void biggerAura(int, int, int);							// Vẽ hào quang lớn
+	static void titleEffect(int, int, int, int, int, int);							// Tiêu đề
+	static void winnerSignature(int, int, int);						// Vẽ dòng chữ "WINNER"
+	static void loserSignature(int, int, int);					// Vẽ dòng chữ "LOSER"
 	static void musicIconOn(int, int);							// icon bật nhạc
 	static void musicIconOff(int, int);							// icon tắt nhạc
 	static void printCaroTutorial(int, int, int, int);			// Vẽ dòng chữ "CARO TUTORIAL"						
@@ -54,4 +54,11 @@ public:
 	static void PacmanOpenHalfMouth(int, int);
 	static void PacmanOpenMouth(int, int);
 	static void thankPlaying(int, int);							// Kết thúc game
+	static void exitBackground();								// background exit (không bao gồm pacman)
+	static void Fire(int, int);									// vẽ lửa
+	static void exitTitle(int, int);							// vẽ chữ "exit"
+	static void fireStatus(int, int);							// vẽ cột lửa
+	static void numberTransfer(int, int, int);					// biến số thành số lớn hơn bằng ký tự ascii
+	static void singleNumberTransfer(int, int, int);				// biến số thành số lớn (0 <= number <= 9) 
+	static void setTimer(int, int, int);										// cài thời gian để chơi
 };
