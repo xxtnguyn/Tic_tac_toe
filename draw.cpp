@@ -39,10 +39,10 @@ void draw::rainbowBackground()
 			putchar(219);
 		}
 	}
-	Cat(10, 0, LIGHT_RED);
-	Cat(10, 16, LIGHT_BLUE);
-	Cat(85, 8, LIGHT_YELLOW);
-	Cat(85, 24, LIGHT_PURPLE);
+	Cat(10, 0, LIGHT_RED, LIGHT_RED);
+	Cat(10, 16, LIGHT_BLUE, LIGHT_BLUE);
+	Cat(85, 8, LIGHT_YELLOW, LIGHT_YELLOW);
+	Cat(85, 23, LIGHT_PURPLE, LIGHT_BLUE);
 }
 
 void draw::rainbowColumn() {
@@ -453,310 +453,6 @@ void draw::printLoadText()
 	draw::printO(77, 0);
 }
 
-
-void draw::printScene() {
-	common::setColor(0);
-	char sun[] = { char(219), char(254), char(223),char(220) };
-	for (int i = 0; i < 3; i++)
-	{
-		// Tia lửa ngang trái
-		common::gotoXY(90 - 6 + 2 * i, 5);
-		cout << sun[3];
-		common::gotoXY(90 - 6 + 2 * i, 5 + 1);
-		cout << sun[2];
-
-		// Vẽ hình tròn mặt trời
-		common::gotoXY(90 + i, 5 - i);
-		cout << sun[0];
-		common::gotoXY(90 + i, 5 + 1 + i);
-		cout << sun[0];
-		if (i == 2) {
-			common::gotoXY(90 + 3, 5 - 2);
-			cout << sun[0] << sun[0];
-			common::gotoXY(90 + 3, 5 + 3);
-			cout << sun[0] << sun[0];
-		}
-
-		common::gotoXY(90 + 4 + i, 5 - 2 + i);
-		cout << sun[0];
-		common::gotoXY(90 + 4 + i, 5 + 3 - i);
-		cout << sun[0];
-
-		// Vẽ tia lửa ngang phải
-		common::gotoXY(90 + 8 + 2 * i, 5);
-		cout << sun[3];
-		common::gotoXY(90 + 8 + 2 * i, 5 + 1);
-		cout << sun[2];
-
-		// Vẽ tia lửa ngang phía trên
-		common::gotoXY(90 + 3, 5 - 3 - i);
-		if (i == 0) cout << sun[2];
-		else if (i == 1) cout << sun[1];
-		else cout << sun[3];
-
-		// Vẽ tia lửa ngang phía dưới
-		common::gotoXY(90 + 3, 5 + 4 + i);
-		if (i == 0) cout << sun[3];
-		else if (i == 1) cout << sun[1];
-		else cout << sun[2];
-
-		// Vẽ tia lửa chéo trái
-		common::gotoXY(90 - 3 + i, 5 - 4 + i);
-		cout << sun[1];
-		common::gotoXY(90 + 7 + i, 5 + 3 + i);
-		cout << sun[1];
-
-		// Vẽ tia lửa chéo phải
-		common::gotoXY(90 + 7 + i, 5 - 2 - i);
-		cout << sun[1];
-		common::gotoXY(90 - 3 + i, 5 + 5 - i);
-		cout << sun[1];
-	}
-
-	// Vẽ tâm mặt trời
-	common::setColor(14);
-	for (int i = 0; i < 3; i++) {
-		if (i == 0) {
-			common::gotoXY(90 + 1, 5);
-			cout << sun[0];
-			common::gotoXY(90 + 1, 5 + 1);
-			cout << sun[0];
-		}
-		if (i == 2) {
-			common::gotoXY(90 + 5, 5);
-			cout << sun[0];
-			common::gotoXY(90 + 5, 5 + 1);
-			cout << sun[0];
-		}
-
-		common::gotoXY(90 + 2 + i, 5 - 1);
-		cout << sun[0];
-		common::gotoXY(90 + 2 + i, 5);
-		cout << sun[0];
-		common::gotoXY(90 + 2 + i, 5 + 1);
-		cout << sun[0];
-		common::gotoXY(90 + 2 + i, 5 + 2);
-		cout << sun[0];
-	}
-
-	// Vẽ hải âu 1
-	common::setColor(0);
-	for (int i = 0; i < 3; i++) {
-		common::gotoXY(60 + i, 4 - i);
-		cout << sun[0];
-		if (i == 2) {
-			common::gotoXY(60 + 3, 4 - i);
-			cout << sun[0];
-		}
-		common::gotoXY(60 + 2 + i + 1, 4 - 2 + i);
-		cout << sun[0];
-
-		common::gotoXY(60 + 4 + i + 1, 4 - i);
-		cout << sun[0];
-		if (i == 2) {
-			common::gotoXY(60 + 8, 4 - i);
-			cout << sun[0];
-		}
-		common::gotoXY(60 + 8 + i, 4 - 2 + i);
-		cout << sun[0];
-	}
-
-	// Vẽ hải âu 2
-	for (int i = 0; i < 3; i++) {
-		common::gotoXY(83 + i, 17 - i);
-		cout << sun[0];
-		if (i == 2) {
-			common::gotoXY(83 + 3, 17 - i);
-			cout << sun[0];
-		}
-		common::gotoXY(83 + 2 + i + 1, 17 - 2 + i);
-		cout << sun[0];
-
-		common::gotoXY(83 + 4 + i + 1, 17 - i);
-		cout << sun[0];
-		if (i == 2) {
-			common::gotoXY(683 + 8, 17 - i);
-			cout << sun[0];
-		}
-		common::gotoXY(83 + 8 + i, 17 - 2 + i);
-		cout << sun[0];
-	}
-
-	// Vẽ biển
-	common::setColor(9);
-	for (int i = 0; i < 5; i++) {
-		for (int j = 0; j < 105; j++) {
-			common::gotoXY(j, 25 + i + 1);
-			cout << sun[0];
-		}
-	}
-
-	common::setColor(0);
-	for (int i = 0; i < 105; i++) {
-		common::gotoXY(i, 25);
-		cout << sun[3];
-	}
-
-	common::setConsoleColor(LIGHT_BLUE, BLUE);
-	for (int i = 0; i < 4; i++) {
-		if (i % 2 == 0) {
-			for (int j = 0; j < 4; j++) {
-				for (int k = 0; k < 4; k++) {
-					common::gotoXY(8 + 25 * j + k, 25 + 1 + i);
-					cout << sun[3];
-				}
-			}
-		}
-		else {
-			for (int j = 0; j < 4; j++) {
-				for (int k = 0; k < 2; k++) {
-					common::gotoXY(20 + 25 * j + k, 25 + 1 + i);
-					cout << sun[3];
-				}
-			}
-		}
-	}
-
-	// Vẽ đảo
-
-	// Vẽ cây trên đảo
-
-	// Vẽ phần trên của cây
-	common::setConsoleColor(BRIGHT_WHITE, BLACK);
-	for (int i = 0; i < 6; i++) {
-		for (int j = 0; j < 15 + 4 * i; j++) {
-			if (i == 0) {
-				common::gotoXY(j, 0);
-				cout << sun[3];
-			}
-			if (j == 14 + 4 * i) {
-				/*common::gotoXY(x + j + 1, y - 1 + i);
-				cout << sun[0];*/
-				for (int t = 0; t < 4; t++) {
-					common::gotoXY(j + 1 + t, 2 - 1 + i);
-					cout << sun[3];
-				}
-			}
-		}
-		for (int k = 0; k < 33 - 3 * i; k++) {
-			if (i != 5 && i != 4 && i != 0) {
-				if (k == 32 - 3 * i) {
-					/*common::gotoXY(x + k + 1, y + i + 7);
-					cout << sun[0];*/
-					for (int t = 0; t < 3; t++) {
-						common::gotoXY(k + 1 + t, 2 + i + 7);
-						cout << sun[2];
-					}
-				}
-				if (i == 3) {
-					common::gotoXY(k, 13);
-					cout << sun[2];
-				}
-			}
-		}
-	}
-
-	common::setColor(2);
-	for (int i = 0; i < 6; i++) {
-		for (int j = 0; j < 15 + 4 * i; j++) {
-			if (i == 0) {
-				common::gotoXY(j, 1);
-				cout << sun[0];
-			}
-			if (j == 14 + 4 * i) {
-				for (int t = 0; t < 4; t++) {
-					common::gotoXY(j + 1 + t, 2 + i);
-					cout << sun[0];
-				}
-			}
-		}
-		for (int k = 0; k < 33 - 3 * i; k++) {
-			if (i != 5 && i != 4) {
-				if (k == 32 - 3 * i) {
-					for (int t = 0; t < 3; t++) {
-						common::gotoXY(k + 1 + t, 2 + i + 6);
-						cout << sun[0];
-					}
-				}
-				if (i == 3) {
-					common::gotoXY(k, 12);
-					cout << sun[0];
-				}
-			}
-		}
-	}
-
-	common::setColor(10);
-	for (int i = 0; i < 6; i++) {
-		for (int j = 0; j < 15 + 4 * i; j++) {
-			common::gotoXY(j, 2 + i);
-			cout << sun[0];
-		}
-		for (int k = 0; k < 33 - 3 * i; k++) {
-			if (i != 4 && i != 5) {
-				common::gotoXY(k, 2 + i + 6);
-				cout << sun[0];
-			}
-		}
-	}
-
-	// Vẽ thân cây
-	common::setColor(0);
-	for (int i = 0; i < 13; i++) {
-		common::gotoXY(7, 12 + i);
-		cout << sun[0];
-	}
-
-	common::setColor(6);
-	for (int i = 0; i < 13; i++) {
-		for (int j = 0; j < 7; j++) {
-			common::gotoXY(j, 2 + 10 + i);
-			cout << sun[0];
-		}
-	}
-
-	// Vẽ táo
-	common::setColor(4);
-	for (int i = 0; i < 2; i++) {
-		for (int j = 0; j < 3; j++) {
-			common::gotoXY(2 + j, 5 + i); cout << sun[0];
-			common::gotoXY(8 + j, 8 + i); cout << sun[0];
-			common::gotoXY(16 + j, 5 + i); cout << sun[0];
-			common::gotoXY(21 + j, 9 + i); cout << sun[0];
-		}
-	}
-	common::setColor(2);
-	common::gotoXY(3, 4); cout << sun[0];
-	common::gotoXY(9, 7); cout << sun[0];
-	common::gotoXY(17, 4); cout << sun[0];
-	common::gotoXY(22, 8); cout << sun[0];
-
-	// Vẽ nền đất của đảo
-	common::setConsoleColor(BRIGHT_WHITE, BLACK);
-	for (int i = 0; i < 15; i++) {
-		common::gotoXY(8 + i, 2 + 12 + 9);
-		cout << sun[3];
-	}
-	for (int i = 0; i < 4; i++) {
-		common::gotoXY(9 + 14 + i, 2 + 13 + 9 + i);
-		cout << sun[0];
-	}
-
-	common::setColor(8);
-	for (int i = 8; i < 23; i++) {
-		common::gotoXY(i, 2 + 12 + 10);
-		cout << sun[0];
-	}
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 24 + i; j++) {
-			common::gotoXY(j, 2 + 13 + 9 + 1 + i);
-			cout << sun[0];
-		}
-	}
-
-	avatar::rightAmongUs(10, 15, LIGHT_RED, RED, BRIGHT_WHITE);
-}
-
 void draw::printLoadBoard(int color)
 {
 	int left = 11;
@@ -820,12 +516,15 @@ void draw::loadingBar()
 	Sleep(200);
 }
 
-void draw::Cat(int x, int y, int color)
+void draw::Cat(int x, int y, int color, int color_1)
 {
 	// Vẽ viền
-	common::setConsoleColor(color, BLACK);
+	common::setConsoleColor(color_1, BLACK);
+	common::gotoXY(x + 9, y); putchar(220);
+	common::gotoXY(x + 10, y); putchar(220);
 	common::gotoXY(x + 1, y); putchar(220);
 	common::gotoXY(x + 2, y); putchar(220);
+	common::setConsoleColor(color, BLACK);
 	common::gotoXY(x + 3, y + 1); putchar(219);
 	common::gotoXY(x + 4, y + 2); putchar(219);
 	for (int i = 0; i < 2; i++) {
@@ -839,16 +538,14 @@ void draw::Cat(int x, int y, int color)
 	}
 	common::gotoXY(x + 7, y + 2); putchar(219);
 	common::gotoXY(x + 8, y + 1); putchar(219);
-	common::gotoXY(x + 9, y); putchar(220);
-	common::gotoXY(x + 10, y); putchar(220);
 
-	common::gotoXY(x, y + 5); putchar(219);
-	common::gotoXY(x + 1, y + 6); putchar(219);
-	for (int i = 0; i < 8; i++) {
-		common::gotoXY(x + 2 + i, y + 7); putchar(223);
+	common::gotoXY(x - 1, y + 5); putchar(219);
+	common::gotoXY(x, y + 6); putchar(219);
+	for (int i = 0; i < 10; i++) {
+		common::gotoXY(x + 1 + i, y + 7); putchar(223);
 	}
-	common::gotoXY(x + 11, y + 5); putchar(219);
-	common::gotoXY(x + 10, y + 6); putchar(219);
+	common::gotoXY(x + 12, y + 5); putchar(219);
+	common::gotoXY(x + 11, y + 6); putchar(219);
 
 	// Tô màu
 	common::setColor(8);
@@ -856,11 +553,11 @@ void draw::Cat(int x, int y, int color)
 		common::gotoXY(x + i, y + 3); putchar(219);
 		common::gotoXY(x + i, y + 4); putchar(219);
 	}
-	for (int i = 0; i < 10; i++) {
-		common::gotoXY(x + 1 + i, y + 5); putchar(219);
+	for (int i = 0; i < 12; i++) {
+		common::gotoXY(x + i, y + 5); putchar(219);
 	}
-	for (int i = 0; i < 8; i++) {
-		common::gotoXY(x + 2 + i, y + 6); putchar(219);
+	for (int i = 0; i < 10; i++) {
+		common::gotoXY(x + 1 + i, y + 6); putchar(219);
 	}
 	for (int i = 0; i < 2; i++) {
 		common::setConsoleColor(GRAY, BLACK);
@@ -1036,10 +733,10 @@ void draw::Aura(int x, int y)
 	}
 }
 
-void draw::biggerAura(int x, int y)
+void draw::biggerAura(int x, int y, int color_1)
 {
-	unsigned int color[] = { LIGHT_RED, LIGHT_YELLOW, LIGHT_GREEN, LIGHT_BLUE, LIGHT_RED };
-	for (int count = 0; count < 5; count++) {
+	unsigned int color[] = { LIGHT_RED, LIGHT_YELLOW, LIGHT_GREEN, LIGHT_BLUE, LIGHT_RED, color_1 };
+	for (int count = 0; count < 6; count++) {
 		common::setColor(color[count]);
 		for (int i = 0; i < 16; i++) {
 			common::gotoXY(x + 17 + i, y); putchar(219);
@@ -1087,31 +784,74 @@ void draw::biggerAura(int x, int y)
 	
 }
 
-void draw::titleEffect(int x, int y)
+void draw::titleEffect(int x, int y, int amongus_color, int smallamong_color, int box_color, int status)
 {
-	printBoard(70, 2, 30, 3, BLACK);
+	// Hiẻn thị ảnh người chơi
+	draw::biggerAura(49, 4, box_color);
+	draw::Aura(56, 9);
+	switch (amongus_color)
+	{
+	case LIGHT_RED:  avatar::leftAmongUs(65, 15, LIGHT_RED, RED, LIGHT_YELLOW, LIGHT_YELLOW); break;
+	case LIGHT_BLUE:  avatar::leftAmongUs(65, 15, LIGHT_BLUE, BLUE, LIGHT_YELLOW, LIGHT_YELLOW); break;
+	case LIGHT_YELLOW:  avatar::leftAmongUs(65, 15, LIGHT_YELLOW, LIGHT_YELLOW, LIGHT_YELLOW, LIGHT_YELLOW); break;
+	case LIGHT_PURPLE:  avatar::leftAmongUs(65, 15, LIGHT_PURPLE, PURPLE, LIGHT_YELLOW, LIGHT_YELLOW); break;
+	case BRIGHT_WHITE:  avatar::leftAmongUs(65, 15, BRIGHT_WHITE, WHITE, LIGHT_YELLOW, LIGHT_YELLOW); break;
+	case LIGHT_GREEN:  avatar::leftAmongUs(65, 15, LIGHT_GREEN, GREEN, LIGHT_YELLOW, LIGHT_YELLOW); break;
+	}
+	if (status == 1) {
+		draw::smallLostAmongUs(94, 23, smallamong_color);
+		draw::winnerSignature(62, 11, LIGHT_YELLOW); // status = 1: thắng, status = 0: thua
+	}
+	else draw::loserSignature(66, 11, LIGHT_YELLOW);
+
+	// Bảng thông tin
+	// in thời gian còn lại
+	printBoard(x + 10, y + 11, 35, 3, LIGHT_BLUE);
+	unsigned char timeleft[] = { 223, 219, 223, 32 , 219, 32 , 219, 220, 32 , 220, 219, 32 , 219, 223, 223, 32 , 32 , 32 , 219, 32 , 32 , 32 , 219, 223, 223, 32 , 219, 223, 223, 32 , 223, 219, 223,
+								 32 , 219, 32 , 32 , 219, 32 , 219, 32 , 223, 32 , 219, 32 , 219, 219, 220, 32 , 32 , 32 , 219, 220, 220, 32 , 219, 219, 220, 32 , 219, 223, 223, 32 , 32 , 219, 32 , };
+	draw::printColoredRectangle(x + 8, y + 10, 36, 4, LIGHT_BLUE);
+	common::setConsoleColor(LIGHT_BLUE, BRIGHT_WHITE);
+	int num_chars_2 = 33;
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < num_chars_2; j++) {
+			common::gotoXY(x + 10 + j, y + 11 + i); putchar(timeleft[i * num_chars_2 + j]);
+		}
+	}
+	numberTransfer(x + 11, y + 15, 25000000);
+
+	// in tỉ lệ thắng
+	printBoard(x, y + 1, 53, 3, LIGHT_BLUE);
 	unsigned char winningMove[] = { 219, 32 , 219, 32 , 219, 32 , 219, 32 , 219, 220, 32 , 219, 32 , 219, 220, 32 , 219, 32 , 219, 32 , 219, 220, 32 , 219, 32 , 219, 223, 223, 32 , 32 , 32 , 219, 223, 219, 32 , 219, 223, 219, 32 , 223, 219, 223, 32 , 219, 32 , 219, 223, 219, 
 									223, 254, 223, 254, 223, 32 , 219, 32 , 219, 32 , 223, 219, 32 , 219, 32 , 223, 219, 32 , 219, 32 , 219, 32 , 223, 219, 32 , 219, 220, 219, 32 , 32 , 32 , 219, 223, 220, 32 , 219, 223, 219, 32 , 32 , 219, 32 , 32 , 219, 32 , 219, 220, 219, };
+	draw::printColoredRectangle(x - 1, y, 53, 4, LIGHT_BLUE);
+	common::setConsoleColor(LIGHT_BLUE, BRIGHT_WHITE);
 	int num_chars = 48;
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < num_chars; j++) {
-			common::gotoXY(x + j, y + i); putchar(winningMove[i * num_chars + j]);
+			common::gotoXY(x + j + 1, y + 1 + i); putchar(winningMove[i * num_chars + j]);
 		}
 	}
-
+	numberTransfer(x + 3, y + 5, 250);
+	
+	// in số lượt đi
+	printBoard(x + 27, y + 21, 25, 3, LIGHT_BLUE);
 	unsigned char moves[] = { 219, 220, 32 , 220, 219, 32 , 219, 223, 219, 32 , 219, 32 , 219, 32 , 219, 223, 223, 32 , 219, 223,
 							  219, 32 , 223, 32 , 219, 32 , 219, 220, 219, 32 , 223, 254, 223, 32 , 219, 219, 220, 32 , 220, 219, };
+	draw::printColoredRectangle(x + 26, y + 20, 25, 4, LIGHT_BLUE);
+	common::setConsoleColor(LIGHT_BLUE, BRIGHT_WHITE);
 	int num_chars_1 = 20;
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < num_chars_1; j++) {
-			common::gotoXY(x + j + 8, y + i + 5); putchar(moves[i * num_chars_1 + j]);
+			common::gotoXY(x + j + 28, y + i + 21); putchar(moves[i * num_chars_1 + j]);
 		}
 	}
+	numberTransfer(x + 30, y + 25, 25);
+
 }
 
-void draw::winnerSignature(int x, int y)
+void draw::winnerSignature(int x, int y, int color)
 {
-	common::setConsoleColor(BRIGHT_WHITE, BLACK);
+	common::setConsoleColor(color, BLACK);
 	unsigned char winner[] = { 219, 32 , 219, 32 , 219, 32 , 219, 32 , 219, 220, 32 , 219, 32 , 219, 220, 32 , 219, 32 , 219, 223, 223, 32 , 219, 223, 219,
 							   223, 254, 223, 254, 223, 32 , 219, 32 , 219, 32 , 223, 219, 32 , 219, 32 , 223, 219, 32 , 219, 219, 220, 32 , 219, 223, 220};
 	int num_chars = 25;
@@ -1356,20 +1096,20 @@ void draw::thankPlaying(int x, int y)
 		common::gotoXY(i, 21); putchar(205);
 		common::gotoXY(i, 22); putchar(205);
 	}
-	Coin(34, 16);
-	Coin(54, 16);
-	Coin(74, 16);
+	Coin(30, 16);
+	Coin(47, 16);
+	Coin(64, 16);
 
-	for (int i = 0; i < 85; i+=5) {
-		PacmanCloseMouth(i, 12);
-		Sleep(30);
-		printColoredRectangle(0, 12, 18 + i, 8, BLACK);
-		PacmanOpenHalfMouth(i + 2, 12);
-		Sleep(30);
-		printColoredRectangle(0, 12, 18 + i + 2, 8, BLACK);
-		PacmanOpenMouth(i + 4, 12);
-		Sleep(30);
-		printColoredRectangle(0, 12, 18 + i + 4, 8, BLACK);
+	for (int i = 0; i < 5; i++) {
+		PacmanOpenMouth(i * 17, 12);
+		Sleep(100);
+		printColoredRectangle(i * 17, 12, 18 + i, 8, BLACK);
+		PacmanOpenHalfMouth(i * 17, 12);
+		Sleep(100); 
+		printColoredRectangle(i * 17, 12, 18 + i, 8, BLACK);
+		PacmanCloseMouth(i * 17, 12);
+		Sleep(100);
+		printColoredRectangle(i * 17, 12, 18 + i, 8, BLACK);
 	}
 	PacmanCloseMouth(84, 12);
 
@@ -1479,5 +1219,498 @@ void draw::drawBoard()
 				}
 			}
 		}
+	}
+}
+
+void draw::exitBackground()
+{
+	system("color 07");
+
+	// nền đất
+	common::setColor(GRAY);
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 105; j++) {
+			common::gotoXY(j, i + 27); putchar(219);
+		}
+	}
+	common::setConsoleColor(GRAY, WHITE);
+	for (int i = 0; i < 105; i+=5) {
+		if (i % 10 == 0) {
+			for (int j = 0; j < 3; j++) {
+				common::gotoXY(i + j, 29); putchar(223);
+				if (j == 1) {
+					common::gotoXY(i + j, 28); putchar(220);
+				}
+			}
+		}
+		else {
+			for (int j = 0; j < 3; j++) {
+				common::gotoXY(i + j, 30); putchar(223);
+				if (j == 1) {
+					common::gotoXY(i + j, 29); putchar(220);
+				}
+			}
+		}
+	}
+
+	// nền cỏ
+	for (int i = 0; i < 105; i++) {
+		common::setColor(LIGHT_GREEN);
+		common::gotoXY(i, 27); putchar(219);
+		if (i % 10 == 0) {
+			common::setConsoleColor(LIGHT_GREEN, GREEN);
+			common::gotoXY(i, 27); putchar(223);
+			common::gotoXY(i + 1, 27); putchar(223);
+			common::gotoXY(i + 2, 27); putchar(223);
+			i += 2;
+		}
+	}
+	common::setConsoleColor(GRAY, LIGHT_GREEN);
+	for (int i = 3; i < 100; i += 10) {
+		for (int j = 0; j < 3; j++) {
+			common::gotoXY(i + j, 28); putchar(223);
+			if (j == 1) {
+				common::gotoXY(i + j, 28); putchar(219);
+			}
+		}
+	}
+	common::setConsoleColor(BLACK, GREEN);
+	for (int i = 0; i < 105; i++) {
+		common::gotoXY(i, 26); putchar(220);
+	}
+
+	// cột lửa
+	fireStatus(6, 11);
+	fireStatus(83, 11);
+	
+	// lửa
+	Fire(11, 2);
+	Fire(88, 2);
+
+	// chữ Exit
+	exitTitle(30, 0);
+	common::setConsoleColor(BLACK, GRAY);
+	common::gotoXY(28, 1); putchar(254);
+	common::gotoXY(29, 1); putchar(219);
+	common::gotoXY(30, 1); putchar(254);
+	common::gotoXY(29, 0); putchar(220);
+	common::gotoXY(29, 2); putchar(223);
+
+	common::gotoXY(76, 6); putchar(254);
+	common::gotoXY(77, 6); putchar(219);
+	common::gotoXY(78, 6); putchar(254);
+	common::gotoXY(77, 5); putchar(220);
+	common::gotoXY(77, 7); putchar(223);
+
+	// in khung cho exit
+	common::setColor(15);
+	for (int i = 0; i < 9; i++) {
+		for (int j = 0; j < 44; j++) {
+			common::gotoXY(32 + j, 8 + i);
+			putchar(219);
+		}
+	}
+
+	// vẽ đom đóm
+	common::setConsoleColor(BLACK, LIGHT_YELLOW);
+	common::gotoXY(10, 5); putchar(254);
+	common::gotoXY(21, 5); putchar(254);
+	common::gotoXY(87, 4); putchar(254);
+	common::gotoXY(25, 17); putchar(254);
+	common::gotoXY(97, 5); putchar(254);
+	common::gotoXY(80, 15); putchar(254);
+	common::gotoXY(2, 13); putchar(254);
+	common::gotoXY(100, 20); putchar(254);
+
+	// Lời dẫn goodbye
+	common::setColor(LIGHT_YELLOW);
+	common::gotoXY(33, 20); cout << "There is no greater thing you can do with";
+	common::gotoXY(30, 21); cout << "your life and your work than follow your passions";
+	common::gotoXY(33, 22); cout << "- in a way that serves the world and you.";
+	common::gotoXY(55, 24); cout << "- Richard Branson -";
+}
+
+void draw::Fire(int x, int y) {
+	common::setColor(BRIGHT_WHITE);
+	common::gotoXY(x + 3, y + 7); putchar(219);
+	common::gotoXY(x + 4, y + 7); putchar(219);
+
+	common::setConsoleColor(BRIGHT_WHITE, LIGHT_YELLOW); //
+	common::gotoXY(x + 3, y + 6); putchar(219);
+	common::gotoXY(x + 4, y + 6); putchar(223);
+	for (int i = 0; i < 3; i++) {
+		common::gotoXY(x + 3 + i, y + 5); putchar(219);
+	}
+
+	common::setConsoleColor(RED, LIGHT_RED);
+	common::gotoXY(x + 3, y + 4); putchar(220);
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < 3; j++) {
+			common::gotoXY(x + 4 + j, y + 3 + i); putchar(219);
+		}
+	}
+	common::gotoXY(x + 4, y + 2); putchar(219);
+	common::gotoXY(x + 3, y + 3); putchar(223);
+	common::gotoXY(x + 2, y + 5); putchar(219);
+	common::gotoXY(x + 1, y + 6); putchar(219);
+	common::gotoXY(x + 3, y + 3); putchar(220);
+	common::gotoXY(x + 3, y + 4); putchar(219);
+	for (int i = 0; i < 2; i++) {
+		common::gotoXY(x + 6, y + 5 + i); putchar(219);
+	}
+
+	common::setColor(RED);
+	common::gotoXY(x + 3, y + 2); putchar(219);
+	common::gotoXY(x + 7, y + 3); putchar(219);
+	for (int i = 0; i < 3; i++) {
+		common::gotoXY(x + 7, y + 4 + i); putchar(219);
+	}
+	common::gotoXY(x + 1, y + 7); putchar(219);
+
+	common::setConsoleColor(BLACK, RED);
+	common::gotoXY(x + 4, y + 1); putchar(220);
+	common::gotoXY(x + 2, y); putchar(220);
+	common::gotoXY(x + 7, y + 1); putchar(220);
+	for (int i = 0; i < 2; i++) {
+		common::gotoXY(x + 5 + i, y + 2); putchar(220);
+	}
+	common::gotoXY(x + 6, y + 3); putchar(219);
+	common::gotoXY(x + 6, y + 7); putchar(223);
+	common::gotoXY(x, y + 7); putchar(223);
+	for (int i = 0; i < 2; i++) {
+		common::gotoXY(x, y + 5 + i); putchar(219);
+	}
+	common::gotoXY(x + 1, y + 5); putchar(219);
+	common::gotoXY(x + 1, y + 4); putchar(220);
+	common::gotoXY(x + 2, y + 4); putchar(219);
+	common::gotoXY(x + 2, y + 3); putchar(220);
+
+	common::setConsoleColor(RED, LIGHT_YELLOW);
+	common::gotoXY(x + 5, y + 7); putchar(223);
+	common::gotoXY(x + 2, y + 7); putchar(223);
+
+	common::setConsoleColor(LIGHT_RED, LIGHT_YELLOW);
+	common::gotoXY(x + 2, y + 6); putchar(220);
+
+	common::setConsoleColor(LIGHT_RED, LIGHT_YELLOW); //1
+	common::gotoXY(x + 5, y + 5); putchar(220);
+	common::gotoXY(x + 5, y + 6); putchar(219);
+}
+
+void draw::exitTitle(int x, int y)
+{
+	unsigned char exit[] = { 32 , 32 , 32 , 220, 219, 219, 219, 219, 219, 219, 219, 219, 32 , 223, 219, 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 223, 32 , 32 , 32 , 220, 219, 32 , 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 ,
+							 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 219, 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 223, 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 223, 219, 219, 219, 219, 219, 219, 219, 219, 219, 220, 
+							 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 219, 223, 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 219, 32 , 32 , 32 , 219, 219, 219, 223, 32 , 32 , 32 , 32 , 219, 219, 219, 219, 32 , 32 , 32 , 32 , 223, 219, 219, 219, 223, 223, 219, 219, 
+							 32 , 220, 219, 219, 219, 220, 220, 220, 32 , 32 , 32 , 32 , 32 , 32 , 32 , 32 , 32 , 223, 219, 219, 219, 220, 219, 219, 219, 223, 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 223,
+							 223, 223, 219, 219, 219, 223, 223, 223, 32 , 32 , 32 , 32 , 32 , 32 , 32 , 32 , 32 , 220, 219, 219, 219, 223, 219, 219, 219, 220, 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 
+							 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 219, 220, 32 , 32 , 32 , 32 , 32 , 220, 219, 219, 219, 32 , 32 , 32 , 219, 219, 219, 219, 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 
+						     32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 220, 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 220, 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 ,
+							 32 , 32 , 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 32 , 32 , 220, 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 220, 32 , 32 , 219, 223, 32 , 32 , 32 , 32 , 32 , 32 , 220, 219, 219, 219, 219, 223, 32 , 32 , };
+	int num_chars = 47;
+	common::setConsoleColor(BLACK, GRAY);
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < num_chars; j++) {
+			common::gotoXY(x + j, y + i);
+			putchar(exit[i * num_chars + j]);
+		}
+	}
+	common::setColor(WHITE);
+}
+
+void draw::fireStatus(int x, int y)
+{
+	common::setColor(GRAY);
+	for (int i = 0; i < 13; i++) { // 13
+		for (int j = 0; j < 8; j++) {
+			if (i != 12) {
+				common::gotoXY(x + 5 + j, y + 1 + i); putchar(219);
+			}
+			else {
+				common::setConsoleColor(GRAY, WHITE);
+				common::gotoXY(x + 5 + j, y + 13); putchar(220);
+			}
+		}
+	}
+	common::setConsoleColor(BLACK, WHITE);
+	for (int i = 0; i < 5; i++) {
+		common::gotoXY(x + i, y + 13); putchar(220);
+		common::gotoXY(x + 13 + i, y + 13); putchar(220);
+	}
+	common::setColor(GRAY);
+	for (int i = 0; i < 16; i++) {
+		common::gotoXY(x + 1 + i, y + 14); putchar(219);
+	}
+	common::setConsoleColor(GREEN, WHITE);
+	for (int i = 0; i < 18; i++) {
+		common::gotoXY(x + i, y + 15); putchar(223);
+	}
+	common::setColor(WHITE);
+	common::gotoXY(x, y + 14); putchar(219);
+	common::gotoXY(x + 17, y + 14); putchar(219);
+
+	common::setConsoleColor(GRAY, WHITE);
+	for (int i = 0; i < 18; i++) {
+		common::gotoXY(x + i, y); putchar(220);
+	}
+	common::gotoXY(x, y); putchar(219);
+	common::gotoXY(x + 17, y); putchar(219);
+	for (int i = 0; i < 18; i++) {
+		common::gotoXY(x + i, y - 1); putchar(223);
+	}
+	common::gotoXY(x, y - 1); putchar(219);
+	common::gotoXY(x + 17, y - 1); putchar(219);
+	for (int i = 0; i < 3; i++) {
+		common::gotoXY(x + 7, i + y + 3); putchar(219);
+		common::gotoXY(x + 10, i + y + 8); putchar(219);
+	}
+
+	common::setConsoleColor(GREEN, WHITE);
+	for (int i = 0; i < 13; i++) {
+		for (int j = 0; j < 2; j++) {
+			common::gotoXY(x + 5 + j * 9 - 1, y + 1 + i); putchar(219);
+		}
+	}
+}
+
+void draw::numberTransfer(int x, int y, int number)
+{
+	int k = number;
+	int count = 0;
+	while (k > 0) { count++; k /= 10; }
+	if (number >= 0 && number <= 9) {
+		unsigned char zero[] = { 219, 223, 223, 219, 219, 32 , 32 , 219, 219, 220, 220, 219, };
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 4; j++) {
+				common::gotoXY(x + j, y + i); putchar(zero[i * 4 + j]);
+			}
+		}
+		singleNumberTransfer(x + 5, y, number);
+	}
+	else {
+		while (count > 0) {
+			// chữ số đầu tiên
+			int divide = pow(10, count - 1);
+			int firstSingleNum = number / divide;
+			singleNumberTransfer(x, y, firstSingleNum);
+			x += 5;
+			number %= divide;
+			count--;
+		}
+	}
+}
+
+void draw::singleNumberTransfer(int x, int y, int number)
+{
+	if (number < 0 || number > 9) return;
+	if (number == 0) {
+		unsigned char num[] = {  219, 223, 223, 219,
+								 219, 32 , 32 , 219,
+								 219, 220, 220, 219, };
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 4; j++) {
+				common::gotoXY(x + j, y + i); putchar(num[i * 4 + j]);
+			}
+		}
+	}
+	else if (number == 1) {
+		unsigned char num[] = { 32 , 32 , 219, 32 , 
+								32 , 223, 219, 32 ,
+								32 , 220, 219, 220,};
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 4; j++) {
+				common::gotoXY(x + j, y + i); putchar(num[i * 4 + j]);
+			}
+		}
+	}
+	else if (number == 2) {
+		unsigned char num[] = { 223, 223, 223, 219,
+								219, 223, 223, 223,
+								219, 220, 220, 220,};
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 4; j++) {
+				common::gotoXY(x + j, y + i); putchar(num[i * 4 + j]);
+			}
+		}
+	}
+	else if (number == 3) {
+		unsigned char num[] = { 223, 223, 223, 219,
+								223, 223, 223, 219,
+								220, 220, 220, 219, };
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 4; j++) {
+				common::gotoXY(x + j, y + i); putchar(num[i * 4 + j]);
+			}
+		}
+	}
+	else if (number == 4) {
+		unsigned char num[] = { 219, 32 , 32 , 219,
+								219, 220, 220, 219,
+								32 , 32 , 32 , 219,};
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 4; j++) {
+				common::gotoXY(x + j, y + i); putchar(num[i * 4 + j]);
+			}
+		}
+	}
+	else if (number == 5) {
+		unsigned char num[] = { 219, 223, 223, 223,
+						        223, 223, 223, 219,
+								220, 220, 220, 219,};
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 4; j++) {
+				common::gotoXY(x + j, y + i); putchar(num[i * 4 + j]);
+			}
+		}
+	}
+	else if (number == 6) {
+		unsigned char num[] = { 219, 223, 223, 223,
+								219, 223, 223, 219,
+								219, 220, 220, 219,};
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 4; j++) {
+				common::gotoXY(x + j, y + i); putchar(num[i * 4 + j]);
+			}
+		}
+	}
+	else if (number == 7) {
+		unsigned char num[] = { 219, 223, 223, 219,
+								32 , 32 , 32 , 219,
+								32 , 32 , 32 , 219,};
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 4; j++) {
+				common::gotoXY(x + j, y + i); putchar(num[i * 4 + j]);
+			}
+		}
+	}
+	else if (number == 8) {
+		unsigned char num[] = { 219, 223, 223, 219,
+							    219, 223, 223, 219,
+								219, 220, 220, 219, };
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 4; j++) {
+				common::gotoXY(x + j, y + i); putchar(num[i * 4 + j]);
+			}
+		}
+	}
+	else {
+		unsigned char num[] = { 219, 223, 223, 219,
+								223, 223, 223, 219,
+						        220, 220, 220, 219,};
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 4; j++) {
+				common::gotoXY(x + j, y + i); putchar(num[i * 4 + j]);
+			}
+		}	
+	}
+}
+
+void draw::loserSignature(int x, int y, int color)
+{
+	common::setConsoleColor(color, BLACK);
+	unsigned char loser[] = { 219, 32 , 32 , 32 , 219, 223, 219, 32 , 219, 223, 32 , 219, 223, 223, 32 , 219, 223, 219, 
+							  219, 220, 220, 32 , 219, 220, 219, 32 , 220, 219, 32 , 219, 219, 220, 32 , 219, 223, 220, };
+	int num_chars = 18;
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < num_chars; j++) {
+			common::gotoXY(x + j, y + i); putchar(loser[i * num_chars + j]);
+		}
+	}
+}
+void draw::setTimer(int hour, int minute, int second)
+{
+	// tiêu đề "SET YOUR TIMER"
+	unsigned char time[] = { 219, 223, 32 , 219, 223, 223, 32 , 223, 219, 223, 32 , 32 , 32 , 219, 32 , 219, 32 , 219, 223, 219, 32 , 219, 32 , 219, 32 , 219, 223, 219, 32 , 32 , 32 , 223, 219, 223, 32 , 219, 32 , 219, 220, 32 , 220, 219, 32 , 219, 223, 223, 32 , 219, 223, 219,
+							 220, 219, 32 , 219, 219, 220, 32 , 32 , 219, 32 , 32 , 32 , 32 , 32 , 219, 32 , 32 , 219, 220, 219, 32 , 219, 220, 219, 32 , 219, 223, 220, 32 , 32 , 32 , 32 , 219, 32 , 32 , 219, 32 , 219, 32 , 223, 32 , 219, 32 , 219, 219, 220, 32 , 219, 223, 220, };
+	common::setConsoleColor(BRIGHT_WHITE, BLACK);
+	int num_chars = 50;
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < num_chars; j++) {
+			common::gotoXY(30 + j, 2 + i); putchar(time[i * num_chars + j]);
+		}
+	}
+	common::gotoXY(34, 29); cout << "W: add time" << "\t" << "S: minus time" << "\t" << "Enter: confirm";
+	common::setConsoleColor(BRIGHT_WHITE, RED);
+	common::gotoXY(34, 20); cout << "The limit of the timer is from 0 to 24 hours";
+
+	printColoredRectangle(31, 9, 50, 9, BLACK);
+	printColoredRectangle(33, 10, 46, 7, BRIGHT_WHITE);
+	printBoard(29, 8, 53, 10, BLACK);
+
+	common::setConsoleColor(BRIGHT_WHITE, GREEN);
+	numberTransfer(40, 12, hour);
+	common::setConsoleColor(BRIGHT_WHITE, BLACK);
+	common::gotoXY(50, 12); putchar(254);
+	common::gotoXY(50, 13); putchar(254);
+	numberTransfer(52, 12, minute);
+	common::gotoXY(62, 12); putchar(254);
+	common::gotoXY(62, 13); putchar(254);
+	numberTransfer(64, 12, minute);
+
+	int pos = 0;
+	common::setConsoleColor(BRIGHT_WHITE, BLACK);
+	while (1) {
+		if (pos == 1) {
+			common::setConsoleColor(BRIGHT_WHITE, BLACK);
+			numberTransfer(40, 12, hour);
+			common::setConsoleColor(BRIGHT_WHITE, GREEN);
+			numberTransfer(52, 12, minute);
+		}
+		else if (pos == 2) {
+			common::setConsoleColor(BRIGHT_WHITE, BLACK);
+			numberTransfer(52, 12, minute);
+			common::setConsoleColor(BRIGHT_WHITE, GREEN);
+			numberTransfer(64, 12, second);
+		}
+		common::setConsoleColor(BRIGHT_WHITE, GREEN);
+		int input = common::getConsoleInput();
+		switch (input) {
+		case 2: 
+			if (pos == 0) {
+				++hour; if (hour == 25) hour = 24; numberTransfer(40, 12, hour); break;
+			}
+			else if (pos == 1) {
+				++minute; if (minute == 60) minute = 0; numberTransfer(52, 12, minute); break;
+			}
+			else {
+				++second; if (second == 60) second = 0; numberTransfer(64, 12, second); break;
+			}
+		case 5: 
+			if (pos == 0) {
+				--hour; if (hour == -1) hour = 0; numberTransfer(40, 12, hour); break;
+			}
+			else if (pos == 1) {
+				--minute; if (minute == -1) minute = 59; numberTransfer(52, 12, minute); break;
+			}
+			else {
+				--second; if (second == -1) second = 59; numberTransfer(64, 12, second); break;
+			}
+		case 6: pos++; break;
+		}
+		if (pos == 3) break;
+	}
+
+	int t = 3;
+	while (t > 0) {
+		common::setColor(0);
+		numberTransfer(40, 12, hour);
+		common::gotoXY(50, 12); putchar(254);
+		common::gotoXY(50, 13); putchar(254);
+		numberTransfer(52, 12, minute);
+		common::gotoXY(62, 12); putchar(254);
+		common::gotoXY(62, 13); putchar(254);
+		numberTransfer(64, 12, second);
+		Sleep(500);
+
+		common::setColor(4);
+		numberTransfer(40, 12, hour);
+		common::gotoXY(50, 12); putchar(254);
+		common::gotoXY(50, 13); putchar(254);
+		numberTransfer(52, 12, minute);
+		common::gotoXY(62, 12); putchar(254);
+		common::gotoXY(62, 13); putchar(254);
+		numberTransfer(64, 12, second);
+		Sleep(500);
+		t--;
 	}
 }
