@@ -343,9 +343,8 @@ void avatar::BotHead(int left, int top, int color, int color_1)
 	}
 }
 
-void avatar::Bot(int left, int top) 
+void avatar::Bot(int left, int top, int color1, int color2, int color3) 
 {
-	int color1 = BRIGHT_WHITE, color2 = BLACK, color3 = LIGHT_BLUE;
 	//Vẽ mình
 	/*unsigned char avatarbot[] = {
 		 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,219,219,219,219,219,219, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
@@ -411,7 +410,7 @@ void avatar::Bot(int left, int top)
 	}
 
 	//Vẽ viền
-	common::setConsoleColor(WHITE, color2);
+	common::setConsoleColor(WHITE, BLACK);
 	for (int i = 0; i < 5; i++) {
 		common::gotoXY(left + i + 12, top - 1);
 		putchar(220);
@@ -494,7 +493,7 @@ void avatar::Bot(int left, int top)
 	putchar(219);
 
 	//Tô mặt
-	common::setConsoleColor(color1, color2);
+	common::setConsoleColor(color1, BLACK);
 	for (int i = 0; i < 7; i++) {
 		common::gotoXY(left + 11 + i, top + 1);
 		putchar(220);
@@ -515,7 +514,7 @@ void avatar::Bot(int left, int top)
 	}
 
 	//Vẽ mặt
-	common::setColor(color3);
+	common::setColor(color2);
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 2; j++) {
 			common::gotoXY(left + 11 + i * 5 + j, top + 3);
@@ -524,7 +523,7 @@ void avatar::Bot(int left, int top)
 	}
 
 	// In tên con bot
-	common::setColor(1);
+	common::setColor(color3);
 	string bot_name = "FIT@HCMUS";
 	for (int i = 0; i < bot_name.size(); i++) {
 		common::gotoXY(left + 10 + i, top + 6);
