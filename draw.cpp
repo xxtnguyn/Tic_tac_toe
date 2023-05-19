@@ -784,25 +784,58 @@ void draw::biggerAura(int x, int y, int color_1)
 	
 }
 
-void draw::titleEffect(int x, int y, int amongus_color, int smallamong_color, int box_color, int status)
+void draw::titleEffect(int x, int y, int amongus_color, int smallamong_color, int box_color, int status, int mode)
 {
 	// Hiẻn thị ảnh người chơi
 	draw::biggerAura(49, 4, box_color);
 	draw::Aura(56, 9);
-	switch (amongus_color)
-	{
-	case LIGHT_RED:  avatar::leftAmongUs(65, 15, LIGHT_RED, RED, LIGHT_YELLOW, LIGHT_YELLOW); break;
-	case LIGHT_BLUE:  avatar::leftAmongUs(65, 15, LIGHT_BLUE, BLUE, LIGHT_YELLOW, LIGHT_YELLOW); break;
-	case LIGHT_YELLOW:  avatar::leftAmongUs(65, 15, LIGHT_YELLOW, LIGHT_YELLOW, LIGHT_YELLOW, LIGHT_YELLOW); break;
-	case LIGHT_PURPLE:  avatar::leftAmongUs(65, 15, LIGHT_PURPLE, PURPLE, LIGHT_YELLOW, LIGHT_YELLOW); break;
-	case BRIGHT_WHITE:  avatar::leftAmongUs(65, 15, BRIGHT_WHITE, WHITE, LIGHT_YELLOW, LIGHT_YELLOW); break;
-	case LIGHT_GREEN:  avatar::leftAmongUs(65, 15, LIGHT_GREEN, GREEN, LIGHT_YELLOW, LIGHT_YELLOW); break;
+	if (mode == 0) {
+		switch (amongus_color)
+		{
+		case LIGHT_RED:  avatar::leftAmongUs(65, 15, LIGHT_RED, RED, LIGHT_YELLOW, LIGHT_YELLOW); break;
+		case LIGHT_BLUE:  avatar::leftAmongUs(65, 15, LIGHT_BLUE, BLUE, LIGHT_YELLOW, LIGHT_YELLOW); break;
+		case LIGHT_YELLOW:  avatar::leftAmongUs(65, 15, LIGHT_YELLOW, LIGHT_YELLOW, LIGHT_YELLOW, LIGHT_YELLOW); break;
+		case LIGHT_PURPLE:  avatar::leftAmongUs(65, 15, LIGHT_PURPLE, PURPLE, LIGHT_YELLOW, LIGHT_YELLOW); break;
+		case BRIGHT_WHITE:  avatar::leftAmongUs(65, 15, BRIGHT_WHITE, WHITE, LIGHT_YELLOW, LIGHT_YELLOW); break;
+		case LIGHT_GREEN:  avatar::leftAmongUs(65, 15, LIGHT_GREEN, GREEN, LIGHT_YELLOW, LIGHT_YELLOW); break;
+		}
+		if (status == 1) {
+			draw::smallLostAmongUs(94, 23, smallamong_color);
+			draw::winnerSignature(62, 11, LIGHT_YELLOW); // status = 1: thắng, status = 0: thua
+		}
+		else draw::loserSignature(66, 11, LIGHT_YELLOW);
 	}
-	if (status == 1) {
-		draw::smallLostAmongUs(94, 23, smallamong_color);
-		draw::winnerSignature(62, 11, LIGHT_YELLOW); // status = 1: thắng, status = 0: thua
+	else {
+		if (status == 1) { // bot thua
+			switch (amongus_color)
+			{
+			case LIGHT_RED:  avatar::leftAmongUs(65, 15, LIGHT_RED, RED, LIGHT_YELLOW, LIGHT_YELLOW); break;
+			case LIGHT_BLUE:  avatar::leftAmongUs(65, 15, LIGHT_BLUE, BLUE, LIGHT_YELLOW, LIGHT_YELLOW); break;
+			case LIGHT_YELLOW:  avatar::leftAmongUs(65, 15, LIGHT_YELLOW, LIGHT_YELLOW, LIGHT_YELLOW, LIGHT_YELLOW); break;
+			case LIGHT_PURPLE:  avatar::leftAmongUs(65, 15, LIGHT_PURPLE, PURPLE, LIGHT_YELLOW, LIGHT_YELLOW); break;
+			case BRIGHT_WHITE:  avatar::leftAmongUs(65, 15, BRIGHT_WHITE, WHITE, LIGHT_YELLOW, LIGHT_YELLOW); break;
+			case LIGHT_GREEN:  avatar::leftAmongUs(65, 15, LIGHT_GREEN, GREEN, LIGHT_YELLOW, LIGHT_YELLOW); break;
+			}
+			draw::winnerSignature(62, 11, LIGHT_YELLOW);
+		}
+		else {
+			avatar::Bot(60, 15, BRIGHT_WHITE, LIGHT_BLUE, BLUE);
+			draw::winnerSignature(62, 11, LIGHT_YELLOW);
+			draw::smallLostAmongUs(94, 23, smallamong_color);
+			Sleep(5000);
+			// hiển thị among us thua
+			switch (amongus_color)
+			{
+			case LIGHT_RED:  avatar::leftAmongUs(65, 15, LIGHT_RED, RED, LIGHT_YELLOW, LIGHT_YELLOW); break;
+			case LIGHT_BLUE:  avatar::leftAmongUs(65, 15, LIGHT_BLUE, BLUE, LIGHT_YELLOW, LIGHT_YELLOW); break;
+			case LIGHT_YELLOW:  avatar::leftAmongUs(65, 15, LIGHT_YELLOW, LIGHT_YELLOW, LIGHT_YELLOW, LIGHT_YELLOW); break;
+			case LIGHT_PURPLE:  avatar::leftAmongUs(65, 15, LIGHT_PURPLE, PURPLE, LIGHT_YELLOW, LIGHT_YELLOW); break;
+			case BRIGHT_WHITE:  avatar::leftAmongUs(65, 15, BRIGHT_WHITE, WHITE, LIGHT_YELLOW, LIGHT_YELLOW); break;
+			case LIGHT_GREEN:  avatar::leftAmongUs(65, 15, LIGHT_GREEN, GREEN, LIGHT_YELLOW, LIGHT_YELLOW); break;
+			}
+			draw::loserSignature(66, 11, LIGHT_YELLOW);
+		}
 	}
-	else draw::loserSignature(66, 11, LIGHT_YELLOW);
 
 	// Bảng thông tin
 	// in thời gian còn lại
@@ -1712,5 +1745,84 @@ void draw::setTimer(int hour, int minute, int second)
 		numberTransfer(64, 12, second);
 		Sleep(500);
 		t--;
+	}
+}
+
+void draw::drawTitle(int x, int y)
+{
+	// D
+	common::setColor(LIGHT_RED);
+	for (int i = 0; i < 4; i++) {
+		common::gotoXY(x, y + 1 + i); putchar(219);
+		common::gotoXY(x + 1, y + 1 + i); putchar(219);
+	}
+	for (int i = 0; i < 6; i++) {
+		common::gotoXY(x + 2 + i, y); putchar(219);
+		common::gotoXY(x + 2 + i, y + 5); putchar(219);
+	}
+	for (int i = 0; i < 2; i++) {
+		common::gotoXY(x + 8 + i, y + 1); putchar(219);
+		common::gotoXY(x + 8 + i, y + 4); putchar(219);
+	}
+	for (int i = 0; i < 2; i++) {
+		common::gotoXY(x + 10, y + 2 + i); putchar(219);
+		common::gotoXY(x + 11, y + 2 + i); putchar(219);
+	}
+
+	// R
+	common::setColor(LIGHT_YELLOW);
+	for (int i = 0; i < 6; i++) {
+		common::gotoXY(x + 14, y + i); putchar(219);
+		common::gotoXY(x + 15, y + i); putchar(219);
+	}
+	for (int i = 0; i < 6; i++) {
+		common::gotoXY(x + 16 + i, y); putchar(219);
+		common::gotoXY(x + 16 + i, y + 3); putchar(219);
+	}
+	for (int i = 0; i < 2; i++) {
+		common::gotoXY(22 + x, y + 1 + i); putchar(219);
+		common::gotoXY(23 + x, y + 1 + i); putchar(219);
+		common::gotoXY(x + 20 + i, y + 4); putchar(219);
+		common::gotoXY(x + 22 + i, y + 5); putchar(219);
+	}
+
+	// A
+	common::setColor(LIGHT_GREEN);
+	for (int i = 0; i < 5; i++) {
+		common::gotoXY(26 + x, y + 1 + i); putchar(219);
+		common::gotoXY(27 + x, y + 1 + i); putchar(219);
+		common::gotoXY(34 + x, y + 1 + i); putchar(219);
+		common::gotoXY(35 + x, y + 1 + i); putchar(219);
+	}
+	for (int i = 0; i < 6; i++) {
+		common::gotoXY(x + 28 + i, y); putchar(219);
+		common::gotoXY(x + 28 + i, y + 3); putchar(219);
+	}
+
+	// W
+	common::setColor(LIGHT_BLUE);
+	for (int i = 0; i < 5; i++) {
+		common::gotoXY(x + 38, y + i); putchar(219);
+		common::gotoXY(x + 39, y + i); putchar(219);
+		common::gotoXY(x + 43, y + i); putchar(219);
+		common::gotoXY(x + 44, y + i); putchar(219);
+		common::gotoXY(x + 48, y + i); putchar(219);
+		common::gotoXY(x + 49, y + i); putchar(219);
+	}
+	for (int i = 0; i < 3; i++) {
+		common::gotoXY(x + 40 + i, y + 5); putchar(219);
+		common::gotoXY(x + 45 + i, y + 5); putchar(219);
+	}
+}
+
+void draw::resultTitle(int x, int y)
+{
+	unsigned char result[] = { 219, 223, 219, 32 , 219, 223, 223, 32 , 219, 223, 32 , 219, 32 , 219, 32 , 219, 32 , 32 , 223, 219, 223,
+							   219, 223, 220, 32 , 219, 219, 220, 32 , 220, 219, 32 , 219, 220, 219, 32 , 219, 220, 220, 32 , 219, 32 ,};
+	int num_chars = 21;
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < num_chars; j++) {
+			common::gotoXY(x + j, y + i); putchar(result[i * num_chars + j]);
+		}
 	}
 }
