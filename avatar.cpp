@@ -1,9 +1,9 @@
 #include "avatar.h"
 #include "common.h"
 
-void avatar::rightAmongUs(int x, int y, int color, int color_1, int color_2)
+void avatar::rightAmongUs(int x, int y, int color, int color_1, int color_2, int color_3)
 {
-	// Tô màu
+	// TÃ´ mÃ u
 	common::setColor(color);
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 2; j++) {
@@ -40,12 +40,12 @@ void avatar::rightAmongUs(int x, int y, int color, int color_1, int color_2)
 		}
 	}
 
-	// Tô bóng
+	// TÃ´ bÃ³ng
 	common::setColor(7);
 	common::gotoXY(x + 3, y + 9); putchar(219);
 	common::gotoXY(x + 11, y + 9); putchar(219);
 
-	// Tô màu kính
+	// TÃ´ mÃ u kÃ­nh
 	for (int i = 0; i < 9; i++) {
 		common::setConsoleColor(WHITE, GRAY);
 		common::gotoXY(x + 8 + i, y + 3); putchar(220);
@@ -54,7 +54,7 @@ void avatar::rightAmongUs(int x, int y, int color, int color_1, int color_2)
 	}
 
 	common::setColor(0);
-	// Vẽ viền kính vũ trụ
+	// Váº½ viá»n kÃ­nh vÅ© trá»¥
 	common::gotoXY(x + 7, y + 2); putchar(219);
 	common::gotoXY(x + 7, y + 3); putchar(219);
 	for (int i = 0; i < 9; i++) {
@@ -66,12 +66,12 @@ void avatar::rightAmongUs(int x, int y, int color, int color_1, int color_2)
 	common::setColor(0);
 	common::gotoXY(x + 17, y + 2); putchar(219);
 	common::gotoXY(x + 17, y + 3); putchar(219);
-	common::setConsoleColor(BRIGHT_WHITE, BLACK);
+	common::setConsoleColor(color_3, BLACK);
 	common::gotoXY(x + 15, y + 1); putchar(220);
 	common::gotoXY(x + 16, y + 1); putchar(220);
 	common::gotoXY(x + 16, y + 4); putchar(223);
 
-	// Vẽ viền
+	// Váº½ viá»n
 	common::setConsoleColor(color_2, BLACK);
 	for (int i = 0; i < 3; i++) {
 		common::gotoXY(x + 1 + i, y + 3); putchar(220);
@@ -107,7 +107,7 @@ void avatar::leftAmongUsHead(int x, int y, int color)
 {
 	// Tồ màu
 	common::setColor(color);
-	for(int i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 		common::gotoXY(x + 11 + i, y + 1); putchar(219);
 	}
 	for (int i = 0; i < 3; i++) {
@@ -343,7 +343,7 @@ void avatar::BotHead(int left, int top, int color, int color_1)
 	}
 }
 
-void avatar::Bot(int left, int top, int color1, int color2, int color3) 
+void avatar::Bot(int left, int top, int color1, int color2, int color3, int color4)
 {
 	//Vẽ mình
 	/*unsigned char avatarbot[] = {
@@ -410,7 +410,7 @@ void avatar::Bot(int left, int top, int color1, int color2, int color3)
 	}
 
 	//Vẽ viền
-	common::setConsoleColor(WHITE, BLACK);
+	common::setConsoleColor(color4, BLACK);
 	for (int i = 0; i < 5; i++) {
 		common::gotoXY(left + i + 12, top - 1);
 		putchar(220);
@@ -480,7 +480,7 @@ void avatar::Bot(int left, int top, int color1, int color2, int color3)
 	for (int i = 0; i < 4; i++) {
 		common::gotoXY(left + 22 + i, top + 2);
 		putchar(220);
-	}  
+	}
 	common::gotoXY(left + 22, top + 2);
 	putchar(219);
 	common::gotoXY(left + 21, top + 1);
