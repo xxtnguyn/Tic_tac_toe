@@ -38,7 +38,7 @@ public:
 	static void smallLostAmongUs(int, int, int);				// Vẽ among us khóc
 	static void Aura(int, int);									// Vẽ hào quang
 	static void biggerAura(int, int, int);							// Vẽ hào quang lớn
-	static void titleEffect(int, int, int, int, int, int);							// Tiêu đề
+	static void titleEffect(int, int, int, int, int, int, int, int);							// Tiêu đề
 	static void winnerSignature(int, int, int);						// Vẽ dòng chữ "WINNER"
 	static void loserSignature(int, int, int);					// Vẽ dòng chữ "LOSER"
 	static void musicIconOn(int, int);							// icon bật nhạc
@@ -61,4 +61,6 @@ public:
 	static void numberTransfer(int, int, int);					// biến số thành số lớn hơn bằng ký tự ascii
 	static void singleNumberTransfer(int, int, int);				// biến số thành số lớn (0 <= number <= 9) 
 	static void setTimer(int, int, int);										// cài thời gian để chơi
+	static void drawTitle(int, int);
+	static void resultTitle(int, int);
 };
