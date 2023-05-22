@@ -38,12 +38,11 @@ void gameplay::startGame()
 			if (_mode == 0 || (_turn == 1 && _countRounds % 2 == 0) || (_turn == 0 && _countRounds % 2 == 1))
 			{
 				if (_turn == 1) {
-					if (_mode == 0) time::printData(80, 16, _P2hour, _P2minute, _P2second, GRAY);
-					else time::printData(80, 16, _Bothour, _Botminute, _Botsecond, GRAY);
+					if (_mode == 0) time::printData(89, 20, _P2hour, _P2minute, _P2second, GRAY);
+					else time::printData(89, 20, _Bothour, _Botminute, _Botsecond, GRAY);
 					// time::stayTime(80, 9, _P1hour, _P1minute, _P1second, _P1ms, LIGHT_BLUE);
-					time::counter(80, 9, _P1hour, _P1minute, _P1second, _P1ms, input, LIGHT_BLUE);
- 					input = common::getConsoleInput();
-					common::gotoXY(80, 10); cout << input;
+					time::counter(89, 7, _P1hour, _P1minute, _P1second, _P1ms, input, LIGHT_BLUE);
+					input = common::getConsoleInput();
 					switch (input)
 					{
 					case 0:
@@ -79,9 +78,9 @@ void gameplay::startGame()
 					}
 				}
 				else if (_turn == 0 && _mode == 0) {
-					time::printData(80, 9, _P1hour, _P1minute, _P1second, GRAY);
+					time::printData(89, 7, _P1hour, _P1minute, _P1second, GRAY);
 					// time::stayTime(80, 16, _P2hour, _P2minute, _P2second, _P1ms, LIGHT_RED);
-					time::counter(80, 16, _P2hour, _P2minute, _P2second, _P2ms, input, LIGHT_RED);
+					time::counter(89, 20, _P2hour, _P2minute, _P2second, _P2ms, input, LIGHT_RED);
 					input = common::getConsoleInput();
 					switch (input)
 					{
@@ -120,6 +119,7 @@ void gameplay::startGame()
 			}
 			else
 			{
+				time::printData(89, 7, _P1hour, _P1minute, _P1second, GRAY);
 				gpoint p = (_mode == 1) ? _b->PVC_easy() : _b->PVC_hard();
 				moveToDirection(p.getX(), p.getY(), _Bothour, _Botminute, _Botsecond, _Botms);
 				processCheckBoard();
@@ -131,6 +131,7 @@ void gameplay::startGame()
 		askContinue();
 		if (_loop)
 		{
+			swap(_p1pos, _p2pos);
 			swap(_p1Name, _p2Name);
 			swap(_countP1Wins, _countP2Wins);
 		}
@@ -140,29 +141,341 @@ void gameplay::startGame()
 
 void gameplay::processCheckBoard()
 {
+	int col[7] = { 0, LIGHT_RED, LIGHT_BLUE, LIGHT_GREEN, LIGHT_PURPLE, BRIGHT_WHITE, LIGHT_YELLOW };
 	int c = _b->checkBoard(_x, _y, _turn);
 	if (c == -1 || c == 1)
 	{
-		//ommon::playSound(3);
+		//common::playSound(3);
 		common::gotoXY(_x, _y);
 		if (c == 1)
 		{
 			common::setConsoleColor(BRIGHT_WHITE, BLUE);
 			putchar(88);
-			common::gotoXY(86, 8);
+			common::gotoXY(86, 6); 
 			cout << _b->getCountX();
 		}
 		else
 		{
 			common::setConsoleColor(BRIGHT_WHITE, RED);
 			putchar(79);
-			common::gotoXY(86, 21);
+			common::gotoXY(86, 19); 
 			cout << _b->getCountO();
 		}
 		int result = processFinish();
 		if (result == 2)
 		{
-			int color[] = { RED, BLUE }, pos[] = { 22,9 };
+			if (_mode == 0)
+			{
+				int col[7] = { 0, LIGHT_RED, LIGHT_BLUE, LIGHT_GREEN, LIGHT_PURPLE, BRIGHT_WHITE, LIGHT_YELLOW };
+				if (_turn)
+				{
+					draw::printBoard(69, 1, 34, 10, LIGHT_BLUE);
+					common::setConsoleColor(BRIGHT_WHITE, GRAY);
+					draw::printRectangle(69, 14, 33, 10);
+					draw::printBigX(66, 2, LIGHT_BLUE, BRIGHT_WHITE);
+					common::gotoXY(86 - _p1Name.length() / 2, 3);
+					common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+					cout << _p1Name;
+					common::gotoXY(78, 5);
+					common::setConsoleColor(BRIGHT_WHITE, BLACK);
+					cout << "Winning Ratio:";
+					common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+					string score1 = to_string(_countP1Wins) + "/" + to_string(_countRounds);
+					common::gotoXY(94 - score1.find('/'), 5);
+					cout << score1;
+					common::gotoXY(78, 6);
+					common::setConsoleColor(BRIGHT_WHITE, BLACK);
+					cout << "Moves:";
+					common::gotoXY(78, 7);
+					cout << "Time left:";
+					common::gotoXY(86, 6);
+					common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+					cout << _b->getCountX();
+					if (_p1pos == 8)
+						avatar::leftAmongUsHead(89, _p1pos, col[_cp1]);
+					else
+						avatar::leftAmongUsHead(89, _p1pos, WHITE);
+
+					common::setConsoleColor(BRIGHT_WHITE, GRAY);
+					common::gotoXY(82, 16);
+					draw::printBigO(66, 15, GRAY, BRIGHT_WHITE);
+					common::gotoXY(86 - _p2Name.length() / 2, 16);
+					cout << _p2Name;
+					common::gotoXY(78, 18);
+					cout << "Winning Ratio:";
+					string score2 = to_string(_countP2Wins) + "/" + to_string(_countRounds);
+					common::gotoXY(94 - score2.find('/'), 18);
+					cout << score2;
+					common::gotoXY(78, 19);
+					cout << "Moves:";
+					common::gotoXY(78, 20);
+					cout << "Time left:";
+					common::gotoXY(86, 19);
+					cout << _b->getCountO();
+					if (_p1pos == 8)
+						avatar::leftAmongUsHead(89, _p2pos, WHITE);
+					else
+						avatar::leftAmongUsHead(89, _p2pos, col[_cp2]);
+				}
+				else
+				{
+					common::setConsoleColor(BRIGHT_WHITE, GRAY);
+					draw::printRectangle(69, 1, 33, 10);
+					draw::printBoard(69, 14, 34, 10, LIGHT_RED);
+					common::setConsoleColor(BRIGHT_WHITE, GRAY);
+					draw::printBigX(66, 2, GRAY, BRIGHT_WHITE);
+					common::gotoXY(86 - _p1Name.length() / 2, 3);
+					cout << _p1Name;
+					common::gotoXY(78, 5);
+					cout << "Winning Ratio:";
+					string score1 = to_string(_countP1Wins) + "/" + to_string(_countRounds);
+					common::gotoXY(94 - score1.find('/'), 5);
+					cout << score1;
+					common::gotoXY(78, 6);
+					cout << "Moves:";
+					common::gotoXY(78, 7);
+					cout << "Time left:";
+					common::gotoXY(86, 6);
+					cout << _b->getCountX();
+					if (_p1pos == 8)
+						avatar::leftAmongUsHead(89, _p1pos, WHITE);
+					else
+						avatar::leftAmongUsHead(89, _p1pos, col[_cp1]);
+
+					common::gotoXY(82, 16);
+					draw::printBigO(66, 15, LIGHT_RED, BRIGHT_WHITE);
+					common::gotoXY(86 - _p2Name.length() / 2, 16);
+					cout << _p2Name;
+					common::gotoXY(78, 18);
+					common::setConsoleColor(BRIGHT_WHITE, BLACK);
+					cout << "Winning Ratio:";
+					string score2 = to_string(_countP2Wins) + "/" + to_string(_countRounds);
+					common::gotoXY(94 - score2.find('/'), 18);
+					common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+					cout << score2;
+					common::gotoXY(78, 19);
+					common::setConsoleColor(BRIGHT_WHITE, BLACK);
+					cout << "Moves:";
+					common::gotoXY(78, 20);
+					cout << "Time left:";
+					common::gotoXY(86, 19);
+					common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+					cout << _b->getCountO();
+					if (_p1pos == 8)
+						avatar::leftAmongUsHead(89, _p2pos, col[_cp2]);
+					else
+						avatar::leftAmongUsHead(89, _p2pos, WHITE);
+				}
+			}
+			else if (_mode == 1)
+			{
+				int col[7] = { 0, LIGHT_RED, LIGHT_BLUE, LIGHT_GREEN, LIGHT_PURPLE, BRIGHT_WHITE, LIGHT_YELLOW };
+				if (_turn)
+				{
+					draw::printBoard(69, 1, 34, 10, LIGHT_BLUE);
+					common::setConsoleColor(BRIGHT_WHITE, GRAY);
+					draw::printRectangle(69, 14, 33, 10);
+					draw::printBigX(66, 2, LIGHT_BLUE, BRIGHT_WHITE);
+					common::gotoXY(86 - _p1Name.length() / 2, 3);
+					common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+					cout << _p1Name;
+					common::gotoXY(78, 5);
+					common::setConsoleColor(BRIGHT_WHITE, BLACK);
+					cout << "Winning Ratio:";
+					common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+					string score1 = to_string(_countP1Wins) + "/" + to_string(_countRounds);
+					common::gotoXY(94 - score1.find('/'), 5);
+					cout << score1;
+					common::gotoXY(78, 6);
+					common::setConsoleColor(BRIGHT_WHITE, BLACK);
+					cout << "Moves:";
+					common::gotoXY(78, 7);
+					cout << "Time left:";
+					common::gotoXY(86, 6);
+					common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+					cout << _b->getCountX();
+					if (_p1pos == 8)
+						avatar::leftAmongUsHead(89, _p1pos, col[_cp1]);
+					else
+						avatar::leftAmongUsHead(89, _p1pos, WHITE);
+
+
+					common::setConsoleColor(BRIGHT_WHITE, GRAY);
+					common::gotoXY(82, 16);
+					draw::printBigO(66, 15, GRAY, BRIGHT_WHITE);
+					common::gotoXY(86 - _p2Name.length() / 2, 16);
+					cout << _p2Name;
+					common::gotoXY(78, 18);
+					cout << "Winning Ratio:";
+					string score2 = to_string(_countP2Wins) + "/" + to_string(_countRounds);
+					common::gotoXY(94 - score2.find('/'), 18);
+					cout << score2;
+					common::gotoXY(78, 19);
+					cout << "Moves:";
+					common::gotoXY(78, 20);
+					cout << "Time left:";
+					common::gotoXY(86, 19);
+					cout << _b->getCountO();
+					if (_p1pos == 8)
+						avatar::BotHead(82, _p2pos, WHITE, GRAY);
+					else
+						avatar::BotHead(82, _p2pos, BRIGHT_WHITE, LIGHT_BLUE);
+				}
+				else
+				{
+					common::setConsoleColor(BRIGHT_WHITE, GRAY);
+					draw::printRectangle(69, 1, 33, 10);
+					draw::printBoard(69, 14, 34, 10, LIGHT_RED);
+					common::setConsoleColor(BRIGHT_WHITE, GRAY);
+					draw::printBigX(66, 2, GRAY, BRIGHT_WHITE);
+					common::gotoXY(86 - _p1Name.length() / 2, 3);
+					cout << _p1Name;
+					common::gotoXY(78, 5);
+					cout << "Winning Ratio:";
+					string score1 = to_string(_countP1Wins) + "/" + to_string(_countRounds);
+					common::gotoXY(94 - score1.find('/'), 5);
+					cout << score1;
+					common::gotoXY(78, 6);
+					cout << "Moves:";
+					common::gotoXY(78, 7);
+					cout << "Time left:";
+					common::gotoXY(86, 6);
+					cout << _b->getCountX();
+					if (_p1pos == 8)
+						avatar::leftAmongUsHead(89, _p1pos, WHITE);
+					else
+						avatar::leftAmongUsHead(89, _p1pos, col[_cp1]);
+					
+					common::gotoXY(82, 16);
+					draw::printBigO(66, 15, LIGHT_RED, BRIGHT_WHITE);
+					common::gotoXY(86 - _p2Name.length() / 2, 16);
+					cout << _p2Name;
+					common::gotoXY(78, 18);
+					common::setConsoleColor(BRIGHT_WHITE, BLACK);
+					cout << "Winning Ratio:";
+					string score2 = to_string(_countP2Wins) + "/" + to_string(_countRounds);
+					common::gotoXY(94 - score2.find('/'), 18);
+					common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+					cout << score2;
+					common::gotoXY(78, 19);
+					common::setConsoleColor(BRIGHT_WHITE, BLACK);
+					cout << "Moves:";
+					common::gotoXY(78, 20);
+					cout << "Time left:";
+					common::gotoXY(86, 19);
+					common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+					cout << _b->getCountO();
+					if (_p1pos == 8)
+						avatar::BotHead(82, _p2pos, BRIGHT_WHITE, LIGHT_BLUE);
+					else
+						avatar::BotHead(82, _p2pos, WHITE, GRAY);
+				}
+			}
+			else
+			{
+				int col[7] = { 0, LIGHT_RED, LIGHT_BLUE, LIGHT_GREEN, LIGHT_PURPLE, BRIGHT_WHITE, LIGHT_YELLOW };
+				if (_turn)
+				{
+					draw::printBoard(69, 1, 34, 10, LIGHT_BLUE);
+					common::setConsoleColor(BRIGHT_WHITE, GRAY);
+					draw::printRectangle(69, 14, 33, 10);
+					draw::printBigX(66, 2, LIGHT_BLUE, BRIGHT_WHITE);
+					common::gotoXY(86 - _p1Name.length() / 2, 3);
+					common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+					cout << _p1Name;
+					common::gotoXY(78, 5);
+					common::setConsoleColor(BRIGHT_WHITE, BLACK);
+					cout << "Winning Ratio:";
+					common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+					string score1 = to_string(_countP1Wins) + "/" + to_string(_countRounds);
+					common::gotoXY(94 - score1.find('/'), 5);
+					cout << score1;
+					common::gotoXY(78, 6);
+					common::setConsoleColor(BRIGHT_WHITE, BLACK);
+					cout << "Moves:";
+					common::gotoXY(78, 7);
+					cout << "Time left:";
+					common::gotoXY(86, 6);
+					common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+					cout << _b->getCountX();
+					if (_p1pos == 8)
+						avatar::leftAmongUsHead(89, _p1pos, col[_cp1]);
+					else
+						avatar::leftAmongUsHead(89, _p1pos, WHITE);
+
+					common::setConsoleColor(BRIGHT_WHITE, GRAY);
+					common::gotoXY(82, 16);
+					draw::printBigO(66, 15, GRAY, BRIGHT_WHITE);
+					common::gotoXY(86 - _p2Name.length() / 2, 16);
+					cout << _p2Name;
+					common::gotoXY(78, 18);
+					cout << "Winning Ratio:";
+					string score2 = to_string(_countP2Wins) + "/" + to_string(_countRounds);
+					common::gotoXY(94 - score2.find('/'), 18);
+					cout << score2;
+					common::gotoXY(78, 19);
+					cout << "Moves:";
+					common::gotoXY(78, 20);
+					cout << "Time left:";
+					common::gotoXY(86, 19);
+					cout << _b->getCountO();
+					if (_p1pos == 8)
+						avatar::BotHead(82, _p2pos, GRAY, BRIGHT_WHITE);
+					else
+						avatar::BotHead(82, _p2pos, RED, LIGHT_RED);
+				}
+				else
+				{
+					common::setConsoleColor(BRIGHT_WHITE, GRAY);
+					draw::printRectangle(69, 1, 33, 10);
+					draw::printBoard(69, 14, 34, 10, LIGHT_RED);
+					common::setConsoleColor(BRIGHT_WHITE, GRAY);
+					draw::printBigX(66, 2, GRAY, BRIGHT_WHITE);
+					common::gotoXY(86 - _p1Name.length() / 2, 3);
+					cout << _p1Name;
+					common::gotoXY(78, 5);
+					cout << "Winning Ratio:";
+					string score1 = to_string(_countP1Wins) + "/" + to_string(_countRounds);
+					common::gotoXY(94 - score1.find('/'), 5);
+					cout << score1;
+					common::gotoXY(78, 6);
+					cout << "Moves:";
+					common::gotoXY(78, 7);
+					cout << "Time left:";
+					common::gotoXY(86, 6);
+					cout << _b->getCountX();
+					if (_p1pos == 8)
+						avatar::leftAmongUsHead(89, _p1pos, WHITE);
+					else
+						avatar::leftAmongUsHead(89, _p1pos, col[_cp1]);
+
+					common::gotoXY(82, 16);
+					draw::printBigO(66, 15, LIGHT_RED, BRIGHT_WHITE);
+					common::gotoXY(86 - _p2Name.length() / 2, 16);
+					cout << _p2Name;
+					common::gotoXY(78, 18);
+					common::setConsoleColor(BRIGHT_WHITE, BLACK);
+					cout << "Winning Ratio:";
+					string score2 = to_string(_countP2Wins) + "/" + to_string(_countRounds);
+					common::gotoXY(94 - score2.find('/'), 18);
+					common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+					cout << score2;
+					common::gotoXY(78, 19);
+					common::setConsoleColor(BRIGHT_WHITE, BLACK);
+					cout << "Moves:";
+					common::gotoXY(78, 20);
+					cout << "Time left:";
+					common::gotoXY(86, 19);
+					common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+					cout << _b->getCountO();
+					if (_p1pos == 8)
+						avatar::BotHead(82, _p2pos, RED, LIGHT_RED);
+					else
+						avatar::BotHead(82, _p2pos, GRAY, BRIGHT_WHITE);
+		
+				}
+			}
+			/*int color[] = { RED, BLUE }, pos[] = { 22,9 };
 			if (_turn)
 			{
 				draw::printBoard(69, 1, 34, 10, LIGHT_BLUE);
@@ -185,7 +498,7 @@ void gameplay::processCheckBoard()
 				common::gotoXY(86, 8);
 				common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
 				cout << _b->getCountX();
-				avatar::leftAmongUsHead(89, 8, LIGHT_BLUE);
+				avatar::leftAmongUsHead(89, 8, col[_cp1]);
 
 				common::setConsoleColor(BRIGHT_WHITE, GRAY);
 				common::gotoXY(82, 16);
@@ -240,11 +553,11 @@ void gameplay::processCheckBoard()
 				common::gotoXY(86, 21);
 				common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
 				cout << _b->getCountO();
-				avatar::leftAmongUsHead(89, 21, LIGHT_RED);
+				avatar::leftAmongUsHead(89, 21, col[_cp2]);
 			}
 			common::gotoXY(_x, _y);
 			_showCursor = true;
-			common::showCursor(_showCursor);
+			common::showCursor(_showCursor);*/
 		}
 	}
 	else
@@ -269,7 +582,8 @@ int gameplay::processFinish()
 			if (_p2Name != "Computer")
 				printYouWin();
 			else
-				printYouLose();
+				printBotWin();
+				// printYouLose();
 			break;
 		case 1:
 			_finish = 1;
@@ -278,7 +592,8 @@ int gameplay::processFinish()
 			if (_p1Name != "Computer")
 				printYouWin();
 			else
-				printYouLose();
+				printBotWin();
+				// printYouLose();
 			break;
 		case 0:
 			_finish = 1;
@@ -437,101 +752,367 @@ void gameplay::printTurnSymbol()
 
 void gameplay::printInterface()
 {
-	common::setConsoleColor(BRIGHT_WHITE, BLACK);
-	_b->drawBoard();
-	if (_loadSymbols)
+	if (_mode == 0)
 	{
-		printLoadedSymbols();
-		_loadSymbols = 0;
-	}
-	if (_turn)
-	{
-		draw::printBoard(69, 1, 34, 10, LIGHT_BLUE);
-		common::setConsoleColor(BRIGHT_WHITE, GRAY);
-		draw::printRectangle(69, 14, 33, 10);
-		draw::printBigX(66, 2, LIGHT_BLUE, BRIGHT_WHITE);
-		common::gotoXY(86 - _p1Name.length() / 2, 4);
-		common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
-		cout << _p1Name;
-		common::gotoXY(80, 5);
+		int col[7] = { 0, LIGHT_RED, LIGHT_BLUE, LIGHT_GREEN, LIGHT_PURPLE, BRIGHT_WHITE, LIGHT_YELLOW };
 		common::setConsoleColor(BRIGHT_WHITE, BLACK);
-		cout << "Winning Ratio:";
-		common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
-		string score1 = to_string(_countP1Wins) + "/" + to_string(_countRounds);
-		common::gotoXY(86 - score1.find('/'), 6);
-		cout << score1;
-		common::gotoXY(84, 7);
-		common::setConsoleColor(BRIGHT_WHITE, BLACK);
-		cout << "Moves:";
-		common::gotoXY(86, 8);
-		common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
-		cout << _b->getCountX();
-		avatar::leftAmongUsHead(89, 8, LIGHT_BLUE);
+		_b->drawBoard();
+		if (_loadSymbols)
+		{
+			printLoadedSymbols();
+			_loadSymbols = 0;
+		}
+		if (_turn)
+		{
+			draw::printBoard(69, 1, 34, 10, LIGHT_BLUE);
+			common::setConsoleColor(BRIGHT_WHITE, GRAY);
+			draw::printRectangle(69, 14, 33, 10);
+			draw::printBigX(66, 2, LIGHT_BLUE, BRIGHT_WHITE);
+			common::gotoXY(86 - _p1Name.length() / 2, 3);
+			common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+			cout << _p1Name;
+			common::gotoXY(78, 5);
+			common::setConsoleColor(BRIGHT_WHITE, BLACK);
+			cout << "Winning Ratio:";
+			common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+			string score1 = to_string(_countP1Wins) + "/" + to_string(_countRounds);
+			common::gotoXY(94 - score1.find('/'), 5);
+			cout << score1;
+			common::gotoXY(78, 6);
+			common::setConsoleColor(BRIGHT_WHITE, BLACK);
+			cout << "Moves:";
+			common::gotoXY(78, 7);
+			cout << "Time left:";
+			common::gotoXY(86, 6);
+			common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+			cout << _b->getCountX();
+			if (_p1pos == 8)
+				avatar::leftAmongUsHead(89, _p1pos, col[_cp1]);
+			else
+				avatar::leftAmongUsHead(89, _p1pos, WHITE);
 
-		common::setConsoleColor(BRIGHT_WHITE, GRAY);
-		common::gotoXY(82, 16);
-		draw::printBigO(66, 15, GRAY, BRIGHT_WHITE);
-		common::gotoXY(86 - _p2Name.length() / 2, 17);
-		cout << _p2Name;
-		common::gotoXY(80, 18);
-		cout << "Winning Ratio:";
-		string score2 = to_string(_countP2Wins) + "/" + to_string(_countRounds);
-		common::gotoXY(86 - score2.find('/'), 19);
-		cout << score2;
-		common::gotoXY(84, 20);
-		cout << "Moves:";
-		common::gotoXY(86, 21);
-		cout << _b->getCountO();
-		avatar::leftAmongUsHead(89, 21, WHITE);
+			common::setConsoleColor(BRIGHT_WHITE, GRAY);
+			common::gotoXY(82, 16);
+			draw::printBigO(66, 15, GRAY, BRIGHT_WHITE);
+			common::gotoXY(86 - _p2Name.length() / 2, 16);
+			cout << _p2Name;
+			common::gotoXY(78, 18);
+			cout << "Winning Ratio:";
+			string score2 = to_string(_countP2Wins) + "/" + to_string(_countRounds);
+			common::gotoXY(94 - score2.find('/'), 18);
+			cout << score2;
+			common::gotoXY(78, 19);
+			cout << "Moves:";
+			common::gotoXY(78, 20);
+			cout << "Time left:";
+			common::gotoXY(86, 19);
+			cout << _b->getCountO();
+			if (_p1pos == 8)
+				avatar::leftAmongUsHead(89, _p2pos, WHITE);
+			else
+				avatar::leftAmongUsHead(89, _p2pos, col[_cp2]);
+		}
+		else
+		{
+			common::setConsoleColor(BRIGHT_WHITE, GRAY);
+			draw::printRectangle(69, 1, 33, 10);
+			draw::printBoard(69, 14, 34, 10, LIGHT_RED);
+			common::setConsoleColor(BRIGHT_WHITE, GRAY);
+			draw::printBigX(66, 2, GRAY, BRIGHT_WHITE);
+			common::gotoXY(86 - _p1Name.length() / 2, 3);
+			cout << _p1Name;
+			common::gotoXY(78, 5);
+			cout << "Winning Ratio:";
+			string score1 = to_string(_countP1Wins) + "/" + to_string(_countRounds);
+			common::gotoXY(94 - score1.find('/'), 5);
+			cout << score1;
+			common::gotoXY(78, 6);
+			cout << "Moves:";
+			common::gotoXY(78, 7);
+			common::gotoXY(86, 6);
+			cout << _b->getCountX();
+			if (_p1pos == 8)
+				avatar::leftAmongUsHead(89, _p1pos, WHITE);
+			else
+				avatar::leftAmongUsHead(89, _p1pos, col[_cp1]);	
+
+			common::gotoXY(82, 16);
+			draw::printBigO(66, 15, LIGHT_RED, BRIGHT_WHITE);
+			common::gotoXY(86 - _p2Name.length() / 2, 16);
+			cout << _p2Name;
+			common::gotoXY(78, 18);
+			common::setConsoleColor(BRIGHT_WHITE, BLACK);
+			cout << "Winning Ratio:";
+			string score2 = to_string(_countP2Wins) + "/" + to_string(_countRounds);
+			common::gotoXY(94 - score2.find('/'), 18);
+			common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+			cout << score2;
+			common::gotoXY(78, 19);
+			common::setConsoleColor(BRIGHT_WHITE, BLACK);
+			cout << "Moves:";
+			common::gotoXY(78, 20);
+			cout << "Time left:";
+			common::gotoXY(86, 19);
+			common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+			cout << _b->getCountO();
+			if (_p1pos == 8)
+				avatar::leftAmongUsHead(89, _p2pos, col[_cp2]);
+			else
+				avatar::leftAmongUsHead(89, _p2pos, WHITE);
+		}
+		common::setConsoleColor(BRIGHT_WHITE, BLUE);
+		draw::printRectangle(69, 27, 14, 2);
+		common::setConsoleColor(BRIGHT_WHITE, RED);
+		draw::printRectangle(88, 27, 14, 2);
+		common::setConsoleColor(BRIGHT_WHITE, BLACK);
+		common::gotoXY(73, 28);
+		cout << "SAVE (P)";
+		common::gotoXY(91, 28);
+		cout << "BACK (ESC)";
+		if (!_turn) common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+		else common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+	}
+	else if (_mode == 1)
+	{
+		int col[7] = { 0, LIGHT_RED, LIGHT_BLUE, LIGHT_GREEN, LIGHT_PURPLE, BRIGHT_WHITE, LIGHT_YELLOW };
+		common::setConsoleColor(BRIGHT_WHITE, BLACK);
+		_b->drawBoard();
+		if (_loadSymbols)
+		{
+			printLoadedSymbols();
+			_loadSymbols = 0;
+		}
+		if (_turn)
+		{
+			draw::printBoard(69, 1, 34, 10, LIGHT_BLUE);
+			common::setConsoleColor(BRIGHT_WHITE, GRAY);
+			draw::printRectangle(69, 14, 33, 10);
+			draw::printBigX(66, 2, LIGHT_BLUE, BRIGHT_WHITE);
+			common::gotoXY(86 - _p1Name.length() / 2, 3);
+			common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+			cout << _p1Name;
+			common::gotoXY(78, 5);
+			common::setConsoleColor(BRIGHT_WHITE, BLACK);
+			cout << "Winning Ratio:";
+			common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+			string score1 = to_string(_countP1Wins) + "/" + to_string(_countRounds);
+			common::gotoXY(94 - score1.find('/'), 5);
+			cout << score1;
+			common::gotoXY(78, 6);
+			common::setConsoleColor(BRIGHT_WHITE, BLACK);
+			cout << "Moves:";
+			common::gotoXY(78, 7);
+			cout << "Time left:";
+			common::gotoXY(86, 6);
+			common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+			cout << _b->getCountX();
+			if (_p1pos == 8)
+				avatar::leftAmongUsHead(89, _p1pos, col[_cp1]);
+			else
+				avatar::leftAmongUsHead(89, _p1pos, WHITE);
+
+			common::setConsoleColor(BRIGHT_WHITE, GRAY);
+			common::gotoXY(82, 16);
+			draw::printBigO(66, 15, GRAY, BRIGHT_WHITE);
+			common::gotoXY(86 - _p2Name.length() / 2, 16);
+			cout << _p2Name;
+			common::gotoXY(78, 18);
+			cout << "Winning Ratio:";
+			string score2 = to_string(_countP2Wins) + "/" + to_string(_countRounds);
+			common::gotoXY(94 - score2.find('/'), 18);
+			cout << score2;
+			common::gotoXY(78, 19);
+			cout << "Moves:";
+			common::gotoXY(78, 20);
+			cout << "Time left:";
+			common::gotoXY(86, 19);
+			cout << _b->getCountO();
+			if (_p1pos == 8)
+				avatar::BotHead(82, _p2pos, WHITE, GRAY);
+			else
+				avatar::BotHead(82, _p2pos, BRIGHT_WHITE, LIGHT_BLUE);
+		}
+		else
+		{
+			common::setConsoleColor(BRIGHT_WHITE, GRAY);
+			draw::printRectangle(69, 1, 33, 10);
+			draw::printBoard(69, 14, 34, 10, LIGHT_RED);
+			common::setConsoleColor(BRIGHT_WHITE, GRAY);
+			draw::printBigX(66, 2, GRAY, BRIGHT_WHITE);
+			common::gotoXY(86 - _p1Name.length() / 2, 3);
+			cout << _p1Name;
+			common::gotoXY(78, 5);
+			cout << "Winning Ratio:";
+			string score1 = to_string(_countP1Wins) + "/" + to_string(_countRounds);
+			common::gotoXY(94 - score1.find('/'), 5);
+			cout << score1;
+			common::gotoXY(78, 6);
+			cout << "Moves:";
+			common::gotoXY(78, 7);
+			cout << "Time left:";
+			common::gotoXY(86, 6);
+			cout << _b->getCountX();
+			if (_p1pos == 8)
+				avatar::leftAmongUsHead(89, _p1pos, WHITE);
+			else
+				avatar::leftAmongUsHead(89, _p1pos, col[_cp1]);
+
+			common::gotoXY(82, 16);
+			draw::printBigO(66, 15, LIGHT_RED, BRIGHT_WHITE);
+			common::gotoXY(86 - _p2Name.length() / 2, 16);
+			cout << _p2Name;
+			common::gotoXY(78, 18);
+			common::setConsoleColor(BRIGHT_WHITE, BLACK);
+			cout << "Winning Ratio:";
+			string score2 = to_string(_countP2Wins) + "/" + to_string(_countRounds);
+			common::gotoXY(94 - score2.find('/'), 18);
+			common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+			cout << score2;
+			common::gotoXY(78, 19);
+			common::setConsoleColor(BRIGHT_WHITE, BLACK);
+			cout << "Moves:";
+			common::gotoXY(78, 20);
+			common::gotoXY(86, 19);
+			common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+			cout << _b->getCountO();
+			if (_p1pos == 8)
+				avatar::BotHead(82, _p2pos, BRIGHT_WHITE, LIGHT_BLUE);
+			else
+				avatar::BotHead(82, _p2pos, WHITE, GRAY);
+		}
+		common::setConsoleColor(BRIGHT_WHITE, BLUE);
+		draw::printRectangle(69, 27, 14, 2);
+		common::setConsoleColor(BRIGHT_WHITE, RED);
+		draw::printRectangle(88, 27, 14, 2);
+		common::setConsoleColor(BRIGHT_WHITE, BLACK);
+		common::gotoXY(73, 28);
+		cout << "SAVE (P)";
+		common::gotoXY(91, 28);
+		cout << "BACK (ESC)";
+		if (!_turn) common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+		else common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
 	}
 	else
 	{
-		common::setConsoleColor(BRIGHT_WHITE, GRAY);
-		draw::printRectangle(69, 1, 33, 10);
-		draw::printBoard(69, 14, 34, 10, LIGHT_RED);
-		common::setConsoleColor(BRIGHT_WHITE, GRAY);
-		draw::printBigX(66, 2, GRAY, BRIGHT_WHITE);
-		common::gotoXY(86 - _p1Name.length() / 2, 4);
-		cout << _p1Name;
-		common::gotoXY(80, 5);
-		cout << "Winning Ratio:";
-		string score1 = to_string(_countP1Wins) + "/" + to_string(_countRounds);
-		common::gotoXY(86 - score1.find('/'), 6);
-		cout << score1;
-		common::gotoXY(84, 7);
-		cout << "Moves:";
-		common::gotoXY(86, 8);
-		cout << _b->getCountX();
-		common::gotoXY(82, 16);
-		draw::printBigO(66, 15, LIGHT_RED, BRIGHT_WHITE);
-		common::gotoXY(86 - _p2Name.length() / 2, 17);
-		cout << _p2Name;
-		common::gotoXY(80, 18);
+		int col[7] = { 0, LIGHT_RED, LIGHT_BLUE, LIGHT_GREEN, LIGHT_PURPLE, BRIGHT_WHITE, LIGHT_YELLOW };
 		common::setConsoleColor(BRIGHT_WHITE, BLACK);
-		cout << "Winning Ratio:";
-		string score2 = to_string(_countP2Wins) + "/" + to_string(_countRounds);
-		common::gotoXY(86 - score2.find('/'), 19);
-		common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
-		cout << score2;
-		common::gotoXY(84, 20);
+		_b->drawBoard();
+		if (_loadSymbols)
+		{
+			printLoadedSymbols();
+			_loadSymbols = 0;
+		}
+		if (_turn)
+		{
+			draw::printBoard(69, 1, 34, 10, LIGHT_BLUE);
+			common::setConsoleColor(BRIGHT_WHITE, GRAY);
+			draw::printRectangle(69, 14, 33, 10);
+			draw::printBigX(66, 2, LIGHT_BLUE, BRIGHT_WHITE);
+			common::gotoXY(86 - _p1Name.length() / 2, 3);
+			common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+			cout << _p1Name;
+			common::gotoXY(78, 5);
+			common::setConsoleColor(BRIGHT_WHITE, BLACK);
+			cout << "Winning Ratio:";
+			common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+			string score1 = to_string(_countP1Wins) + "/" + to_string(_countRounds);
+			common::gotoXY(94 - score1.find('/'), 5);
+			cout << score1;
+			common::gotoXY(78, 6);
+			common::setConsoleColor(BRIGHT_WHITE, BLACK);
+			cout << "Moves:";
+			common::gotoXY(78, 7);
+			cout << "Time left:";
+			common::gotoXY(86, 6);
+			common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+			cout << _b->getCountX();
+			if (_p1pos == 8)
+				avatar::leftAmongUsHead(89, _p1pos, col[_cp1]);
+			else
+				avatar::leftAmongUsHead(89, _p1pos, WHITE);
+
+			common::setConsoleColor(BRIGHT_WHITE, GRAY);
+			common::gotoXY(82, 16);
+			draw::printBigO(66, 15, GRAY, BRIGHT_WHITE);
+			common::gotoXY(86 - _p2Name.length() / 2, 16);
+			cout << _p2Name;
+			common::gotoXY(78, 18);
+			cout << "Winning Ratio:";
+			string score2 = to_string(_countP2Wins) + "/" + to_string(_countRounds);
+			common::gotoXY(94 - score2.find('/'), 18);
+			cout << score2;
+			common::gotoXY(78, 19);
+			cout << "Moves:";
+			common::gotoXY(78, 20);
+			cout << "Time left:";
+			common::gotoXY(86, 19);
+			cout << _b->getCountO();
+			if (_p1pos == 8)
+				avatar::BotHead(82, _p2pos, GRAY, BRIGHT_WHITE);
+			else
+				avatar::BotHead(82, _p2pos, RED, LIGHT_RED);
+		}
+		else
+		{
+			common::setConsoleColor(BRIGHT_WHITE, GRAY);
+			draw::printRectangle(69, 1, 33, 10);
+			draw::printBoard(69, 14, 34, 10, LIGHT_RED);
+			common::setConsoleColor(BRIGHT_WHITE, GRAY);
+			draw::printBigX(66, 2, GRAY, BRIGHT_WHITE);
+			common::gotoXY(86 - _p1Name.length() / 2, 3);
+			cout << _p1Name;
+			common::gotoXY(78, 5);
+			cout << "Winning Ratio:";
+			string score1 = to_string(_countP1Wins) + "/" + to_string(_countRounds);
+			common::gotoXY(94 - score1.find('/'), 5);
+			cout << score1;
+			common::gotoXY(78, 6);
+			cout << "Moves:";
+			common::gotoXY(78, 7);
+			cout << "Time left:";
+			common::gotoXY(86, 6);
+			cout << _b->getCountX();
+			if (_p1pos == 8)
+				avatar::leftAmongUsHead(89, _p1pos, WHITE);
+			else
+				avatar::leftAmongUsHead(89, _p1pos, col[_cp1]);
+
+			common::gotoXY(82, 16);
+			draw::printBigO(66, 15, LIGHT_RED, BRIGHT_WHITE);
+			common::gotoXY(86 - _p2Name.length() / 2, 16);
+			cout << _p2Name;
+			common::gotoXY(78, 18);
+			common::setConsoleColor(BRIGHT_WHITE, BLACK);
+			cout << "Winning Ratio:";
+			string score2 = to_string(_countP2Wins) + "/" + to_string(_countRounds);
+			common::gotoXY(94 - score2.find('/'), 18);
+			common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+			cout << score2;
+			common::gotoXY(78, 19);
+			common::setConsoleColor(BRIGHT_WHITE, BLACK);
+			cout << "Moves:";
+			common::gotoXY(78, 20);
+			cout << "Time left:";
+			common::gotoXY(86, 19);
+			common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+			cout << _b->getCountO();
+			if (_p1pos == 8)
+				avatar::BotHead(82, _p2pos, RED, LIGHT_RED);
+			else
+				avatar::BotHead(82, _p2pos, GRAY, BRIGHT_WHITE);
+		}
+		common::setConsoleColor(BRIGHT_WHITE, BLUE);
+		draw::printRectangle(69, 27, 14, 2);
+		common::setConsoleColor(BRIGHT_WHITE, RED);
+		draw::printRectangle(88, 27, 14, 2);
 		common::setConsoleColor(BRIGHT_WHITE, BLACK);
-		cout << "Moves:";
-		common::gotoXY(86, 21);
-		common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
-		cout << _b->getCountO();
-	}
-	common::setConsoleColor(BRIGHT_WHITE, BLUE);
-	draw::printRectangle(75, 27, 12, 2);
-	common::setConsoleColor(BRIGHT_WHITE, RED);
-	draw::printRectangle(90, 27, 12, 2);
-	common::setConsoleColor(BRIGHT_WHITE, BLACK);
-	common::gotoXY(78, 28);
-	cout << "SAVE (P)";
-	common::gotoXY(92, 28);
-	cout << "BACK (ESC)";
-	draw::musicIconOn(67, 27);
-	if(!_turn) common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
-	else common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+		common::gotoXY(73, 28);
+		cout << "SAVE (P)";
+		common::gotoXY(91, 28);
+		cout << "BACK (ESC)";
+		if (!_turn) common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+		else common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+    }
 }
 
 void gameplay::moveToDirection(int x, int y, int& hour, int& minute, int& second, int& ms)
@@ -542,7 +1123,8 @@ void gameplay::moveToDirection(int x, int y, int& hour, int& minute, int& second
 	{
 		Sleep(250);
 		countTime = 1;
-		time::timerForBot(80, 16, hour, minute, second, ms, LIGHT_RED, countTime);
+		common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+		time::timerForBot(89, 20, hour, minute, second, ms, LIGHT_RED, countTime);
 		countTime = 0;
 		moveRight();
 	}
@@ -550,7 +1132,8 @@ void gameplay::moveToDirection(int x, int y, int& hour, int& minute, int& second
 	{
 		Sleep(250);
 		countTime = 1;
-		time::timerForBot(80, 16, hour, minute, second, ms, LIGHT_RED, countTime);
+		common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+		time::timerForBot(89, 20, hour, minute, second, ms, LIGHT_RED, countTime);
 		countTime = 0;
 		moveLeft();
 	}
@@ -558,7 +1141,8 @@ void gameplay::moveToDirection(int x, int y, int& hour, int& minute, int& second
 	{
 		Sleep(250);
 		countTime = 1;
-		time::timerForBot(80, 16, hour, minute, second, ms, LIGHT_RED, countTime);
+		common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+		time::timerForBot(89, 20, hour, minute, second, ms, LIGHT_RED, countTime);
 		countTime = 0;
 		moveDown();
 	}
@@ -566,7 +1150,8 @@ void gameplay::moveToDirection(int x, int y, int& hour, int& minute, int& second
 	{
 		Sleep(250);
 		countTime = 1;
-		time::timerForBot(80, 16, hour, minute, second, ms, LIGHT_RED, countTime);
+		common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+		time::timerForBot(89, 20, hour, minute, second, ms, LIGHT_RED, countTime);
 		countTime = 0;
 		moveUp();
 	}
@@ -585,6 +1170,10 @@ void gameplay::setUpGame(int mode, string fileName)
 		inFile >> _countRounds;
 		inFile >> _countP1Wins;
 		inFile >> _countP2Wins;
+		inFile >> _cp1;
+		inFile >> _cp2;
+		inFile >> _p1pos;
+		inFile >> _p2pos;
 		inFile >> _finish;
 		if (!_finish)
 		{
@@ -599,6 +1188,8 @@ void gameplay::setUpGame(int mode, string fileName)
 	}
 	else
 	{
+		_p1pos = 8;
+		_p2pos = 22;
 		common::setConsoleColor(BRIGHT_WHITE, GRAY);
 		common::clearConsole();
 		draw::printLogo();
@@ -623,6 +1214,36 @@ void gameplay::setUpGame(int mode, string fileName)
 			common::gotoXY(75, 23);
 			getline(cin, _p2Name);
 			common::showCursor(false);
+		}
+		else if (_mode == 1)
+		{
+			common::setConsoleColor(BRIGHT_WHITE, LIGHT_BLUE);
+			common::gotoXY(27, 21);
+			cout << "X player's:  ";
+			common::gotoXY(28, 23);
+			common::showCursor(true);
+			getline(cin, _p1Name);
+			common::setConsoleColor(BRIGHT_WHITE, LIGHT_RED);
+			common::gotoXY(74, 21);
+			cout << "O player's:  ";
+			common::gotoXY(75, 23);
+			common::showCursor(false);
+			cout << "Computer";
+			Sleep(500);
+			common::gotoXY(75, 23);
+			cout << "        ";
+			Sleep(500);
+			common::gotoXY(75, 23);
+			cout << "Computer";
+			Sleep(500);
+			common::gotoXY(75, 23);
+			cout << "        ";
+			Sleep(500);
+			common::gotoXY(75, 23);
+			cout << "Computer";
+			Sleep(1000);
+			_p2Name = "Computer";
+			_cp2 = 1;
 		}
 		else
 		{
@@ -652,9 +1273,12 @@ void gameplay::setUpGame(int mode, string fileName)
 			cout << "Computer";
 			Sleep(1000);
 			_p2Name = "Computer";
+			_cp2 = 2;
 		}
 		common::showCursor(false);
 		_b->resetData();
+		Sleep(1000);
+		chooseAvatarScreen(mode);
 	}
 }
 
@@ -706,6 +1330,10 @@ void gameplay::saveData()
 	outFile << _countRounds << endl;
 	outFile << _countP1Wins << endl;
 	outFile << _countP2Wins << endl;
+	outFile << _cp1 << endl;
+	outFile << _cp2 << endl;
+	outFile << _p1pos << endl;
+	outFile << _p2pos << endl;
 	outFile << _finish << endl;
 	if (!_finish)
 	{
@@ -822,61 +1450,20 @@ void gameplay::askContinue()
 
 void gameplay::printPlayerWin(int pWhoWin)
 {
-	string playerName;
-	if (pWhoWin == -1)
-	{
-		playerName = _p2Name;
-	}
-	else playerName = _p1Name;
-	common::playSound(6);
-	common::setConsoleColor(BRIGHT_WHITE, BLACK);
 	common::clearConsole();
-	unsigned char win[] = {
-		32 , 32 , 32 ,176, 219, 219, 187, 176, 176, 176, 176, 176, 176, 176, 219, 219, 187, 219, 219, 187, 219, 219, 219, 187, 176, 176, 219, 219, 187, 32 , 32 , 32 , 32 ,
-		32 , 32 , 32 ,176, 219, 219, 186, 176, 176, 219, 219, 187, 176, 176, 219, 219, 186, 219, 219, 186, 219, 219, 219, 219, 187, 176, 219, 219, 186, 32 , 32 , 32 , 32 ,
-		32 , 32 , 32 ,176, 200, 219, 219, 187, 219, 219, 219, 219, 187, 219, 219, 201, 188, 219, 219, 186, 219, 219, 201, 219, 219, 187, 219, 219, 186, 32 , 32 , 32 , 32 ,
-		32 , 32 , 32 ,176, 176, 219, 219, 219, 219, 201, 205, 219, 219, 219, 219, 186, 176, 219, 219, 186, 219, 219, 186, 200, 219, 219, 219, 219, 186, 32 , 32 , 32 , 32 ,
-		32 , 32 , 32 ,176, 176, 200, 219, 219, 201, 188, 176, 200, 219, 219, 201, 188, 176, 219, 219, 186, 219, 219, 186, 176, 200, 219, 219, 219, 186, 32 , 32 , 32 , 32 ,
-		32 , 32 , 32 ,176, 176, 176, 200, 205, 188, 176, 176, 176, 200, 205, 188, 176, 176, 200, 205, 188, 200, 205, 188, 176, 176, 200, 205, 205, 188, 32 , 32 , 32 , 32 ,
-	};
-	int top = 6, num_char = 33, count = 0;
-	int color[] = { RED, YELLOW, GREEN, AQUA, BLUE, PURPLE };
-	common::gotoXY(53 - playerName.size() / 2, 3);
-	cout << playerName;
-	if (playerName == _p1Name) {
-		/*avatar::leftAmongUs(45, 5, LIGHT_RED, RED);*/
+	if (pWhoWin == 1) { // player 1 thắng
+		draw::titleEffect(2, 2, _cp1, _cp2, LIGHT_BLUE, 1, 0, 0); 
+		Sleep(3000);
+		draw::titleEffect(2, 2, _cp1, _cp2, LIGHT_RED, 0, 0, 0);
+		Sleep(3000);
 	}
 	else {
-		/*avatar::leftAmongUs(20, 10, LIGHT_BLUE, BLUE);*/
+		draw::titleEffect(2, 2, _cp2, _cp1, LIGHT_RED, 1, 0, 0);
+		Sleep(3000);
+		draw::titleEffect(2, 2, _cp2, _cp1, LIGHT_BLUE, 0, 0, 0);
+		Sleep(3000);
 	}
-	Sleep(500);
-	for (int i = 1;i <= 3;i++)
-	{
-		count = 0;
-		while (count++ < 5)
-		{
-
-			common::setConsoleColor(BRIGHT_WHITE, color[count]);
-			for (int i = 0; i < 6; i++)
-			{
-				common::gotoXY(37, i + top + 7);
-				for (int j = 0; j < num_char; j++)
-				{
-					putchar(win[i * num_char + j]);
-				}
-			}
-			Sleep(300);
-			for (int i = 0; i < 6; i++)
-			{
-				common::gotoXY(37, i + top + 7);
-				for (int j = 0; j < num_char; j++)
-				{
-					putchar(32);
-				}
-			}
-			Sleep(50);
-		}
-	}
+	common::clearConsole();
 }
 
 void gameplay::printBotWin()
@@ -884,44 +1471,13 @@ void gameplay::printBotWin()
 	common::playSound(7);
 	common::setConsoleColor(BRIGHT_WHITE, BLACK);
 	common::clearConsole();
-	unsigned char Bot_1[] = {
-		176, 219, 219, 219, 219, 219, 187, 176, 176, 219, 219, 219, 219, 219, 187, 176, 219, 219, 219, 187, 176, 176, 176, 219, 219, 219, 187, 219, 219, 219, 219, 219, 219, 187, 176, 219, 219, 187, 176, 176, 176, 219, 219, 187, 219, 219, 219, 219, 219, 219, 219, 219, 187, 219, 219, 219, 219, 219, 219, 219, 187, 219, 219, 219, 219, 219, 219, 187, 176,
-		219, 219, 201, 205, 205, 219, 219, 187, 219, 219, 201, 205, 205, 219, 219, 187, 219, 219, 219, 219, 187, 176, 219, 219, 219, 219, 186, 219, 219, 201, 205, 205, 219, 219, 187, 219, 219, 186, 176, 176, 176, 219, 219, 186, 200, 205, 205, 219, 219, 201, 205, 205, 188, 219, 219, 201, 205, 205, 205, 205, 188, 219, 219, 201, 205, 205, 219, 219, 187,
-		219, 219, 186, 176, 176, 200, 205, 188, 219, 219, 186, 176, 176, 219, 219, 186, 219, 219, 201, 219, 219, 219, 219, 201, 219, 219, 186, 219, 219, 219, 219, 219, 219, 201, 188, 219, 219, 186, 176, 176, 176, 219, 219, 186, 176, 176, 176, 219, 219, 186, 176, 176, 176, 219, 219, 219, 219, 219, 187, 176, 176, 219, 219, 219, 219, 219, 219, 201, 188,
-		219, 219, 186, 176, 176, 219, 219, 187, 219, 219, 186, 176, 176, 219, 219, 186, 219, 219, 186, 200, 219, 219, 201, 188, 219, 219, 186, 219, 219, 201, 205, 205, 205, 188, 176, 219, 219, 186, 176, 176, 176, 219, 219, 186, 176, 176, 176, 219, 219, 186, 176, 176, 176, 219, 219, 201, 205, 205, 188, 176, 176, 219, 219, 201, 205, 205, 219, 219, 187,
-		200, 219, 219, 219, 219, 219, 201, 188, 200, 219, 219, 219, 219, 219, 201, 188, 219, 219, 186, 176, 200, 205, 188, 176, 219, 219, 186, 219, 219, 186, 176, 176, 176, 176, 176, 200, 219, 219, 219, 219, 219, 219, 201, 188, 176, 176, 176, 219, 219, 186, 176, 176, 176, 219, 219, 219, 219, 219, 219, 219, 187, 219, 219, 186, 176, 176, 219, 219, 186,
-		176, 200, 205, 205, 205, 205, 188, 176, 176, 200, 205, 205, 205, 205, 188, 176, 200, 205, 188, 176, 176, 176, 176, 176, 200, 205, 188, 200, 205, 188, 176, 176, 176, 176, 176, 176, 200, 205, 205, 205, 205, 205, 188, 176, 176, 176, 176, 200, 205, 188, 176, 176, 176, 200, 205, 205, 205, 205, 205, 205, 188, 200, 205, 188, 176, 176, 200, 205, 188,
+	
+	draw::titleEffect(2, 2, _cp1, _cp2, LIGHT_RED, 1, 1, _mode);
+	Sleep(3000);
+	draw::titleEffect(2, 2, _cp1, _cp2, LIGHT_BLUE, 0, 0, _mode);
+	Sleep(3000);
 
-	};
-	unsigned char Bot_2[] = {
-		32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 176, 219, 219, 187, 176, 176, 176, 176, 176, 176, 176, 219, 219, 187, 219, 219, 187, 219, 219, 219, 187, 176, 176, 219, 219, 187, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
-		32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 176, 219, 219, 186, 176, 176, 219, 219, 187, 176, 176, 219, 219, 186, 219, 219, 186, 219, 219, 219, 219, 187, 176, 219, 219, 186, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
-		32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 176, 200, 219, 219, 187, 219, 219, 219, 219, 187, 219, 219, 201, 188, 219, 219, 186, 219, 219, 201, 219, 219, 187, 219, 219, 186, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
-		32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 176, 176, 219, 219, 219, 219, 201, 205, 219, 219, 219, 219, 186, 176, 219, 219, 186, 219, 219, 186, 200, 219, 219, 219, 219, 186, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
-		32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 176, 176, 200, 219, 219, 201, 188, 176, 200, 219, 219, 201, 188, 176, 219, 219, 186, 219, 219, 186, 176, 200, 219, 219, 219, 186, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
-		32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 176, 176, 176, 200, 205, 188, 176, 176, 176, 200, 205, 188, 176, 176, 200, 205, 188, 200, 205, 188, 176, 176, 200, 205, 205, 188, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32
-	};
-	int top = 6, num_char = 69, count = 0;
-	int color[] = { BRIGHT_WHITE, BLACK, BRIGHT_WHITE, BLUE, BRIGHT_WHITE, GREEN, BRIGHT_WHITE, PURPLE };
-	while (count++ < 7)
-	{
-		common::setConsoleColor(BRIGHT_WHITE, color[count]);
-		for (int i = 0; i < 6; i++)
-		{
-			common::gotoXY(20, i + top);
-			for (int j = 0; j < num_char; j++)
-			{
-				putchar(Bot_1[i * num_char + j]);
-			}
-			common::gotoXY(20, i + top + 7);
-			for (int j = 0; j < num_char; j++)
-			{
-				putchar(Bot_2[i * num_char + j]);
-			}
-			Sleep(100);
-		}
-		Sleep(900);
-	}
+	common::clearConsole();
 }
 
 void gameplay::printDraw()
@@ -929,45 +1485,61 @@ void gameplay::printDraw()
 	common::playSound(6);
 	common::setConsoleColor(BRIGHT_WHITE, BLACK);
 	common::clearConsole();
-	unsigned char Draw_1[] = {
-		219, 219, 219, 219, 219, 219, 187, 176, 32, 32, 219, 219, 219, 219, 219, 219, 187, 176, 219, 219, 187, 176, 176, 176, 176, 176, 176, 219, 219, 219, 219, 219, 187, 176, 219, 219, 187, 176, 176, 176, 219, 219, 187, 219, 219, 219, 219, 219, 219, 219, 187, 219, 219, 219, 219, 219, 219, 187, 176,
-		200, 205, 205, 205, 205, 219, 219, 187, 32, 32, 219, 219, 201, 205, 205, 219, 219, 187, 219, 219, 186, 176, 176, 176, 176, 176, 219, 219, 201, 205, 205, 219, 219, 187, 200, 219, 219, 187, 176, 219, 219, 201, 188, 219, 219, 201, 205, 205, 205, 205, 188, 219, 219, 201, 205, 205, 219, 219, 187,
-		176, 176, 219, 219, 219, 201, 205, 188, 32, 32, 219, 219, 219, 219, 219, 219, 201, 188, 219, 219, 186, 176, 176, 176, 176, 176, 219, 219, 219, 219, 219, 219, 219, 186, 176, 200, 219, 219, 219, 219, 201, 188, 176, 219, 219, 219, 219, 219, 187, 176, 176, 219, 219, 219, 219, 219, 219, 201, 188,
-		219, 219, 201, 205, 205, 188, 176, 176, 32, 32, 219, 219, 201, 205, 205, 205, 188, 176, 219, 219, 186, 176, 176, 176, 176, 176, 219, 219, 201, 205, 205, 219, 219, 186, 176, 176, 200, 219, 219, 201, 188, 176, 176, 219, 219, 201, 205, 205, 188, 176, 176, 219, 219, 201, 205, 205, 219, 219, 187,
-		219, 219, 219, 219, 219, 219, 219, 187, 32, 32, 219, 219, 186, 176, 176, 176, 176, 176, 219, 219, 219, 219, 219, 219, 219, 187, 219, 219, 186, 176, 176, 219, 219, 186, 176, 176, 176, 219, 219, 186, 176, 176, 176, 219, 219, 219, 219, 219, 219, 219, 187, 219, 219, 186, 176, 176, 219, 219, 186,
-		200, 205, 205, 205, 205, 205, 205, 188, 32, 32, 200, 205, 188, 176, 176, 176, 176, 176, 200, 205, 205, 205, 205, 205, 205, 188, 200, 205, 188, 176, 176, 200, 205, 188, 176, 176, 176, 200, 205, 188, 176, 176, 176, 200, 205, 205, 205, 205, 205, 205, 188, 200, 205, 188, 176, 176, 200, 205, 188,
-	};
-	unsigned char Draw_2[] = {
-		32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 219, 219, 219, 219, 219, 219, 187, 176, 219, 219, 219, 219, 219, 219, 187, 176, 176, 219, 219, 219, 219, 219, 187, 176, 176, 219, 219, 187, 176, 176, 176, 176, 176, 176, 176, 219, 219, 187, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
-		32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 219, 219, 201, 205, 205, 219, 219, 187, 219, 219, 201, 205, 205, 219, 219, 187, 219, 219, 201, 205, 205, 219, 219, 187, 176, 219, 219, 186, 176, 176, 219, 219, 187, 176, 176, 219, 219, 186, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
-		32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 219, 219, 186, 176, 176, 219, 219, 186, 219, 219, 219, 219, 219, 219, 201, 188, 219, 219, 219, 219, 219, 219, 219, 186, 176, 200, 219, 219, 187, 219, 219, 219, 219, 187, 219, 219, 201, 188, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
-		32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 219, 219, 186, 176, 176, 219, 219, 186, 219, 219, 201, 205, 205, 219, 219, 187, 219, 219, 201, 205, 205, 219, 219, 186, 176, 176, 219, 219, 219, 219, 201, 205, 219, 219, 219, 219, 186, 176, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
-		32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 219, 219, 219, 219, 219, 219, 201, 188, 219, 219, 186, 176, 176, 219, 219, 186, 219, 219, 186, 176, 176, 219, 219, 186, 176, 176, 200, 219, 219, 201, 188, 176, 200, 219, 219, 201, 188, 176, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
-		32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 200, 205, 205, 205, 205, 205, 188, 176, 200, 205, 188, 176, 176, 200, 205, 188, 200, 205, 188, 176, 176, 200, 205, 188, 176, 176, 176, 200, 205, 188, 176, 176, 176, 200, 205, 188, 176, 176, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32
-	};
-	int top = 6, num_char = 59, count = 0;
-	int color[] = { BRIGHT_WHITE, BLACK, BRIGHT_WHITE, BLUE, BRIGHT_WHITE, GREEN, BRIGHT_WHITE, PURPLE };
-	while (count++ < 7)
-	{
-		common::setConsoleColor(BRIGHT_WHITE, color[count]);
-		for (int i = 0; i < 6; i++)
-		{
-			common::gotoXY(24, i + top);
-			for (int j = 0; j < num_char; j++)
-			{
-				putchar(Draw_1[i * num_char + j]);
-			}
-			common::gotoXY(24, i + top + 7);
-			for (int j = 0; j < num_char; j++)
-			{
-				putchar(Draw_2[i * num_char + j]);
-			}
-			Sleep(100);
-		}
-		Sleep(300);
-	}
-}
 
+	int t = 3;
+	while (t > 0) {
+		draw::printColoredRectangle(3, 0, 24, 30, BRIGHT_WHITE);
+		draw::printColoredRectangle(79, 0, 25, 30, BRIGHT_WHITE);
+		Sleep(300);
+
+		draw::printColoredRectangle(3, 0, 24, 30, WHITE);
+		draw::printColoredRectangle(79, 0, 25, 30, WHITE);
+		Sleep(300);
+
+		t--;
+	}
+	avatar::rightAmongUs(5, 16, LIGHT_RED, RED, WHITE, WHITE);
+	avatar::leftAmongUs(82, 16, LIGHT_BLUE, BLUE, WHITE, WHITE);
+	// avatar::Bot(77, 16, BRIGHT_WHITE, LIGHT_BLUE, BLUE, WHITE);
+	Sleep(100);
+
+	draw::printBoard(28, 9, 49, 19, BLACK);
+	draw::printColoredRectangle(25, 1, 56, 8, BLACK);
+	common::setConsoleColor(BLACK, BRIGHT_WHITE);
+	draw::drawTitle(28, 2);
+	common::setConsoleColor(BRIGHT_WHITE, BLACK);
+	draw::resultTitle(42, 10);
+	common::setConsoleColor(WHITE, RED);
+	common::gotoXY(39, 12); cout << " THE GAME ENDED IN A DRAW ";
+	common::setConsoleColor(BRIGHT_WHITE, BLACK);
+	common::gotoXY(31, 14); cout << "Player 1's name: ";
+	common::gotoXY(31, 16); cout << "Player 2's name: ";
+	common::gotoXY(31, 18); cout << "Ratio: ";
+	common::gotoXY(31, 20); cout << "Moves: ";
+	common::gotoXY(31, 22); cout << "Time left: ";
+	common::gotoXY(31, 24); cout << "Mode: ";
+	common::gotoXY(31, 26); cout << "Status: "; // hoà
+	common::setConsoleColor(BRIGHT_WHITE, BLACK);
+	common::gotoXY(45, 29); cout << "To be continued...";
+
+	common::setConsoleColor(BRIGHT_WHITE, BLACK);
+	common::gotoXY(61, 18); putchar(179);
+	common::gotoXY(61, 20); putchar(179);
+	common::gotoXY(61, 22); putchar(179);
+	common::setConsoleColor(BRIGHT_WHITE, BLUE);
+	common::gotoXY(57, 14); cout << _p1Name;
+	common::gotoXY(55, 18); cout << _countP1Wins;
+	common::gotoXY(55, 20); cout << "5";
+	common::gotoXY(50, 22); cout << "00:00:00";
+	common::setConsoleColor(BRIGHT_WHITE, RED);
+	common::gotoXY(57, 16); cout << "NguyenThao";
+	common::gotoXY(67, 18); cout << "3";
+	common::gotoXY(67, 20); cout << "4";
+	common::gotoXY(65, 22); cout << "00:00:00";
+	common::setConsoleColor(BRIGHT_WHITE, LIGHT_PURPLE);
+	common::gotoXY(60, 24); cout << "PVP";
+	common::gotoXY(59, 26); cout << "draw";
+}
 void gameplay::saveBoxScreen()
 {
 	common::showCursor(false);
@@ -1025,10 +1597,10 @@ void gameplay::saveBoxScreen()
 				common::clearConsole();
 				return;
 			}
-			else 
+			else
 			{
 				common::clearConsole();
-				draw::loadingBar();
+				
 				common::clearConsole();
 				return;
 			}
@@ -1050,7 +1622,7 @@ void gameplay::exitGameScreen() {
 	common::gotoXY(44, 11);
 	cout << " DO YOU WANT TO EXIT ";
 	common::gotoXY(45, 12);
-	cout <<  " YOUR CURRENT GAME? ";
+	cout << " YOUR CURRENT GAME? ";
 	string str[2] = { "YES", "NO" };
 	int left[] = { 35,41,48,58,64,70 }, word[] = { 32,32,62,60 }, top = 15;
 	bool choice = 0;
@@ -1092,10 +1664,10 @@ void gameplay::exitGameScreen() {
 				common::clearConsole();
 				menu::mainScreen();
 			}
-			else 
+			else
 			{
 				common::clearConsole();
-				// draw::loadingBar();
+				
 				common::clearConsole();
 				return;
 			}
@@ -1112,121 +1684,28 @@ void gameplay::printYouWin()
 	common::playSound(6);
 	common::setConsoleColor(BRIGHT_WHITE, BLACK);
 	common::clearConsole();
-	unsigned char you[] = {
-		176, 219, 219, 187, 176, 176, 176, 176, 176, 219, 219, 187, 176, 219, 219, 219, 219, 219, 219, 219, 187, 176, 176, 219, 219, 187, 176, 176, 176, 176, 219, 219, 187,
-		176, 200, 219, 219, 187, 176, 176, 176, 219, 219, 201, 188, 219, 219, 201, 205, 205, 205, 205, 219, 219, 187, 176, 219, 219, 186, 176, 176, 176, 176, 219, 219, 186,
-		176, 176, 200, 219, 219, 219, 219, 219, 219, 201, 188, 176, 219, 219, 186, 176, 176, 176, 176, 219, 219, 186, 176, 219, 219, 186, 176, 176, 176, 176, 219, 219, 186,
-		176, 176, 176, 176, 200, 219, 219, 201, 205, 188, 176, 176, 219, 219, 186, 176, 176, 176, 176, 219, 219, 186, 176, 219, 219, 186, 176, 176, 176, 176, 219, 219, 186,
-		176, 176, 176, 176, 176, 219, 219, 186, 176, 176, 176, 176, 200, 219, 219, 219, 219, 219, 219, 219, 201, 188, 176, 200, 219, 219, 219, 219, 219, 219, 219, 201, 188,
-		176, 176, 176, 176, 176, 200, 205, 188, 176, 176, 176, 176, 176, 200, 205, 205, 205, 205, 205, 205, 188, 176, 176, 176, 200, 205, 205, 205, 205, 205, 205, 188, 32
-	};
-	unsigned char win[] = {
-		32 , 32 , 32 ,176, 219, 219, 187, 176, 176, 176, 176, 176, 176, 176, 219, 219, 187, 219, 219, 187, 219, 219, 219, 187, 176, 176, 219, 219, 187, 32 , 32 , 32 , 32 ,
-		32 , 32 , 32 ,176, 219, 219, 186, 176, 176, 219, 219, 187, 176, 176, 219, 219, 186, 219, 219, 186, 219, 219, 219, 219, 187, 176, 219, 219, 186, 32 , 32 , 32 , 32 ,
-		32 , 32 , 32 ,176, 200, 219, 219, 187, 219, 219, 219, 219, 187, 219, 219, 201, 188, 219, 219, 186, 219, 219, 201, 219, 219, 187, 219, 219, 186, 32 , 32 , 32 , 32 ,
-		32 , 32 , 32 ,176, 176, 219, 219, 219, 219, 201, 205, 219, 219, 219, 219, 186, 176, 219, 219, 186, 219, 219, 186, 200, 219, 219, 219, 219, 186, 32 , 32 , 32 , 32 ,
-		32 , 32 , 32 ,176, 176, 200, 219, 219, 201, 188, 176, 200, 219, 219, 201, 188, 176, 219, 219, 186, 219, 219, 186, 176, 200, 219, 219, 219, 186, 32 , 32 , 32 , 32 ,
-		32 , 32 , 32 ,176, 176, 176, 200, 205, 188, 176, 176, 176, 200, 205, 188, 176, 176, 200, 205, 188, 200, 205, 188, 176, 176, 200, 205, 205, 188, 32 , 32 , 32 , 32 ,
-	};
-	int top = 6, num_char = 33, count = 0;
-	int color[] = { RED, YELLOW, GREEN, AQUA, BLUE, PURPLE};
-	for (int i = 0; i < 6; i++)
-	{
-		common::gotoXY(37, i + top);
-		for (int j = 0; j < num_char; j++)
-		{
-			putchar(you[i * num_char + j]);
-		}
-	}
-	Sleep(500);
-	for(int i=1;i<=3;i++)
-	{
-		count = 0;
-		while (count++ < 5)
-		{
 
-			common::setConsoleColor(BRIGHT_WHITE, color[count]);
-			for (int i = 0; i < 6; i++)
-			{
-				common::gotoXY(37, i + top + 7);
-				for (int j = 0; j < num_char; j++)
-				{
-					putchar(win[i * num_char + j]);
-				}
-			}
-			Sleep(300);
-			for (int i = 0; i < 6; i++)
-			{
-				common::gotoXY(37, i + top + 7);
-				for (int j = 0; j < num_char; j++)
-				{
-					putchar(32);
-				}
-			}
-			Sleep(50);
-		}
-	}
+	draw::titleEffect(2, 2, _cp1, _cp2, LIGHT_BLUE, 1, 0, 1);
+	Sleep(3000);
+	draw::titleEffect(2, 2, _cp1, _cp2, LIGHT_RED, 0, 1, 1);
+	Sleep(3000);
+
+	common::clearConsole();
 }
+
 
 void gameplay::printYouLose()
 {
 	common::playSound(6);
 	common::setConsoleColor(BRIGHT_WHITE, BLACK);
 	common::clearConsole();
-	unsigned char you[] = {
-		176, 219, 219, 187, 176, 176, 176, 176, 176, 219, 219, 187, 176, 219, 219, 219, 219, 219, 219, 219, 187, 176, 176, 219, 219, 187, 176, 176, 176, 176, 219, 219, 187, 32 ,
-		176, 200, 219, 219, 187, 176, 176, 176, 219, 219, 201, 188, 219, 219, 201, 205, 205, 205, 205, 219, 219, 187, 176, 219, 219, 186, 176, 176, 176, 176, 219, 219, 186, 32 ,
-		176, 176, 200, 219, 219, 219, 219, 219, 219, 201, 188, 176, 219, 219, 186, 176, 176, 176, 176, 219, 219, 186, 176, 219, 219, 186, 176, 176, 176, 176, 219, 219, 186, 32 ,
-		176, 176, 176, 176, 200, 219, 219, 201, 205, 188, 176, 176, 219, 219, 186, 176, 176, 176, 176, 219, 219, 186, 176, 219, 219, 186, 176, 176, 176, 176, 219, 219, 186, 32 ,
-		176, 176, 176, 176, 176, 219, 219, 186, 176, 176, 176, 176, 200, 219, 219, 219, 219, 219, 219, 219, 201, 188, 176, 200, 219, 219, 219, 219, 219, 219, 219, 201, 188, 32 ,
-		176, 176, 176, 176, 176, 200, 205, 188, 176, 176, 176, 176, 176, 200, 205, 205, 205, 205, 205, 205, 188, 176, 176, 176, 200, 205, 205, 205, 205, 205, 205, 188, 32 , 32 ,
-	};
-	unsigned char lose[] = {
-		176, 219, 219, 187, 176, 176, 176, 176, 176, 176, 219, 219, 219, 219, 219, 219, 187, 176, 219, 219, 219, 219, 219, 219, 219, 187, 219, 219, 219, 219, 219, 219, 219, 187,
-		176, 219, 219, 187, 176, 176, 176, 176, 176, 219, 219, 201, 205, 205, 205, 219, 219, 187, 219, 219, 201, 205, 205, 205, 205, 188, 219, 219, 201, 205, 205, 205, 205, 188,
-		176, 219, 219, 187, 176, 176, 176, 176, 176, 219, 219, 186, 176, 176, 176, 219, 219, 186, 219, 219, 219, 219, 219, 219, 219, 187, 219, 219, 219, 219, 219, 187, 176, 176,
-	    176, 219, 219, 187, 176, 176, 176, 176, 176, 219, 219, 186, 176, 176, 176, 219, 219, 186, 200, 205, 205, 205, 205, 219, 219, 186, 219, 219, 201, 205, 205, 199, 176, 176,
-		176, 219, 219, 219, 219, 219, 219, 219, 187, 200, 219, 219, 219, 219, 219, 219, 201, 188, 219, 219, 219, 219, 219, 219, 219, 186, 219, 219, 219, 219, 219, 219, 219, 187,
-		176, 200, 205, 205, 205, 205, 205, 205, 188, 176, 200, 205, 205, 205, 205, 205, 188, 176, 200, 205, 205, 205, 205, 205, 205, 188, 200, 205, 205, 205, 205, 205, 205, 188,
-	};
-	int top = 6, num_char = 34, count = 0;
-	int color[] = { RED, YELLOW, GREEN, AQUA, BLUE, PURPLE };
-	for (int i = 0; i < 6; i++)
-	{
-		common::gotoXY(37, i + top);
-		for (int j = 0; j < num_char; j++)
-		{
-			putchar(you[i * num_char + j]);
-		}
-	}
-	Sleep(500);
-	for (int i = 1;i <= 3;i++)
-	{
-		count = 0;
-		while (count++ < 5)
-		{
 
-			common::setConsoleColor(BRIGHT_WHITE, color[count]);
-			for (int i = 0; i < 6; i++)
-			{
-				common::gotoXY(37, i + top + 7);
-				for (int j = 0; j < num_char; j++)
-				{
-					putchar(lose[i * num_char + j]);
-				}
-			}
-			Sleep(300);
-			for (int i = 0; i < 6; i++)
-			{
-				common::gotoXY(37, i + top + 7);
-				for (int j = 0; j < num_char; j++)
-				{
-					putchar(32);
-				}
-			}
-			Sleep(50);
-		}
-	}
+	draw::titleEffect(2, 2, _cp1, _cp2, LIGHT_RED, 0, 1, _mode);
+	Sleep(3000);
+	draw::titleEffect(2, 2, _cp1, _cp2, LIGHT_BLUE, 0, 0, _mode);
+	Sleep(3000);
+
+	common::clearConsole();
 }
 
 
@@ -1288,7 +1767,7 @@ void gameplay::continueBackground()
 	}
 
 	// Vẽ đèn chiếu của sân
-	for(int k=1;k<=3;k++)
+	for (int k = 1;k <= 3;k++)
 	{
 		for (int i = 0; i < 7; i++) {
 			common::setColor(i + 9);
@@ -1311,4 +1790,233 @@ void gameplay::continueBackground()
 			putchar(219);
 		}
 	}
+}
+
+void gameplay::chooseAvatarScreen(int mode)
+{
+	common::showCursor(false);
+	common::clearConsole();
+
+	// Tiêu đề
+	draw::printTitleChoose(20, 1);
+
+	// Hàng trên
+	common::setColor(0);
+	common::gotoXY(14, 4); cout << "No.1";
+	draw::printBoard(7, 5, 16, 10, LIGHT_BLUE);
+	draw::printColoredRectangle(8, 6, 15, 9, LIGHT_BLUE);
+	avatar::rightAmongUs(9, 7, LIGHT_RED, RED, WHITE, BRIGHT_WHITE);
+	common::gotoXY(7, 4);
+	common::setConsoleColor(LIGHT_BLUE, BRIGHT_WHITE);
+	cout << " P1 ";
+	string red = "RED";
+	common::setConsoleColor(BRIGHT_WHITE, RED);
+	for (int i = 0; i < red.size(); i++) {
+		common::gotoXY(5, 8 + 2 * i);
+		cout << red[i];
+	}
+
+	common::setColor(0);
+	common::gotoXY(44, 4); cout << "No.2";
+	draw::printBoard(37, 5, 16, 10, BLACK);
+	draw::printColoredRectangle(38, 6, 15, 9, WHITE);
+	avatar::rightAmongUs(39, 7, LIGHT_BLUE, BLUE, WHITE, BRIGHT_WHITE);
+	string blue = "BLUE";
+	common::setConsoleColor(BRIGHT_WHITE, BLUE);
+	for (int i = 0; i < blue.size(); i++) {
+		common::gotoXY(35, 7 + 2 * i);
+		cout << blue[i];
+	}
+
+	common::setColor(0);
+	common::gotoXY(74, 4); cout << "No.3";
+	draw::printBoard(67, 5, 16, 10, BLACK);
+	draw::printColoredRectangle(68, 6, 15, 9, WHITE);
+	avatar::rightAmongUs(69, 7, LIGHT_GREEN, GREEN, WHITE, BRIGHT_WHITE);
+	string green = "GREEN";
+	common::setConsoleColor(BRIGHT_WHITE, GREEN);
+	for (int i = 0; i < green.size(); i++) {
+		common::gotoXY(65, 6 + 2 * i);
+		cout << green[i];
+	}
+
+	// Hang dưới
+	common::setColor(0);
+	common::gotoXY(27, 18); cout << "No.4";
+	draw::printBoard(20, 19, 16, 10, BLACK);
+	draw::printColoredRectangle(21, 20, 15, 9, WHITE);
+	avatar::rightAmongUs(22, 21, LIGHT_PURPLE, PURPLE, WHITE, BRIGHT_WHITE);
+	string purple = "PURPLE";
+	common::setConsoleColor(BRIGHT_WHITE, PURPLE);
+	for (int i = 0; i < purple.size(); i++) {
+		common::gotoXY(18, 19 + 2 * i);
+		cout << purple[i];
+	}
+
+	common::setColor(0);
+	common::gotoXY(57, 18); cout << "No.5";
+	draw::printBoard(50, 19, 16, 10, BLACK);
+	draw::printColoredRectangle(51, 20, 15, 9, WHITE);
+	avatar::rightAmongUs(52, 21, BRIGHT_WHITE, WHITE, WHITE, BRIGHT_WHITE);
+	string white = "WHITE";
+	common::setConsoleColor(BRIGHT_WHITE, BLACK);
+	for (int i = 0; i < white.size(); i++) {
+		common::gotoXY(48, 20 + 2 * i);
+		cout << white[i];
+	}
+
+	common::setColor(0);
+	common::gotoXY(87, 18); cout << "No.6";
+	draw::printBoard(80, 19, 16, 10, BLACK);
+	draw::printColoredRectangle(81, 20, 15, 9, WHITE);
+	avatar::rightAmongUs(82, 21, LIGHT_YELLOW, LIGHT_YELLOW, WHITE, BRIGHT_WHITE);
+	string yellow = "YELLOW";
+	common::setConsoleColor(BRIGHT_WHITE, YELLOW);
+	for (int i = 0; i < yellow.size(); i++) {
+		common::gotoXY(78, 19 + 2 * i);
+		cout << yellow[i];
+	}
+
+	if (_mode == 0) {
+		// Player 1
+		draw::printBoard(91, 10, 11, 1, LIGHT_BLUE);
+		common::setColor(0);
+		common::gotoXY(93, 10); cout << "PLAYER 1";
+
+		// Player 2
+		draw::printBoard(3, 24, 11, 1, LIGHT_RED);
+		common::setColor(0);
+		common::gotoXY(5, 24); cout << "PLAYER 2";
+	}
+	else {
+		// Hộp Player 
+		draw::printBoard(91, 10, 11, 1, LIGHT_BLUE);
+		common::setColor(0);
+		common::gotoXY(94, 10); cout << "PLAYER";
+
+		// Hộp bot
+		draw::printBoard(3, 24, 11, 1, LIGHT_RED);
+		common::setColor(0);
+		common::gotoXY(8, 24); cout << "BOT";
+	}
+	//Biến số lựa chọn
+	int count = 0;
+	//Biến vị trí trỏ ban đầu
+	int pos = 1;
+	bool chosen[7];
+	int wall;
+	if (mode == 0) wall = 2;
+	else wall = 1;
+	memset(chosen, false, sizeof(chosen));
+	while (count < wall)
+	{
+		switch (common::getConsoleInput())
+		{
+		case 2:
+			if (pos > 3)
+			{
+				if (chosen[pos - 3] == false)
+				{
+					addFrame(pos - 3, count + 1);
+					removeFrame(pos);
+					pos -= 3;
+				}
+			}
+			break;
+		case 3:
+			if (pos != 1)
+			{
+				if (chosen[pos - 1] == false)
+				{
+					addFrame(pos - 1, count + 1);
+					removeFrame(pos);
+					pos -= 1;
+				}
+			}
+			break;
+		case 4:
+			if (pos != 6)
+			{
+				if (chosen[pos + 1] == false)
+				{
+					addFrame(pos + 1, count + 1);
+					removeFrame(pos);
+					pos += 1;
+				}
+			}
+			break;
+		case 5:
+			if (pos < 4)
+			{
+				if (chosen[pos + 3] == false)
+				{
+					addFrame(pos + 3, count + 1);
+					removeFrame(pos);
+					pos += 3;
+				}
+			}
+			break;
+		case 6:
+			if (mode == 0)
+			{
+				if (count == 0) _cp1 = pos;
+				if (count == 1) _cp2 = pos;
+			}
+			else
+			{
+				if (count == 0) _cp1 = pos;
+			}
+			chosen[pos] = true;
+			count++;
+			if (count == wall)
+			{
+				Sleep(1500);
+			}
+			else
+			{
+				if (pos != 1)
+				{
+					addFrame(1, count + 1);
+					pos = 1;
+				}
+				else
+				{
+					addFrame(2, count + 1);
+					pos = 2;
+				}
+			}
+			break;
+		case 1:
+			common::clearConsole();
+			return;
+			break;
+		}
+	}
+}
+
+void gameplay::addFrame(int no, int p)
+{
+	int mau[3] = { 0, LIGHT_BLUE, LIGHT_RED };
+	int left[7] = { 0, 7, 37, 67, 20, 50, 80 };
+	int top[7] = { 0, 5, 5, 5, 19, 19, 19 };
+	int col[7] = { 0, RED, BLUE, GREEN, PURPLE, WHITE, YELLOW };
+	draw::printBoard(left[no], top[no], 16, 10, mau[p]);
+	draw::printColoredRectangle(left[no] + 1, top[no] + 1, 15, 9, mau[p]);
+	avatar::rightAmongUs(left[no] + 2, top[no] + 2, col[no] + 8, col[no], mau[p], BRIGHT_WHITE);
+	common::gotoXY(left[no], top[no] - 1);
+	common::setConsoleColor(mau[p], BRIGHT_WHITE);
+	cout << " P" << p << " ";
+}
+
+void gameplay::removeFrame(int no)
+{
+	int left[7] = { 0, 7, 37, 67, 20, 50, 80 };
+	int top[7] = { 0, 5, 5, 5, 19, 19, 19 };
+	int col[7] = { 0, RED, BLUE, GREEN, PURPLE, WHITE, YELLOW };
+	draw::printBoard(left[no], top[no], 16, 10, BLACK);
+	draw::printColoredRectangle(left[no] + 1, top[no] + 1, 15, 9, WHITE);
+	avatar::rightAmongUs(left[no] + 2, top[no] + 2, col[no] + 8, col[no], WHITE, BRIGHT_WHITE);
+	common::gotoXY(left[no], top[no] - 1);
+	common::setConsoleColor(BRIGHT_WHITE, BRIGHT_WHITE);
+	cout << "     ";
 }
