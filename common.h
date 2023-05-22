@@ -33,3 +33,5 @@ public:
 };
 
 int getRandomInt(int begin, int end);         //Hàm lấy số nguyên ngẫu nhiên
+static int _colorP1;
+static int _colorP2;
