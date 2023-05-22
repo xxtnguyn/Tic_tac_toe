@@ -78,7 +78,7 @@ void board::drawBoard()
 		return;
 	common::setConsoleColor(BRIGHT_WHITE, BLACK);
 	common::clearConsole();
-	
+
 	//Ve duong duoi
 	for (int i = 1; i < _size * 4; i++)
 	{
