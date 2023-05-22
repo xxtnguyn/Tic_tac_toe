@@ -23,7 +23,7 @@ void draw::rainbowBackground()
 			}
 		}
 	}
-	
+
 	common::setColor(color[3]);
 	for (int i = 0; i < 7; i++) {
 		for (int j = 0; j < 105; j++) {
@@ -91,10 +91,8 @@ void draw::printLogo()
 {
 	printColoredRectangle(27, 2, 35, 11, RED);
 	printColoredRectangle(25, 1, 35, 11, LIGHT_RED);
-	Sleep(500);
 	printColoredRectangle(52, 6, 35, 11, BLUE);
 	printColoredRectangle(50, 5, 35, 11, LIGHT_BLUE);
-	Sleep(500);
 	unsigned char logo[] = {
 		32 ,219,219,219,219,219,219,187,32 ,219,219,219,219,219,187,32 ,32 ,32 ,32 ,219,219,219,219,219,219,187,32 ,32 ,219,219,219,219,219,219,187,32 ,
 		219,219,201,205,205,205,205,188,219,219,201,205,205,219,219,187,32 ,32 ,32 ,219,219,201,205,205,219,219,187,219,219,201,205,205,205,219,219,187,
@@ -608,7 +606,7 @@ void draw::printTitleChoose(int x, int y)
 {
 	common::setConsoleColor(BRIGHT_WHITE, BLACK);
 	unsigned char title[] = { 219, 223, 223, 32 , 219, 32 , 219, 32 , 219, 223, 219, 32 , 219, 223, 219, 32 , 219, 223, 223, 32 , 219, 223, 223, 32 , 32 , 32 , 219, 32 , 219, 32 , 219, 223, 219, 32 , 219, 32 , 219, 32 , 219, 223, 219, 32 , 32 , 32 , 219, 223, 219, 32 , 219, 32 , 219, 32 , 219, 223, 219, 32 , 223, 219, 223, 32 , 219, 223, 219, 32 , 219, 223, 219,
-							  219, 220, 220, 32 , 219, 223, 219, 32 , 219, 220, 219, 32 , 219, 220, 219, 32 , 220, 220, 219, 32 , 219, 219, 220, 32 , 32 , 32 , 32 , 219, 32 , 32 , 219, 220, 219, 32 , 219, 220, 219, 32 , 219, 223, 220, 32 , 32 , 32 , 219, 223, 219, 32 , 223, 254, 223, 32 , 219, 223, 219, 32 , 32 , 219, 32 , 32 , 219, 223, 219, 32 , 219, 223, 220};
+							  219, 220, 220, 32 , 219, 223, 219, 32 , 219, 220, 219, 32 , 219, 220, 219, 32 , 220, 220, 219, 32 , 219, 219, 220, 32 , 32 , 32 , 32 , 219, 32 , 32 , 219, 220, 219, 32 , 219, 220, 219, 32 , 219, 223, 220, 32 , 32 , 32 , 219, 223, 219, 32 , 223, 254, 223, 32 , 219, 223, 219, 32 , 32 , 219, 32 , 32 , 219, 223, 219, 32 , 219, 223, 220 };
 
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 67; j++) {
@@ -617,7 +615,7 @@ void draw::printTitleChoose(int x, int y)
 	}
 }
 
-void draw::smallLostAmongUs(int x, int y, int color) 
+void draw::smallLostAmongUs(int x, int y, int color)
 {
 	// Tô màu
 	common::setColor(color);
@@ -781,10 +779,10 @@ void draw::biggerAura(int x, int y, int color_1)
 		}
 		Sleep(50);
 	}
-	
+
 }
 
-void draw::titleEffect(int x, int y, int amongus_color, int smallamong_color, int box_color, int status, int mode)
+void draw::titleEffect(int x, int y, int amongus_color, int smallamong_color, int box_color, int status, int pwin, int mode)
 {
 	// Hiẻn thị ảnh người chơi
 	draw::biggerAura(49, 4, box_color);
@@ -803,10 +801,15 @@ void draw::titleEffect(int x, int y, int amongus_color, int smallamong_color, in
 			draw::smallLostAmongUs(94, 23, smallamong_color);
 			draw::winnerSignature(62, 11, LIGHT_YELLOW); // status = 1: thắng, status = 0: thua
 		}
-		else draw::loserSignature(66, 11, LIGHT_YELLOW);
+		else {
+			draw::loserSignature(66, 11, LIGHT_YELLOW);
+			draw::printColoredRectangle(92, 22, 13, 7, BRIGHT_WHITE);
+		}
 	}
 	else {
-		if (status == 1) { // bot thua
+		if (status == 1 && pwin == 0) { // player thắng
+			draw::printColoredRectangle(92, 22, 13, 7, BRIGHT_WHITE);
+			draw::winnerSignature(62, 11, LIGHT_YELLOW); // status = 1: thắng, status = 0: thua
 			switch (amongus_color)
 			{
 			case LIGHT_RED:  avatar::leftAmongUs(65, 15, LIGHT_RED, RED, LIGHT_YELLOW, LIGHT_YELLOW); break;
@@ -816,14 +819,10 @@ void draw::titleEffect(int x, int y, int amongus_color, int smallamong_color, in
 			case BRIGHT_WHITE:  avatar::leftAmongUs(65, 15, BRIGHT_WHITE, WHITE, LIGHT_YELLOW, LIGHT_YELLOW); break;
 			case LIGHT_GREEN:  avatar::leftAmongUs(65, 15, LIGHT_GREEN, GREEN, LIGHT_YELLOW, LIGHT_YELLOW); break;
 			}
-			draw::winnerSignature(62, 11, LIGHT_YELLOW);
 		}
-		else {
-			avatar::Bot(60, 15, BRIGHT_WHITE, LIGHT_BLUE, BLUE);
-			draw::winnerSignature(62, 11, LIGHT_YELLOW);
-			draw::smallLostAmongUs(94, 23, smallamong_color);
-			Sleep(5000);
-			// hiển thị among us thua
+		else if (status == 0 && pwin == 0) { // player thua
+			draw::printColoredRectangle(92, 22, 13, 7, BRIGHT_WHITE);
+			draw::loserSignature(66, 11, LIGHT_YELLOW);
 			switch (amongus_color)
 			{
 			case LIGHT_RED:  avatar::leftAmongUs(65, 15, LIGHT_RED, RED, LIGHT_YELLOW, LIGHT_YELLOW); break;
@@ -833,52 +832,66 @@ void draw::titleEffect(int x, int y, int amongus_color, int smallamong_color, in
 			case BRIGHT_WHITE:  avatar::leftAmongUs(65, 15, BRIGHT_WHITE, WHITE, LIGHT_YELLOW, LIGHT_YELLOW); break;
 			case LIGHT_GREEN:  avatar::leftAmongUs(65, 15, LIGHT_GREEN, GREEN, LIGHT_YELLOW, LIGHT_YELLOW); break;
 			}
+		}
+		else if (status == 0 && pwin != 0) { // bot thua
+			draw::printColoredRectangle(92, 22, 13, 7, BRIGHT_WHITE);
 			draw::loserSignature(66, 11, LIGHT_YELLOW);
+			if (mode == 1) avatar::Bot(60, 15, BRIGHT_WHITE, LIGHT_BLUE, BLUE, LIGHT_YELLOW);
+			else {
+				avatar::Bot(60, 15, LIGHT_RED, RED, BLACK, LIGHT_YELLOW);
+			}
+		}
+		else if (status == 1 && pwin != 0) { // bot thắng
+			draw::winnerSignature(62, 11, LIGHT_YELLOW);
+			draw::smallLostAmongUs(94, 23, amongus_color);
+			if (mode == 1) avatar::Bot(60, 15, BRIGHT_WHITE, LIGHT_BLUE, BLUE, LIGHT_YELLOW);
+			else {
+				avatar::Bot(60, 15, LIGHT_RED, RED, BLACK, LIGHT_YELLOW);
+			}
 		}
 	}
-
 	// Bảng thông tin
 	// in thời gian còn lại
-	printBoard(x + 10, y + 11, 35, 3, LIGHT_BLUE);
+	printBoard(x + 8, y + 11, 37, 3, box_color);
 	unsigned char timeleft[] = { 223, 219, 223, 32 , 219, 32 , 219, 220, 32 , 220, 219, 32 , 219, 223, 223, 32 , 32 , 32 , 219, 32 , 32 , 32 , 219, 223, 223, 32 , 219, 223, 223, 32 , 223, 219, 223,
 								 32 , 219, 32 , 32 , 219, 32 , 219, 32 , 223, 32 , 219, 32 , 219, 219, 220, 32 , 32 , 32 , 219, 220, 220, 32 , 219, 219, 220, 32 , 219, 223, 223, 32 , 32 , 219, 32 , };
-	draw::printColoredRectangle(x + 8, y + 10, 36, 4, LIGHT_BLUE);
-	common::setConsoleColor(LIGHT_BLUE, BRIGHT_WHITE);
+	draw::printColoredRectangle(x + 7, y + 10, 35, 4, box_color);
+	common::setConsoleColor(box_color, BRIGHT_WHITE);
 	int num_chars_2 = 33;
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < num_chars_2; j++) {
-			common::gotoXY(x + 10 + j, y + 11 + i); putchar(timeleft[i * num_chars_2 + j]);
+			common::gotoXY(x + 9 + j, y + 11 + i); putchar(timeleft[i * num_chars_2 + j]);
 		}
 	}
-	numberTransfer(x + 11, y + 15, 25000000);
+	// numberTransfer(x + 11, y + 15, 25000000);
 
 	// in tỉ lệ thắng
-	printBoard(x, y + 1, 53, 3, LIGHT_BLUE);
-	unsigned char winningMove[] = { 219, 32 , 219, 32 , 219, 32 , 219, 32 , 219, 220, 32 , 219, 32 , 219, 220, 32 , 219, 32 , 219, 32 , 219, 220, 32 , 219, 32 , 219, 223, 223, 32 , 32 , 32 , 219, 223, 219, 32 , 219, 223, 219, 32 , 223, 219, 223, 32 , 219, 32 , 219, 223, 219, 
+	printBoard(x, y + 1, 53, 3, box_color);
+	unsigned char winningMove[] = { 219, 32 , 219, 32 , 219, 32 , 219, 32 , 219, 220, 32 , 219, 32 , 219, 220, 32 , 219, 32 , 219, 32 , 219, 220, 32 , 219, 32 , 219, 223, 223, 32 , 32 , 32 , 219, 223, 219, 32 , 219, 223, 219, 32 , 223, 219, 223, 32 , 219, 32 , 219, 223, 219,
 									223, 254, 223, 254, 223, 32 , 219, 32 , 219, 32 , 223, 219, 32 , 219, 32 , 223, 219, 32 , 219, 32 , 219, 32 , 223, 219, 32 , 219, 220, 219, 32 , 32 , 32 , 219, 223, 220, 32 , 219, 223, 219, 32 , 32 , 219, 32 , 32 , 219, 32 , 219, 220, 219, };
-	draw::printColoredRectangle(x - 1, y, 53, 4, LIGHT_BLUE);
-	common::setConsoleColor(LIGHT_BLUE, BRIGHT_WHITE);
+	draw::printColoredRectangle(x - 1, y, 53, 4, box_color);
+	common::setConsoleColor(box_color, BRIGHT_WHITE);
 	int num_chars = 48;
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < num_chars; j++) {
-			common::gotoXY(x + j + 1, y + 1 + i); putchar(winningMove[i * num_chars + j]);
+			common::gotoXY(x + j, y + 1 + i); putchar(winningMove[i * num_chars + j]);
 		}
 	}
-	numberTransfer(x + 3, y + 5, 250);
-	
+	// numberTransfer(x + 3, y + 5, 250);
+
 	// in số lượt đi
-	printBoard(x + 27, y + 21, 25, 3, LIGHT_BLUE);
+	printBoard(x + 27, y + 21, 25, 3, box_color);
 	unsigned char moves[] = { 219, 220, 32 , 220, 219, 32 , 219, 223, 219, 32 , 219, 32 , 219, 32 , 219, 223, 223, 32 , 219, 223,
 							  219, 32 , 223, 32 , 219, 32 , 219, 220, 219, 32 , 223, 254, 223, 32 , 219, 219, 220, 32 , 220, 219, };
-	draw::printColoredRectangle(x + 26, y + 20, 25, 4, LIGHT_BLUE);
-	common::setConsoleColor(LIGHT_BLUE, BRIGHT_WHITE);
+	draw::printColoredRectangle(x + 26, y + 20, 25, 4, box_color);
+	common::setConsoleColor(box_color, BRIGHT_WHITE);
 	int num_chars_1 = 20;
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < num_chars_1; j++) {
-			common::gotoXY(x + j + 28, y + i + 21); putchar(moves[i * num_chars_1 + j]);
+			common::gotoXY(x + j + 27, y + i + 21); putchar(moves[i * num_chars_1 + j]);
 		}
 	}
-	numberTransfer(x + 30, y + 25, 25);
+	// numberTransfer(x + 30, y + 25, 25);
 
 }
 
@@ -886,7 +899,7 @@ void draw::winnerSignature(int x, int y, int color)
 {
 	common::setConsoleColor(color, BLACK);
 	unsigned char winner[] = { 219, 32 , 219, 32 , 219, 32 , 219, 32 , 219, 220, 32 , 219, 32 , 219, 220, 32 , 219, 32 , 219, 223, 223, 32 , 219, 223, 219,
-							   223, 254, 223, 254, 223, 32 , 219, 32 , 219, 32 , 223, 219, 32 , 219, 32 , 223, 219, 32 , 219, 219, 220, 32 , 219, 223, 220};
+							   223, 254, 223, 254, 223, 32 , 219, 32 , 219, 32 , 223, 219, 32 , 219, 32 , 223, 219, 32 , 219, 219, 220, 32 , 219, 223, 220 };
 	int num_chars = 25;
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < num_chars; j++) {
@@ -978,7 +991,7 @@ void draw::printVS(int x, int y)
 	unsigned char VS[] = { 219, 32 , 219,
 						   223, 254, 223,
 						   32 , 219, 223,
-						   254, 220, 219,};
+						   254, 220, 219, };
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 3; j++) {
 			common::gotoXY(x + j, y + i); putchar(VS[i * 3 + j]);
@@ -1138,7 +1151,7 @@ void draw::thankPlaying(int x, int y)
 		Sleep(100);
 		printColoredRectangle(i * 17, 12, 18 + i, 8, BLACK);
 		PacmanOpenHalfMouth(i * 17, 12);
-		Sleep(100); 
+		Sleep(100);
 		printColoredRectangle(i * 17, 12, 18 + i, 8, BLACK);
 		PacmanCloseMouth(i * 17, 12);
 		Sleep(100);
@@ -1152,8 +1165,8 @@ void draw::thankPlaying(int x, int y)
 	// Hiển thị màn hình Thanks for playing
 	system("color 07");
 	common::setConsoleColor(BLACK, BRIGHT_WHITE);
-	unsigned char thank[] = { 223, 223, 219, 223, 223, 32 , 219, 32 , 32 , 219, 32 , 219, 223, 223, 219, 32 , 219, 220, 32 , 32 , 219, 32 , 219, 32 , 32 , 219, 32 , 219, 223, 223, 223, 32 , 32 , 32 , 219, 223, 223, 223, 32 , 219, 223, 223, 219, 32 , 219, 223, 223, 219, 32 , 32 , 32 , 
-							  32 , 32 , 219, 32 , 32 , 32 , 219, 254, 254, 219, 32 , 219, 223, 223, 219, 32 , 219, 32 , 219, 32 , 219, 32 , 219, 254, 219, 32 , 32 , 223, 254, 254, 220, 32 , 32 , 32 , 219, 223, 223, 223, 32 , 219, 32 , 32 , 219, 32 , 219, 254, 254, 32 , 32 , 32 , 32 , 
+	unsigned char thank[] = { 223, 223, 219, 223, 223, 32 , 219, 32 , 32 , 219, 32 , 219, 223, 223, 219, 32 , 219, 220, 32 , 32 , 219, 32 , 219, 32 , 32 , 219, 32 , 219, 223, 223, 223, 32 , 32 , 32 , 219, 223, 223, 223, 32 , 219, 223, 223, 219, 32 , 219, 223, 223, 219, 32 , 32 , 32 ,
+							  32 , 32 , 219, 32 , 32 , 32 , 219, 254, 254, 219, 32 , 219, 223, 223, 219, 32 , 219, 32 , 219, 32 , 219, 32 , 219, 254, 219, 32 , 32 , 223, 254, 254, 220, 32 , 32 , 32 , 219, 223, 223, 223, 32 , 219, 32 , 32 , 219, 32 , 219, 254, 254, 32 , 32 , 32 , 32 ,
 							  32 , 32 , 219, 32 , 32 , 32 , 219, 32 , 32 , 219, 32 , 219, 32 , 32 , 219, 32 , 219, 32 , 32 , 223, 219, 32 , 219, 32 , 32 , 219, 32 , 220, 220, 220, 219, 32 , 32 , 32 , 219, 32 , 32 , 32 , 32 , 219, 220, 220, 219, 32 , 219, 32 , 32 , 219, 32 , 32 , 32 , };
 	unsigned char playing[] = { 219, 223, 223, 219, 32 , 219, 32 , 32 , 32 , 32 , 219, 223, 223, 219, 32 , 219, 32 , 219, 32 , 219, 32 , 219, 220, 32 , 32 , 219, 32 , 219, 223, 223, 223,
 								219, 223, 223, 223, 32 , 219, 32 , 32 , 32 , 32 , 219, 223, 223, 219, 32 , 254, 220, 254, 32 , 219, 32 , 219, 32 , 219, 32 , 219, 32 , 219, 32 , 220, 220,
@@ -1267,7 +1280,7 @@ void draw::exitBackground()
 		}
 	}
 	common::setConsoleColor(GRAY, WHITE);
-	for (int i = 0; i < 105; i+=5) {
+	for (int i = 0; i < 105; i += 5) {
 		if (i % 10 == 0) {
 			for (int j = 0; j < 3; j++) {
 				common::gotoXY(i + j, 29); putchar(223);
@@ -1315,7 +1328,7 @@ void draw::exitBackground()
 	// cột lửa
 	fireStatus(6, 11);
 	fireStatus(83, 11);
-	
+
 	// lửa
 	Fire(11, 2);
 	Fire(88, 2);
@@ -1433,12 +1446,12 @@ void draw::Fire(int x, int y) {
 void draw::exitTitle(int x, int y)
 {
 	unsigned char exit[] = { 32 , 32 , 32 , 220, 219, 219, 219, 219, 219, 219, 219, 219, 32 , 223, 219, 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 223, 32 , 32 , 32 , 220, 219, 32 , 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 ,
-							 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 219, 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 223, 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 223, 219, 219, 219, 219, 219, 219, 219, 219, 219, 220, 
-							 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 219, 223, 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 219, 32 , 32 , 32 , 219, 219, 219, 223, 32 , 32 , 32 , 32 , 219, 219, 219, 219, 32 , 32 , 32 , 32 , 223, 219, 219, 219, 223, 223, 219, 219, 
+							 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 219, 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 223, 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 223, 219, 219, 219, 219, 219, 219, 219, 219, 219, 220,
+							 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 219, 223, 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 219, 32 , 32 , 32 , 219, 219, 219, 223, 32 , 32 , 32 , 32 , 219, 219, 219, 219, 32 , 32 , 32 , 32 , 223, 219, 219, 219, 223, 223, 219, 219,
 							 32 , 220, 219, 219, 219, 220, 220, 220, 32 , 32 , 32 , 32 , 32 , 32 , 32 , 32 , 32 , 223, 219, 219, 219, 220, 219, 219, 219, 223, 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 223,
-							 223, 223, 219, 219, 219, 223, 223, 223, 32 , 32 , 32 , 32 , 32 , 32 , 32 , 32 , 32 , 220, 219, 219, 219, 223, 219, 219, 219, 220, 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 
-							 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 219, 220, 32 , 32 , 32 , 32 , 32 , 220, 219, 219, 219, 32 , 32 , 32 , 219, 219, 219, 219, 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 
-						     32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 220, 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 220, 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 ,
+							 223, 223, 219, 219, 219, 223, 223, 223, 32 , 32 , 32 , 32 , 32 , 32 , 32 , 32 , 32 , 220, 219, 219, 219, 223, 219, 219, 219, 220, 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 ,
+							 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 219, 220, 32 , 32 , 32 , 32 , 32 , 220, 219, 219, 219, 32 , 32 , 32 , 219, 219, 219, 219, 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 ,
+							 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 220, 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 220, 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 32 , 32 , 32 , 32 ,
 							 32 , 32 , 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 32 , 32 , 220, 219, 219, 219, 32 , 32 , 32 , 32 , 32 , 32 , 32 , 219, 219, 219, 220, 32 , 32 , 219, 223, 32 , 32 , 32 , 32 , 32 , 32 , 220, 219, 219, 219, 219, 223, 32 , 32 , };
 	int num_chars = 47;
 	common::setConsoleColor(BLACK, GRAY);
@@ -1537,7 +1550,7 @@ void draw::singleNumberTransfer(int x, int y, int number)
 {
 	if (number < 0 || number > 9) return;
 	if (number == 0) {
-		unsigned char num[] = {  219, 223, 223, 219,
+		unsigned char num[] = { 219, 223, 223, 219,
 								 219, 32 , 32 , 219,
 								 219, 220, 220, 219, };
 		for (int i = 0; i < 3; i++) {
@@ -1547,9 +1560,9 @@ void draw::singleNumberTransfer(int x, int y, int number)
 		}
 	}
 	else if (number == 1) {
-		unsigned char num[] = { 32 , 32 , 219, 32 , 
+		unsigned char num[] = { 32 , 32 , 219, 32 ,
 								32 , 223, 219, 32 ,
-								32 , 220, 219, 220,};
+								32 , 220, 219, 220, };
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 4; j++) {
 				common::gotoXY(x + j, y + i); putchar(num[i * 4 + j]);
@@ -1559,7 +1572,7 @@ void draw::singleNumberTransfer(int x, int y, int number)
 	else if (number == 2) {
 		unsigned char num[] = { 223, 223, 223, 219,
 								219, 223, 223, 223,
-								219, 220, 220, 220,};
+								219, 220, 220, 220, };
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 4; j++) {
 				common::gotoXY(x + j, y + i); putchar(num[i * 4 + j]);
@@ -1579,7 +1592,7 @@ void draw::singleNumberTransfer(int x, int y, int number)
 	else if (number == 4) {
 		unsigned char num[] = { 219, 32 , 32 , 219,
 								219, 220, 220, 219,
-								32 , 32 , 32 , 219,};
+								32 , 32 , 32 , 219, };
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 4; j++) {
 				common::gotoXY(x + j, y + i); putchar(num[i * 4 + j]);
@@ -1588,8 +1601,8 @@ void draw::singleNumberTransfer(int x, int y, int number)
 	}
 	else if (number == 5) {
 		unsigned char num[] = { 219, 223, 223, 223,
-						        223, 223, 223, 219,
-								220, 220, 220, 219,};
+								223, 223, 223, 219,
+								220, 220, 220, 219, };
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 4; j++) {
 				common::gotoXY(x + j, y + i); putchar(num[i * 4 + j]);
@@ -1599,7 +1612,7 @@ void draw::singleNumberTransfer(int x, int y, int number)
 	else if (number == 6) {
 		unsigned char num[] = { 219, 223, 223, 223,
 								219, 223, 223, 219,
-								219, 220, 220, 219,};
+								219, 220, 220, 219, };
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 4; j++) {
 				common::gotoXY(x + j, y + i); putchar(num[i * 4 + j]);
@@ -1609,7 +1622,7 @@ void draw::singleNumberTransfer(int x, int y, int number)
 	else if (number == 7) {
 		unsigned char num[] = { 219, 223, 223, 219,
 								32 , 32 , 32 , 219,
-								32 , 32 , 32 , 219,};
+								32 , 32 , 32 , 219, };
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 4; j++) {
 				common::gotoXY(x + j, y + i); putchar(num[i * 4 + j]);
@@ -1618,7 +1631,7 @@ void draw::singleNumberTransfer(int x, int y, int number)
 	}
 	else if (number == 8) {
 		unsigned char num[] = { 219, 223, 223, 219,
-							    219, 223, 223, 219,
+								219, 223, 223, 219,
 								219, 220, 220, 219, };
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 4; j++) {
@@ -1629,19 +1642,19 @@ void draw::singleNumberTransfer(int x, int y, int number)
 	else {
 		unsigned char num[] = { 219, 223, 223, 219,
 								223, 223, 223, 219,
-						        220, 220, 220, 219,};
+								220, 220, 220, 219, };
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 4; j++) {
 				common::gotoXY(x + j, y + i); putchar(num[i * 4 + j]);
 			}
-		}	
+		}
 	}
 }
 
 void draw::loserSignature(int x, int y, int color)
 {
 	common::setConsoleColor(color, BLACK);
-	unsigned char loser[] = { 219, 32 , 32 , 32 , 219, 223, 219, 32 , 219, 223, 32 , 219, 223, 223, 32 , 219, 223, 219, 
+	unsigned char loser[] = { 219, 32 , 32 , 32 , 219, 223, 219, 32 , 219, 223, 32 , 219, 223, 223, 32 , 219, 223, 219,
 							  219, 220, 220, 32 , 219, 220, 219, 32 , 220, 219, 32 , 219, 219, 220, 32 , 219, 223, 220, };
 	int num_chars = 18;
 	for (int i = 0; i < 2; i++) {
@@ -1698,7 +1711,7 @@ void draw::setTimer(int hour, int minute, int second)
 		common::setConsoleColor(BRIGHT_WHITE, GREEN);
 		int input = common::getConsoleInput();
 		switch (input) {
-		case 2: 
+		case 2:
 			if (pos == 0) {
 				++hour; if (hour == 25) hour = 24; numberTransfer(40, 12, hour); break;
 			}
@@ -1708,7 +1721,7 @@ void draw::setTimer(int hour, int minute, int second)
 			else {
 				++second; if (second == 60) second = 0; numberTransfer(64, 12, second); break;
 			}
-		case 5: 
+		case 5:
 			if (pos == 0) {
 				--hour; if (hour == -1) hour = 0; numberTransfer(40, 12, hour); break;
 			}
@@ -1818,7 +1831,7 @@ void draw::drawTitle(int x, int y)
 void draw::resultTitle(int x, int y)
 {
 	unsigned char result[] = { 219, 223, 219, 32 , 219, 223, 223, 32 , 219, 223, 32 , 219, 32 , 219, 32 , 219, 32 , 32 , 223, 219, 223,
-							   219, 223, 220, 32 , 219, 219, 220, 32 , 220, 219, 32 , 219, 220, 219, 32 , 219, 220, 220, 32 , 219, 32 ,};
+							   219, 223, 220, 32 , 219, 219, 220, 32 , 220, 219, 32 , 219, 220, 219, 32 , 219, 220, 220, 32 , 219, 32 , };
 	int num_chars = 21;
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < num_chars; j++) {
