@@ -5,7 +5,7 @@
 #include <Random>
 #include <conio.h>
 #include <fstream>
-#include "menu.h"
+#include"menu.h"
 #include "board.h"
 #include "gpoint.h"
 
@@ -31,6 +31,8 @@ private:
 	bool _loop;       //1: Chơi tiếp, 0: dừng lại
 	bool _showCursor; //Cờ để ẩn, hiện con trỏ
 	int _mode;        //0: chế đồ người-người, 1: chế độ người-máy(dễ), 2: chế độ người-máy(khó)
+	int _cp1, _cp2;
+	int _p1pos, _p2pos;
 	bool _loadSymbols;//1: load lại các kí hiệu trên bàn cơ khi chưa kết thúc ván cờ
 public:
 	gameplay();                             //Phương thức tạo lập
@@ -46,7 +48,7 @@ public:
 	void printInterface();				 //Giao diện ván cờ
 	void setUpGame(int, string = "");    //Thiết lập game
 	void saveData();					 //Lưu dữ liệu ván cờ
-	void moveToDirection(int, int);      //Di chuyển đến vị trí(máy)
+	void moveToDirection(int, int, int&, int&, int&, int&);      //Di chuyển đến vị trí(máy)
 	void printWinPos();					 //In ra vị trí thắng
 	void printLoadedSymbols();			 //Load các kí hiệu X,O
 	void askContinue();				     //Hỏi tiếp tục ván cờ
@@ -57,5 +59,10 @@ public:
 	void saveBoxScreen();                //Hiển thị màn hình save box
 	void exitGameScreen();				 //Hiển thị màn hình exit box
 	void printYouWin();					//In You Win
-	void printYouLose();				//In You Lose
+	void printYouLose();				//In You Los
+	void chooseAvatarScreen(int);							//Màn hình chọn skin nhân vật
+	void addFrame(int, int);									//Thêm khung trỏ ava
+	void removeFrame(int);								//Xóa khung trỏ ava
+	void printP1Win();
+	void printP2Win();
 };
