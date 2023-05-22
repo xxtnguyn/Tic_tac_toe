@@ -1,6 +1,7 @@
 #include "menu.h"
 #include "gameplay.h"
 #include "avatar.h"
+#include "tutorial.h"
 #ifdef __cpp_lib_filesystem
 #include <filesystem>
 namespace fs = std::filesystem;
@@ -18,7 +19,6 @@ const string menu::options[9] = { "NEW GAME", "LOAD", "HELP", "ABOUT US", "EXIT"
 
 void menu::mainScreen()
 {
-	_getch();
 	unordered_map<string, void(*)()> function_map = {
 		{options[0], newGameMenu},
 		{options[1], loadScreen},
@@ -33,7 +33,7 @@ void menu::mainScreen()
 	/*common::clearConsole();
 	draw::printIntro();
 	common::clearConsole();
-	draw::loadingBar();
+	
 	common::clearConsole();*/
 	// draw::printAnimatedBigXandBigO(96, 10, 1, 10);
 	common::clearConsole();
@@ -142,9 +142,7 @@ void menu::mainMenu()
 {
 	draw::printBigX(96, 19, LIGHT_RED, BRIGHT_WHITE);
 	draw::printBigO(1, 16, LIGHT_BLUE, BRIGHT_WHITE);
-	Sleep(100);
 	draw::printBigX(22, 22, LIGHT_RED, BRIGHT_WHITE);
-	Sleep(100);
 	draw::printBigO(78, 24, LIGHT_BLUE, BRIGHT_WHITE);
 	draw::printLogo();
 	Sleep(100);
@@ -158,8 +156,6 @@ void menu::mainMenu()
 
 void menu::backMenu()
 {
-	common::clearConsole();
-	draw::loadingBar();
 	common::clearConsole();
 }
 
@@ -254,7 +250,7 @@ void menu::helpScreen()
 
 	while (common::getConsoleInput() != 6) {}
 	common::clearConsole();
-	draw::loadingBar();
+	
 	common::clearConsole();
 }
 
@@ -310,7 +306,7 @@ void menu::aboutUS()
 	putchar(60); putchar(60); putchar(60); putchar(60);
 	while (common::getConsoleInput() != 6) {}
 	common::clearConsole();
-	draw::loadingBar();
+	
 	common::clearConsole();
 }
 
@@ -319,17 +315,8 @@ void menu::exitScreen()
 {
 	common::showCursor(false);
 	common::clearConsole();
-	/*draw::winnerSignature(13, 2);
-	draw::biggerAura(1, 5);
-	draw::Aura(8, 10);
-	avatar::leftAmongUs(17, 15, LIGHT_BLUE, BLUE, LIGHT_YELLOW, WHITE);
-	draw::smallLostAmongUs(45, 24, RED);*/
-	chooseAvatar();
-	/*draw::winnerSignature(3, 5);
-	draw::biggerAura(1, 8);
-	draw::Aura(8, 13);
-	avatar::leftAmongUs(17, 18, LIGHT_RED, RED);
-	draw::smallLostAmongUs(45, 27, RED);*/
+	//chooseAvatar();
+	/*avatar::BotHead(10, 10, BRIGHT_WHITE, LIGHT_BLUE);*/
 	// draw::printScene();
 	/*avatar::leftAmongUsHead(10, 0, LIGHT_BLUE, BLUE);*/
 	/*avatar::Cat(10, 0);*/
@@ -339,7 +326,30 @@ void menu::exitScreen()
 	//printRectangle(62, 23, 6, 2);
 	//common::setConsoleColor(BRIGHT_WHITE, RED);
 	//printLogo();
-	
+	common::playSound(6);
+	common::setConsoleColor(BRIGHT_WHITE, BLACK);
+	common::clearConsole();
+
+	common::clearConsole();
+	int n = 0; 
+	if (n == 1) {
+		draw::titleEffect(2, 2, BRIGHT_WHITE, LIGHT_RED, LIGHT_BLUE, 1, 0, 1);
+		Sleep(3000);
+		draw::titleEffect(2, 2, LIGHT_RED, BRIGHT_WHITE, LIGHT_RED, 0, 0, 1);
+		Sleep(3000);
+	}
+	else {
+		draw::titleEffect(2, 2, LIGHT_RED, BRIGHT_WHITE, LIGHT_RED, 1, 1, 1);
+		Sleep(3000);
+		draw::titleEffect(2, 2, LIGHT_RED, BRIGHT_WHITE, LIGHT_BLUE, 0, 0, 1);
+		Sleep(3000);
+	}
+	common::clearConsole();
+
+	Sleep(20000);
+	exit(0);
+
+	//draw::exitBackground();
 	//draw::printBoard(32, 8, 44, 9, BLACK);
 	//common::setConsoleColor(BRIGHT_WHITE, PURPLE);
 	//common::gotoXY(44, 11);
@@ -383,10 +393,9 @@ void menu::exitScreen()
 	//		if (!choice)
 	//		{
 	//			common::clearConsole();
+	//			draw::thankPlaying(20, 14);
 	//			exit(0);
 	//		}
-	//		common::clearConsole();
-	//		draw::loadingBar();
 	//		common::clearConsole();
 	//		return;
 	//	}
@@ -395,8 +404,6 @@ void menu::exitScreen()
 	//		//common::playSound(4);
 	//	}
 	//}
-	Sleep(200000);
-	exit(0);
 }
 
 void menu::playPvEe()
@@ -416,6 +423,24 @@ void menu::playPvEh()
 void menu::loadScreen()
 {
 	common::clearConsole();
+	vector<string> fileName;
+	for (auto& p : fs::recursive_directory_iterator("load"))
+	{
+		if (p.path().extension() == ".txt")
+		{
+			string temp = p.path().filename().string();
+			temp.erase(temp.find_last_of('.'));
+			fileName.push_back(temp);
+		}
+	}
+	if (!fileName.size())
+	{
+		common::gotoXY(42, 15);
+		cout << "No game files were found!";
+		Sleep(1200);
+		common::clearConsole();
+		return;
+	}
 	draw::printLoadText();
 	draw::printLoadBoard(BLACK);
 	common::setConsoleColor(BLACK, BRIGHT_WHITE);
@@ -433,23 +458,6 @@ void menu::loadScreen()
 	cout << "BACK (ESC)";
 	common::gotoXY(89, 29);
 	cout << "NEXT (D)";
-	vector<string> fileName;
-	for (auto& p : fs::recursive_directory_iterator("load"))
-	{
-		if (p.path().extension() == ".txt")
-		{
-			string temp = p.path().filename().string();
-			temp.erase(temp.find_last_of('.'));
-			fileName.push_back(temp);
-		}
-	}
-	if (!fileName.size())
-	{
-		common::gotoXY(42, 15);
-		cout << "No game files were found!";
-		Sleep(3000);
-		return;
-	}
 	int file = 8;
 	changeFile(3, fileName, file);
 	bool chosen = 0;
@@ -485,7 +493,7 @@ void menu::changeFile(int key, vector<string>& fileName, int& file)
 	vector<string> dt;
 	vector<string> p1Name;
 	vector<string> p2Name;
-	for (int i=0; i<fileName.size();i++)
+	for (int i = 0; i < fileName.size();i++)
 	{
 		string temp1, temp2, temp3;
 		string fullPath = "load\\" + fileName[i] + ".txt";
@@ -527,7 +535,7 @@ void menu::changeFile(int key, vector<string>& fileName, int& file)
 			common::gotoXY(20, 12 + i % 8 * 2);
 			for (int j = 0; j < 19;j++)
 			{
-					putchar(32);
+				putchar(32);
 			}
 			common::gotoXY(40, 12 + i % 8 * 2);
 			for (int j = 0; j < 20;j++)
@@ -593,234 +601,52 @@ void menu::changeFile(int key, vector<string>& fileName, int& file)
 	}
 	else if (key == 2 || key == 5)
 	{
-			if (key == 2 && file % 8 > 0)
-			{
-				common::setConsoleColor(BRIGHT_WHITE, BLACK);
-				common::gotoXY(14, 12 + file % 8 * 2);
-				cout << file + 1;
-				common::gotoXY(23, 12 + file % 8 * 2);
-				cout << p1Name[file];
-				common::gotoXY(43, 12 + file % 8 * 2);
-				cout << p2Name[file];
-				common::gotoXY(66, 12 + file % 8 * 2);
-				cout << dt[file];
-				file--;
-			}
-			else if (key == 5 && file % 8 < 7 && file < fileName.size() - 1)
-			{
-				common::setConsoleColor(BRIGHT_WHITE, BLACK);
-				common::gotoXY(14, 12 + file % 8 * 2);
-				cout << file + 1;
-				common::gotoXY(23, 12 + file % 8 * 2);
-				cout << p1Name[file];
-				common::gotoXY(43, 12 + file % 8 * 2);
-				cout << p2Name[file];
-				common::gotoXY(66, 12 + file % 8 * 2);
-				cout << dt[file];
-				file++;
-			}
-			else
-			{
-				//common::playSound(4);
-				return;
-			}
+		if (key == 2 && file % 8 > 0)
+		{
+			common::setConsoleColor(BRIGHT_WHITE, BLACK);
 			common::gotoXY(14, 12 + file % 8 * 2);
-			common::setConsoleColor(BRIGHT_WHITE, PURPLE);
 			cout << file + 1;
 			common::gotoXY(23, 12 + file % 8 * 2);
-			common::setConsoleColor(BRIGHT_WHITE, BLUE);
 			cout << p1Name[file];
 			common::gotoXY(43, 12 + file % 8 * 2);
-			common::setConsoleColor(BRIGHT_WHITE, RED);
 			cout << p2Name[file];
 			common::gotoXY(66, 12 + file % 8 * 2);
-			common::setConsoleColor(BRIGHT_WHITE, PURPLE);
 			cout << dt[file];
-	}
-}
-
-void menu::chooseAvatar() 
-{
-	// Tiêu đề
-	draw::printTitleChoose(20, 1);
-
-	// Hàng trên
-	common::setColor(0);
-	common::gotoXY(14, 4); cout << "No.1";
-	draw::printBoard(7, 5, 16, 10, BLACK);
-	draw::printColoredRectangle(8, 6, 15, 9, WHITE);
-	avatar::rightAmongUs(9, 7, LIGHT_RED, RED, WHITE);
-	string red = "RED";
-	common::setConsoleColor(BRIGHT_WHITE, RED);
-	for (int i = 0; i < red.size(); i++) {
-		common::gotoXY(5, 8 + 2 * i);
-		cout << red[i];
-	}
-
-	common::setColor(0);
-	common::gotoXY(44, 4); cout << "No.2";
-	draw::printBoard(37, 5, 16, 10, BLACK);
-	draw::printColoredRectangle(38, 6, 15, 9, WHITE);
-	avatar::rightAmongUs(39, 7, LIGHT_BLUE, BLUE, WHITE);
-	string blue = "BLUE";
-	common::setConsoleColor(BRIGHT_WHITE, BLUE);
-	for (int i = 0; i < blue.size(); i++) {
-		common::gotoXY(35, 7 + 2 * i);
-		cout << blue[i];
-	}
-
-	common::setColor(0);
-	common::gotoXY(74, 4); cout << "No.3";
-	draw::printBoard(67, 5, 16, 10, BLACK);
-	draw::printColoredRectangle(68, 6, 15, 9, WHITE);
-	avatar::rightAmongUs(69, 7, LIGHT_GREEN, GREEN, WHITE);
-	string green = "GREEN";
-	common::setConsoleColor(BRIGHT_WHITE, GREEN);
-	for (int i = 0; i < green.size(); i++) {
-		common::gotoXY(65, 6 + 2 * i);
-		cout << green[i];
-	}
-
-	// Hang dưới
-	common::setColor(0);
-	common::gotoXY(27, 18); cout << "No.4";
-	draw::printBoard(20, 19, 16, 10, BLACK);
-	draw::printColoredRectangle(21, 20, 15, 9, WHITE);
-	avatar::rightAmongUs(22, 21, LIGHT_PURPLE, PURPLE, WHITE);
-	string purple = "PURPLE";
-	common::setConsoleColor(BRIGHT_WHITE, PURPLE);
-	for (int i = 0; i < purple.size(); i++) {
-		common::gotoXY(18, 19 + 2 * i);
-		cout << purple[i];
-	}
-
-	common::setColor(0);
-	common::gotoXY(57, 18); cout << "No.5";
-	draw::printBoard(50, 19, 16, 10, BLACK);
-	draw::printColoredRectangle(51, 20, 15, 9, WHITE);
-	avatar::rightAmongUs(52, 21, BRIGHT_WHITE, WHITE, WHITE);
-	string white = "WHITE";
-	common::setConsoleColor(BRIGHT_WHITE, BLACK);
-	for (int i = 0; i < white.size(); i++) {
-		common::gotoXY(48, 20 + 2 * i);
-		cout << white[i];
-	}
-
-	common::setColor(0);
-	common::gotoXY(87, 18); cout << "No.6";
-	draw::printBoard(80, 19, 16, 10, BLACK);
-	draw::printColoredRectangle(81, 20, 15, 9, WHITE);
-	avatar::rightAmongUs(82, 21, LIGHT_YELLOW, LIGHT_YELLOW, WHITE);
-	string yellow = "YELLOW";
-	common::setConsoleColor(BRIGHT_WHITE, YELLOW);
-	for (int i = 0; i < yellow.size(); i++) {
-		common::gotoXY(78, 19 + 2 * i);
-		cout << yellow[i];
-	}
-
-	// Hộp Start (vào game)
-	common::setColor(2);
-	draw::printRectangle(91, 9, 9, 2);
-	common::gotoXY(94, 10); cout << "START";
-
-	// Hộp back menu
-	draw::printRectangle(3, 23, 8, 2);
-	common::gotoXY(6, 24); cout << "BACK";
-}
-
-void menu::Tutorial()
-{
-	tutorial::Intro();
-	int step = 0;
-	int input = 0;
-	while (1) {
-		input = getch();
-		if (input == 100 || input == 68) {
-			step++;
-			draw::printBoard(82, 28, 10, 2, GREEN);
-			common::setConsoleColor(GREEN, BRIGHT_WHITE);
-			common::gotoXY(83, 29); cout << " NEXT (D)";
-			Sleep(500);
+			file--;
+		}
+		else if (key == 5 && file % 8 < 7 && file < fileName.size() - 1)
+		{
 			common::setConsoleColor(BRIGHT_WHITE, BLACK);
-			common::clearConsole();
-			if (step == 7) {
-				common::clearConsole();
-				break;
-			}
-			else {
-				switch (step)
-				{
-				case 1:
-					tutorial::stepOne();
-					break;
-				case 2:
-					tutorial::stepTwo();
-					break;
-				case 3:
-					tutorial::stepThree();
-					break;
-				case 4:
-					tutorial::stepFour();
-					break;
-				case 5:
-					tutorial::stepFive();
-					break;
-				case 6:
-					tutorial::lastStep();
-					break;
-				}
-			}
+			common::gotoXY(14, 12 + file % 8 * 2);
+			cout << file + 1;
+			common::gotoXY(23, 12 + file % 8 * 2);
+			cout << p1Name[file];
+			common::gotoXY(43, 12 + file % 8 * 2);
+			cout << p2Name[file];
+			common::gotoXY(66, 12 + file % 8 * 2);
+			cout << dt[file];
+			file++;
 		}
-		else if (input == 97 || input == 65) {
-			step--;
-			if (step == -1) {
-				tutorial::Intro();
-				step = 0;
-			}
-			else {
-				draw::printBoard(70, 28, 10, 2, GREEN);
-				common::setConsoleColor(GREEN, BRIGHT_WHITE);
-				common::gotoXY(71, 29); cout << " BACK (A)";
-				Sleep(500);
-				common::setConsoleColor(BRIGHT_WHITE, BLACK);
-				common::clearConsole();
-				switch (step)
-				{
-				case 0 :
-					tutorial::Intro();
-					break;
-				case 1:
-					tutorial::stepOne();
-					break;
-				case 2:
-					tutorial::stepTwo();
-					break;
-				case 3:
-					tutorial::stepThree();
-					break;
-				case 4:
-					tutorial::stepFour();
-					break;
-				case 5:
-					tutorial::stepFive();
-					break;
-				case 6:
-					tutorial::lastStep();
-					break;
-				}
-			}
+		else
+		{
+			//common::playSound(4);
+			return;
 		}
-		else if (input == 115 || input == 83) {
-			draw::printBoard(94, 28, 10, 2, GREEN);
-			common::setConsoleColor(GREEN, BRIGHT_WHITE);
-			common::gotoXY(97, 29); cout << " SKIP (D)";
-			Sleep(500);
-			common::clearConsole();
-			break;
-		}
-		else continue;
+		common::gotoXY(14, 12 + file % 8 * 2);
+		common::setConsoleColor(BRIGHT_WHITE, PURPLE);
+		cout << file + 1;
+		common::gotoXY(23, 12 + file % 8 * 2);
+		common::setConsoleColor(BRIGHT_WHITE, BLUE);
+		cout << p1Name[file];
+		common::gotoXY(43, 12 + file % 8 * 2);
+		common::setConsoleColor(BRIGHT_WHITE, RED);
+		cout << p2Name[file];
+		common::gotoXY(66, 12 + file % 8 * 2);
+		common::setConsoleColor(BRIGHT_WHITE, PURPLE);
+		cout << dt[file];
 	}
 }
+
 
 //void menu::changeFile(int key, vector<string>& fileName, int& file)
 //{
@@ -893,3 +719,97 @@ void menu::Tutorial()
 //}
 
 
+void menu::Tutorial()
+{
+	tutorial::Intro();
+	int step = 0;
+	int input = 0;
+	while (1) {
+		input = getch();
+		if (input == 100 || input == 68) {
+			step++;
+			draw::printBoard(82, 28, 10, 2, GREEN);
+			common::setConsoleColor(GREEN, BRIGHT_WHITE);
+			common::gotoXY(83, 29); cout << " NEXT (D)";
+			Sleep(500);
+			common::setConsoleColor(BRIGHT_WHITE, BLACK);
+			common::clearConsole();
+			if (step == 7) {
+				common::clearConsole();
+				break;
+			}
+			else {
+				switch (step)
+				{
+				case 1:
+					tutorial::stepOne();
+					break;
+				case 2:
+					tutorial::stepTwo();
+					break;
+				case 3:
+					tutorial::stepThree();
+					break;
+				case 4:
+					tutorial::stepFour();
+					break;
+				case 5:
+					tutorial::stepFive();
+					break;
+				case 6:
+					tutorial::lastStep();
+					break;
+				}
+			}
+		}
+		else if (input == 97 || input == 65) {
+			step--;
+			if (step == -1) {
+				tutorial::Intro();
+				step = 0;
+			}
+			else {
+				draw::printBoard(70, 28, 10, 2, GREEN);
+				common::setConsoleColor(GREEN, BRIGHT_WHITE);
+				common::gotoXY(71, 29); cout << " BACK (A)";
+				Sleep(500);
+				common::setConsoleColor(BRIGHT_WHITE, BLACK);
+				common::clearConsole();
+				switch (step)
+				{
+				case 0:
+					tutorial::Intro();
+					break;
+				case 1:
+					tutorial::stepOne();
+					break;
+				case 2:
+					tutorial::stepTwo();
+					break;
+				case 3:
+					tutorial::stepThree();
+					break;
+				case 4:
+					tutorial::stepFour();
+					break;
+				case 5:
+					tutorial::stepFive();
+					break;
+				case 6:
+					tutorial::lastStep();
+					break;
+				}
+			}
+		}
+		else if (input == 115 || input == 83) {
+			draw::printBoard(94, 28, 10, 2, GREEN);
+			common::setConsoleColor(GREEN, BRIGHT_WHITE);
+			common::gotoXY(95, 29); cout << " SKIP (S)";
+			Sleep(500);
+			common::setConsoleColor(BRIGHT_WHITE, BLACK);
+			common::clearConsole();
+			break;
+		}
+		else continue;
+	}
+}
