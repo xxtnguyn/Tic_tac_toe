@@ -91,7 +91,7 @@ void tutorial::stepOne()
 	common::setConsoleColor(BRIGHT_WHITE, BLACK);
 	common::gotoXY(7, 12); cout << "This one is for playing with friends";
 	common::gotoXY(12, 13); cout << "or your game opponent";
-	avatar::rightAmongUs(3, 16, LIGHT_BLUE, BLUE, WHITE);
+	avatar::rightAmongUs(3, 16, LIGHT_BLUE, BLUE, WHITE, BRIGHT_WHITE);
 	draw::printVS(24, 20);
 	avatar::leftAmongUs(28, 16, LIGHT_RED, RED, WHITE, WHITE);
 	Sleep(1500);
@@ -116,9 +116,9 @@ void tutorial::stepOne()
 	common::setConsoleColor(BRIGHT_WHITE, BLACK);
 	common::gotoXY(36, 12); cout << "This one is for single player";
 	common::gotoXY(38, 13); cout << "playing with friendly bot";
-	avatar::rightAmongUs(26, 16, LIGHT_BLUE, BLUE, WHITE);
+	avatar::rightAmongUs(26, 16, LIGHT_BLUE, BLUE, WHITE, BRIGHT_WHITE);
 	draw::printVS(47, 20);
-	avatar::Bot(51, 16, BRIGHT_WHITE, LIGHT_BLUE, BLUE);
+	avatar::Bot(51, 16, BRIGHT_WHITE, LIGHT_BLUE, BLUE, BRIGHT_WHITE);
 	Sleep(1500);
 	draw::printColoredRectangle(36, 12, 40, 3, BRIGHT_WHITE);
 	draw::printColoredRectangle(26, 15, 55, 11, BRIGHT_WHITE);
@@ -142,9 +142,9 @@ void tutorial::stepOne()
 	common::setConsoleColor(BRIGHT_WHITE, BLACK);
 	common::gotoXY(66, 12); cout << "This one is for single player";
 	common::gotoXY(65, 13); cout << "playing with extremely angry bot";
-	avatar::rightAmongUs(53, 16, LIGHT_BLUE, BLUE, WHITE);
+	avatar::rightAmongUs(53, 16, LIGHT_BLUE, BLUE, WHITE, BRIGHT_WHITE);
 	draw::printVS(74, 20);
-	avatar::Bot(78, 16, LIGHT_RED, RED, BLACK);
+	avatar::Bot(78, 16, LIGHT_RED, RED, BLACK, BRIGHT_WHITE);
 	Sleep(1500);
 	draw::printColoredRectangle(63, 12, 40, 3, BRIGHT_WHITE);
 	draw::printColoredRectangle(53, 15, 53, 11, BRIGHT_WHITE);
@@ -436,7 +436,7 @@ void tutorial::stepThree()
 	Sleep(500);
 
 	// Lời dẫn nhấn P
-	avatar::rightAmongUs(2, 20, LIGHT_RED, RED, BRIGHT_WHITE);
+	avatar::rightAmongUs(2, 20, LIGHT_RED, RED, BRIGHT_WHITE, BRIGHT_WHITE);
 	draw::printColoredRectangle(11, 11, 33, 7, BRIGHT_WHITE);
 	draw::boxChatLeft(12, 11, 4, 30);
 	common::setConsoleColor(BRIGHT_WHITE, RED);
@@ -513,7 +513,7 @@ void tutorial::stepThree()
 	common::setColor(PURPLE);
 	common::gotoXY(66, 12); cout << "Thu Apr 20 01:57::43 2023";
 	Sleep(500);
-	
+
 	// Lời dẫn mục load
 	avatar::leftAmongUs(85, 21, LIGHT_RED, RED, BRIGHT_WHITE, BRIGHT_WHITE);
 	draw::printColoredRectangle(63, 16, 34, 4, BRIGHT_WHITE);
@@ -726,7 +726,7 @@ void tutorial::stepFive()
 								   219, 223, 219, 32 , 219, 220, 223, 32 , 219, 220, 223, 32 , 219, 32 , 32 , 219, 32 , 32 , 219, 32 , 219, 220, 219, 32 , 219, 32 , 223, 219, 32 , 219, 223, 219, 32 , 219, 220, 220, };
 	unsigned char item[] = { 219, 32 , 223, 219, 223, 32 , 219, 223, 223, 32 , 219, 220, 32 , 220, 219,
 							 219, 32 , 32 , 219, 32 , 32 , 219, 219, 220, 32 , 219, 32 , 223, 32 , 219, };
-	unsigned char sound[] = { 219, 223, 32 , 219, 223, 219, 32 , 219, 32 , 219, 32 , 219, 220, 32 , 219, 32 , 219, 223, 220, 
+	unsigned char sound[] = { 219, 223, 32 , 219, 223, 219, 32 , 219, 32 , 219, 32 , 219, 220, 32 , 219, 32 , 219, 223, 220,
 							  220, 219, 32 , 219, 220, 219, 32 , 219, 220, 219, 32 , 219, 32 , 223, 219, 32 , 219, 220, 223, };
 	int num_chars = 36, num_chars_1 = 15, num_chars_2 = 19;
 	for (int i = 0; i < 2; i++) {
@@ -754,7 +754,7 @@ void tutorial::stepFive()
 	draw::printColoredRectangle(45, 18, 19, 10, BRIGHT_WHITE);
 
 	// Hiển thị tắt nhạc
-	avatar::rightAmongUs(45, 18, BRIGHT_WHITE, WHITE, BRIGHT_WHITE);
+	avatar::rightAmongUs(45, 18, BRIGHT_WHITE, WHITE, BRIGHT_WHITE, BRIGHT_WHITE);
 	draw::boxChatLeft(60, 11, 1, 30);
 	common::setConsoleColor(BRIGHT_WHITE, RED);
 	common::gotoXY(62, 13); cout << "Use M to turn off the sound";
@@ -795,7 +795,7 @@ void tutorial::lastStep()
 
 	common::clearConsole();
 	common::setConsoleColor(BRIGHT_WHITE, BLACK);
-	unsigned char end[] = { 223, 219, 223, 32 , 219, 32 , 219, 32 , 219, 223, 223, 32 , 32 , 32 , 219, 223, 223, 32 , 219, 220, 32 , 219, 32 , 219, 223, 220, 
+	unsigned char end[] = { 223, 219, 223, 32 , 219, 32 , 219, 32 , 219, 223, 223, 32 , 32 , 32 , 219, 223, 223, 32 , 219, 220, 32 , 219, 32 , 219, 223, 220,
 							32 , 219, 219, 32 , 219, 223, 219, 32 , 219, 219, 220, 32 , 32 , 32 , 219, 219, 220, 32 , 219, 32 , 223, 219, 32 , 219, 220, 223, };
 	int num_chars = 26;
 	for (int i = 0; i < 2; i++) {
